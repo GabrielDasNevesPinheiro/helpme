@@ -7,6 +7,8 @@ interface IUser {
     level: Number;
     company: mongoose.ObjectId;
     sector: mongoose.ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const userSchema = new mongoose.Schema<IUser>({
@@ -36,6 +38,8 @@ const userSchema = new mongoose.Schema<IUser>({
         required: true,
     }
 
+}, {
+    timestamps: true,
 });
 
 const User = mongoose.model<IUser>("User", userSchema);

@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 interface ICompany {
     name: string;
     owner: mongoose.ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const companySchema = new mongoose.Schema<ICompany>({
@@ -18,6 +20,8 @@ const companySchema = new mongoose.Schema<ICompany>({
         required: true,
     }
 
+}, {
+    timestamps: true,
 });
 
 const Company = mongoose.model<ICompany>("Company", companySchema);
