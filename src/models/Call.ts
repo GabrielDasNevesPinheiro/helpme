@@ -6,6 +6,8 @@ interface ICall {
     company: mongoose.ObjectId;
     description: string;
     status: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const callSchema = new mongoose.Schema<ICall>({
@@ -35,6 +37,8 @@ const callSchema = new mongoose.Schema<ICall>({
         required: true,
     }
 
+}, {
+    timestamps: true,
 });
 
 const Call = mongoose.model<ICall>("Call", callSchema);
