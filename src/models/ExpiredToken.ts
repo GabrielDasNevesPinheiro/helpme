@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
-interface IToken {
+interface IToken extends Document {
     token: string;
 }
 
@@ -13,6 +13,6 @@ const tokenSchema = new mongoose.Schema<IToken>({
 
 });
 
-const ExpiredToken = mongoose.model<IToken>("ExpiredToken", tokenSchema);
+const ExpiredToken = mongoose.models.ExpiredToken || mongoose.model<IToken>("ExpiredToken", tokenSchema);
 
 export { ExpiredToken, type IToken };

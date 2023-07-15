@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
-interface IUser {
+interface IUser extends Document {
     name: string;
     email: string;
     password: string;
@@ -31,13 +31,12 @@ const userSchema = new mongoose.Schema<IUser>({
     },
     sector: {
         type: mongoose.Types.ObjectId,
-        required: true,
     }
 
 }, {
     timestamps: true,
 });
 
-const User = mongoose.model<IUser>("User", userSchema);
+const User = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
 
 export { User, type IUser };

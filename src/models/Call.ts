@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
-interface ICall {
+interface ICall extends Document {
     user: mongoose.ObjectId;
     sector: mongoose.ObjectId;
     company: mongoose.ObjectId;
@@ -41,6 +41,6 @@ const callSchema = new mongoose.Schema<ICall>({
     timestamps: true,
 });
 
-const Call = mongoose.model<ICall>("Call", callSchema);
+const Call = mongoose.models.Call || mongoose.model<ICall>("Call", callSchema);
 
 export { Call, type ICall };

@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
-interface ICompany {
+interface ICompany extends Document {
     name: string;
     owner: mongoose.ObjectId;
     createdAt: Date;
@@ -24,6 +24,6 @@ const companySchema = new mongoose.Schema<ICompany>({
     timestamps: true,
 });
 
-const Company = mongoose.model<ICompany>("Company", companySchema);
+const Company = mongoose.models.Company || mongoose.model<ICompany>("Company", companySchema);
 
 export { Company, type ICompany };
