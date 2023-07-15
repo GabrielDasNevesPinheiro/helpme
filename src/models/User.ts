@@ -28,7 +28,6 @@ const userSchema = new mongoose.Schema<IUser>({
     },
     company: {
         type: mongoose.Types.ObjectId,
-        required: true,
     },
     sector: {
         type: mongoose.Types.ObjectId,
