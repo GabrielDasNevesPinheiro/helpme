@@ -1,25 +1,27 @@
 "use server";
 
-import axios, { AxiosError } from "axios";
+import connectDatabase from "@/controllers/databaseController";
+import { IUser, User } from "@/models/User";
 
-export async function checkUser(email: string) { // check if user need to complete registration
+interface UserStatus {
+    message: "NEW USER" | "REGISTERED" | "NOT REGISTERED";
+}
 
-    interface UserStatus {
-        message: "NEW USER" | "REGISTERED" | "NOT REGISTERED";
-    }
+export async function checkUser(email: string): Promise<UserStatus> { // check if user need to complete registration
+
 
     try {
+        await connectDatabase();
 
-        const res: UserStatus = await (await axios.get(`http://localhost:3000/api/user/${email}`)).data;
-        return res;
+        const user: IUser | null = await User.findOne({ email });
 
-    } catch(error) {
+        if (!user) return { message: "NOT REGISTERED" };
+        if (!user?.company) return { message: "NEW USER" };
 
-        const parsedError = error as AxiosError;
-        console.log(parsedError.message);
-        
+    } catch (error) {
+        console.log(error);
     }
 
-    
+    return { message: "REGISTERED" }
 
-  }
+}
