@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Rubik } from 'next/font/google'
 import NextAuthSessionProvider from './providers/sessionProvider'
+import AuthProvider from './providers/authProvider'
 
 const inter = Rubik({ subsets: ['latin'] })
 
@@ -19,7 +20,9 @@ export default function RootLayout({
     <html lang="pt">
       <body className={inter.className}>
         <NextAuthSessionProvider>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </NextAuthSessionProvider>
         </body>
     </html>
