@@ -4,7 +4,6 @@ import connectDatabase from "@/controllers/databaseController";
 import { Company, ICompany } from "@/models/Company";
 import { ISector, Sector } from "@/models/Sector";
 import { IUser, User } from "@/models/User";
-import { ObjectId } from "mongoose";
 
 interface UserStatus {
     message: "NEW USER" | "REGISTERED" | "NOT REGISTERED";
