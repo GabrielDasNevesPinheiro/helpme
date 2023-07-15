@@ -16,4 +16,4 @@ const sectorSchema = new mongoose.Schema<ISector>({
 
 const Sector = mongoose.model<ISector>("Sector", sectorSchema);
 
-export default Sector;
+export { Sector, type ISector };

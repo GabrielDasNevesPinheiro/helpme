@@ -43,4 +43,4 @@ const callSchema = new mongoose.Schema<ICall>({
 
 const Call = mongoose.model<ICall>("Call", callSchema);
 
-export default Call;
+export { Call, type ICall };

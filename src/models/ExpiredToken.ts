@@ -15,4 +15,4 @@ const tokenSchema = new mongoose.Schema<IToken>({
 
 const ExpiredToken = mongoose.model<IToken>("ExpiredToken", tokenSchema);
 
-export default ExpiredToken;
+export { ExpiredToken, type IToken };
