@@ -3,12 +3,12 @@ import mongoose, { Document } from "mongoose";
 interface IUser extends Document {
     name: string;
     email: string;
-    password: string;
+    password?: string;
     level: Number;
-    company: mongoose.ObjectId;
-    sector: mongoose.ObjectId;
-    createdAt: Date;
-    updatedAt: Date;
+    company?: mongoose.ObjectId;
+    sector?: mongoose.ObjectId;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 const userSchema = new mongoose.Schema<IUser>({
