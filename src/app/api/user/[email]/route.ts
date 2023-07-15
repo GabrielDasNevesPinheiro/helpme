@@ -15,13 +15,15 @@ export async function GET(req: NextRequest, { params }: Params) { // use it to c
     try {
         
         const user: IUser | null = await User.findOne({ email: params.email });
+
+        if(!user) return NextResponse.json({ message: "NOT REGISTERED" }, { status: 200 });
         
         if(!user?.company) return NextResponse.json( { message: "NEW USER" }, { status: 200 });
 
         return NextResponse.json({ message: "REGISTERED" }, { status: 200 });
 
     } catch (error) {
-        return NextResponse.json({ error: "Error on searching user" }, { status: 200 });
+        return NextResponse.json({ error: "Error on searching user" }, { status: 400 });
     }
 
 }
