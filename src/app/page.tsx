@@ -10,7 +10,7 @@ export default function Home() {
     <main>
       <span>
         <p>Olá { session?.user?.name }, seu e-mail é { session?.user?.email }</p>
-        <button onClick={() => signOut({ })}>Logout</button>
+        <button onClick={() => signOut()}>Logout</button>
       </span>
     </main>
   )
