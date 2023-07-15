@@ -1,5 +1,5 @@
 
-export default function AccountSetupPage () {
+export default function AccountSetupPage() {
 
     return (
         <main>
