@@ -9,12 +9,15 @@ export async function checkUser(email: string) { // check if user need to comple
     }
 
     try {
+
         const res: UserStatus = await (await axios.get(`http://localhost:3000/api/user/${email}`)).data;
-        console.log(res);
         return res;
+
     } catch(error) {
+
         const parsedError = error as AxiosError;
         console.log(parsedError.message);
+        
     }
 
     

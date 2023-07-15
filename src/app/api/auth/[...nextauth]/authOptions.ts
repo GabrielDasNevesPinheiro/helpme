@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
             let dbUser: IUser | null = await User.findOne({ email: user.email });
 
             if(!dbUser) {
-                console.log("need registration");
+                
                 dbUser = new User({ 
                     name: user?.name as string,
                     email: user?.email as string,
