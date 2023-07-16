@@ -21,8 +21,8 @@ export default function AuthProvider({ children }: Props) { // if user has not a
     }
 
     checkUser(session.user?.email as string).then((res) => { // if new user redirect to registration
-        if(res?.message === "NEW USER") router.push("/setup");
-        if(res?.message === "NOT REGISTERED") signOut();
+        if(res === "NEW USER") router.push("/setup");
+        if(res === "NOT REGISTERED") signOut();
       });
 
     return <>{children}</>

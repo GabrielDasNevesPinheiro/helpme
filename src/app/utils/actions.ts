@@ -4,10 +4,8 @@ import connectDatabase from "@/controllers/databaseController";
 import { Company, ICompany } from "@/models/Company";
 import { ISector, Sector } from "@/models/Sector";
 import { IUser, User } from "@/models/User";
+import { SetupResponse, UserStatus } from "./ActionsResponses";
 
-interface UserStatus {
-    message: "NEW USER" | "REGISTERED" | "NOT REGISTERED";
-}
 
 export async function checkUser(email: string): Promise<UserStatus> { // check if user need to complete registration
 
@@ -17,14 +15,14 @@ export async function checkUser(email: string): Promise<UserStatus> { // check i
 
         const user: IUser = (await User.findOne({ email })) as IUser;
 
-        if (!user) return { message: "NOT REGISTERED" };
-        if (!user?.company) return { message: "NEW USER" };
+        if (!user) return "NOT REGISTERED" ;
+        if (!user?.company) return "NEW USER" ;
 
     } catch (error) {
         console.log(error);
     }
 
-    return { message: "REGISTERED" }
+    return "REGISTERED"
 
 }
 
@@ -51,7 +49,7 @@ export async function getSectors(): Promise<string[]> {
 }
 
 // this function must be used when setup a new account
-export async function setupUser({email, sector, company, level}: { email: string, sector: string, company: string, level: number}) {
+export async function setupUser({email, sector, company, level}: { email: string, sector: string, company: string, level: number}): Promise<SetupResponse> {
 
     try {
 
