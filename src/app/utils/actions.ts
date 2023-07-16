@@ -15,7 +15,7 @@ export async function checkUser(email: string): Promise<UserStatus> { // check i
     try {
         await connectDatabase();
 
-        const user: IUser | null = await User.findOne({ email });
+        const user: IUser = (await User.findOne({ email })) as IUser;
 
         if (!user) return { message: "NOT REGISTERED" };
         if (!user?.company) return { message: "NEW USER" };
@@ -54,7 +54,7 @@ export async function getSectors(): Promise<string[]> {
 export async function setupUser({email, sector, company, level}: { email: string, sector: string, company: string, level: number}) {
 
     try {
-        
+
         await connectDatabase();
 
         const user = (await User.findOne({ email })) as IUser;
@@ -64,22 +64,23 @@ export async function setupUser({email, sector, company, level}: { email: string
         user.level = level;
         user.sector = userSector._id;
 
-        if(!userCompany) {
+        // Bosses cannot be owner of another companies.
+        if(userCompany?._id && user.level == 0) return "COMPANY HAS OWNER";
 
-            if (user.level != 0) {
-                return "NO COMPANY";
-            }
-
+        // user levels [0 = BOSS, 1 = TI Support, 2 = Empolyee]
+        if (!userCompany?._id && user.level == 0) { // if company doesnt exists and user level is BOSS level it will create a new company
+            
             userCompany = new Company({ name: company});
             userCompany.owner = user._id;
             await userCompany.save();
 
             user.company = userCompany._id;
+        }
 
-        } else {
+        if (!userCompany?._id && (user.level as number) > 0) return "NO COMPANY";
 
-            if (user.level == 0) return "COMPANY HAS OWNER";
-
+        if(userCompany?._id && (user.level as number) > 0) { // if company exists and user level is not BOSS level, then this user assign to company
+            user.company = userCompany._id;
         }
 
         await User.updateOne({ email }, user);
