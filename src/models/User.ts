@@ -1,5 +1,11 @@
 import mongoose, { Document } from "mongoose";
 
+enum UserLevel {
+    BOSS = 0,
+    OPERATOR = 1,
+    EMPLOYEE = 2,
+}
+
 interface IUser extends Document {
     name: string;
     email: string;
@@ -39,4 +45,4 @@ const userSchema = new mongoose.Schema<IUser>({
 
 const User = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
 
-export { User, type IUser };
+export { User, type IUser, UserLevel };
