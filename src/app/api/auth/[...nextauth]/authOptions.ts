@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
             
             await connectDatabase();
             
-            let dbUser: IUser | null = await User.findOne({ email: user.email });
+            let dbUser: IUser = (await User.findOne({ email: user.email })) as IUser;
 
             if(!dbUser) {
                 
