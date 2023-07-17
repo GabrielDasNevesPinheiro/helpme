@@ -2,13 +2,14 @@
 
 import AppBar from "@/components/layout/AppBar";
 import MainLayout from "@/components/layout/MainLayout";
+import ProfileWidget from "@/components/widgets/ProfileWidget";
 
 export default function Home() {
 
   return (
     <MainLayout>
       <AppBar />
-      <h1>Olá Mundo</h1>
+      <ProfileWidget />
     </MainLayout>
   )
 }
