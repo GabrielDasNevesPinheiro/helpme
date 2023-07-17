@@ -6,6 +6,7 @@ import { Briefcase, BuildingIcon, Crown, KanbanSquare, Mail } from "lucide-react
 import { useEffect, useState } from "react";
 import { ParsedUser } from "@/app/utils/ActionsResponses";
 import { getUserInfo } from "@/app/utils/actions";
+import ProfileWidgetSkeleton from "./Skeleton";
 
 
 export default function ProfileWidget() {
@@ -18,6 +19,10 @@ export default function ProfileWidget() {
             setUser(userInfo);
         })
     });
+
+    if(!user) return <ProfileWidgetSkeleton />// if info is loading, display loading skeleton
+        
+    
 
     return (
         <Card className="m-8 sm:max-w-md">
