@@ -4,7 +4,7 @@ import connectDatabase from "@/controllers/databaseController";
 import { Company, ICompany } from "@/models/Company";
 import { ISector, Sector } from "@/models/Sector";
 import { IUser, User } from "@/models/User";
-import { SetupResponse, UserStatus } from "./ActionsResponses";
+import { ParsedUser, SetupResponse, UserLevel, UserStatus } from "./ActionsResponses";
 
 
 export async function checkUser(email: string): Promise<UserStatus> { // check if user need to complete registration
@@ -88,6 +88,43 @@ export async function setupUser({email, sector, company, level}: { email: string
 
     } catch (error) {
         return "ERROR";
+    }
+
+}
+
+export async function getUserInfo(email: string): Promise<ParsedUser> {
+    
+    const userLevels = {
+        0: "Chefe",
+        1: "Operador",
+        2: "Funcionário",
+    }
+
+    try {
+        
+        await connectDatabase();
+        const user: IUser = (await User.findOne({ email })) as IUser;
+        const company: ICompany = (await Company.findOne({ _id: user.company})) as ICompany;
+        const sector: ISector = (await Sector.findOne({ _id: user.sector })) as ISector;
+
+        
+
+        return { 
+            name: user.name,
+            email: user.email,
+            company: company.name,
+            level: userLevels[user.level as UserLevel],
+            sector: sector.name,
+        };
+
+    } catch (error) {
+        return  {
+            name: "",
+            email: "",
+            company: "",
+            level: userLevels[2],
+            sector: "",
+        }
     }
 
 }
