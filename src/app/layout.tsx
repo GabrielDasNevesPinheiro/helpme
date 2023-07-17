@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Rubik } from 'next/font/google'
 import NextAuthSessionProvider from './providers/sessionProvider'
 import AuthProvider from './providers/authProvider'
+import { ThemeProvider } from './providers/themeProvider'
 
 const inter = Rubik({ subsets: ['latin'] })
 
@@ -21,7 +22,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextAuthSessionProvider>
           <AuthProvider>
-            {children}
+            <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+              {children}
+            </ThemeProvider>
           </AuthProvider>
         </NextAuthSessionProvider>
         </body>
