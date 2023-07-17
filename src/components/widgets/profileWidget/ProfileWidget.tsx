@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Avatar, AvatarImage } from "../ui/avatar";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
+import { Avatar, AvatarImage } from "../../ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Briefcase, BuildingIcon, Crown, KanbanSquare, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
