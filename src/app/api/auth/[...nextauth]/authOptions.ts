@@ -1,8 +1,9 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-import { User, IUser, UserLevel } from "@/models/User";
+import { User, IUser } from "@/models/User";
 import connectDatabase from "@/controllers/databaseController";
+import { UserLevel } from "@/app/utils/ActionsResponses";
 
 export const authOptions: NextAuthOptions = {
 
