@@ -18,7 +18,7 @@ export default function ProfileWidget() {
         getUserInfo(`${session?.user?.email}`).then((userInfo) => {
             setUser(userInfo);
         })
-    });
+    }, []);
 
     if(!user) return <ProfileWidgetSkeleton />// if info is loading, display loading skeleton
         
