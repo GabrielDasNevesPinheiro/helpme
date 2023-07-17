@@ -21,11 +21,11 @@ export default function RootLayout({
     <html lang="pt">
       <body className={inter.className}>
         <NextAuthSessionProvider>
-          <AuthProvider>
-            <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+          <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+            <AuthProvider>
               {children}
-            </ThemeProvider>
-          </AuthProvider>
+            </AuthProvider>
+          </ThemeProvider>
         </NextAuthSessionProvider>
         </body>
     </html>
