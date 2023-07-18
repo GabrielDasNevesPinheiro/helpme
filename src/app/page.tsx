@@ -2,7 +2,7 @@
 
 import AppBar from "@/components/layout/AppBar";
 import MainLayout from "@/components/layout/MainLayout";
-import CallWidget from "@/components/widgets/callWidget/CallWidget";
+import CallWidget from "@/components/widgets/callWidget/CallForm";
 import ProfileWidget from "@/components/widgets/profileWidget/ProfileWidget";
 
 export default function Home() {
