@@ -5,6 +5,7 @@ import { Company, ICompany } from "@/models/Company";
 import { ISector, Sector } from "@/models/Sector";
 import { IUser, User } from "@/models/User";
 import { ParsedUser, SetupResponse, UserLevel, UserStatus } from "./ActionsResponses";
+import { Call } from "@/models/Call";
 
 
 export async function checkUser(email: string): Promise<UserStatus> { // check if user need to complete registration
@@ -127,4 +128,37 @@ export async function getUserInfo(email: string): Promise<ParsedUser> {
         }
     }
 
+}
+
+export async function makeCall(description: string, userInfo: ParsedUser): Promise<boolean> {
+
+    try {
+
+        await connectDatabase();
+        const user: IUser = (await User.findOne({ email: userInfo.email })) as IUser;
+        const sector: ISector = (await Sector.findOne({ name: userInfo.sector })) as ISector;
+        const company: ICompany = (await Company.findOne({ name: userInfo.company })) as ICompany;
+        
+        if(!user) return false;
+        if(!sector) return false;
+        if(!company) return false;
+
+        const call = new Call({ 
+            user: user._id,
+            sector: sector._id,
+            company: company._id,
+            description,
+            status: false, // true = chamado ainda em aberto / false = chamado fechado  (resolvido).
+
+        });
+
+        await call.save();
+
+        return true;
+
+
+    } catch(error) {
+        console.log(error);
+        return false;
+    }
 }

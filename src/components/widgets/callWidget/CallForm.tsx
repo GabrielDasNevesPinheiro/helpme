@@ -2,13 +2,20 @@
 import callFormSchema from "./callFormSchema";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
+import { getUserInfo, makeCall } from "@/app/utils/actions";
+import { ParsedUser } from "@/app/utils/ActionsResponses";
+import { useSession } from "next-auth/react";
 
 export default function CallForm() {
+    
+    const { data: session } = useSession();
+    const [user, setUser] = useState<ParsedUser>();
 
     const form = useForm<z.infer<typeof callFormSchema>>({
         resolver: zodResolver(callFormSchema),
@@ -17,8 +24,30 @@ export default function CallForm() {
         }
     })
 
+    useEffect(() => {
+        getUserInfo(`${session?.user?.email}`).then((userInfo) => {
+            setUser(userInfo);
+        })
+    }, []);
+
+
     function onSubmit(values: z.infer<typeof callFormSchema>) {
-        console.log(values);
+        console.log(values.description);
+        console.log(user);
+        makeCall(values.description, user as ParsedUser).then((isDone) => {
+
+            if(!isDone){ // if server return false, something went wrong.
+
+                return form.setError("description", {
+                    type: "custom",
+                    message: "Erro ao criar chamado.",
+                }, { shouldFocus: true });
+
+            }
+
+            
+            return form.reset();
+        })
     }
 
     return (
