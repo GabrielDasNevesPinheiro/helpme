@@ -4,6 +4,7 @@ import { Rubik } from 'next/font/google'
 import NextAuthSessionProvider from './providers/sessionProvider'
 import AuthProvider from './providers/authProvider'
 import { ThemeProvider } from './providers/themeProvider'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Rubik({ subsets: ['latin'] })
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
             <AuthProvider>
               {children}
+              <Toaster/>
             </AuthProvider>
           </ThemeProvider>
         </NextAuthSessionProvider>

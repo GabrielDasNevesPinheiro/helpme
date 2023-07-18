@@ -11,11 +11,14 @@ import { Mail } from "lucide-react";
 import { getUserInfo, makeCall } from "@/app/utils/actions";
 import { ParsedUser } from "@/app/utils/ActionsResponses";
 import { useSession } from "next-auth/react";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function CallForm() {
     
     const { data: session } = useSession();
     const [user, setUser] = useState<ParsedUser>();
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
+    const { toast } = useToast();
 
     const form = useForm<z.infer<typeof callFormSchema>>({
         resolver: zodResolver(callFormSchema),
@@ -32,8 +35,9 @@ export default function CallForm() {
 
 
     function onSubmit(values: z.infer<typeof callFormSchema>) {
-        console.log(values.description);
-        console.log(user);
+        
+        setIsWaiting(true); // is waiting until we done here
+
         makeCall(values.description, user as ParsedUser).then((isDone) => {
 
             if(!isDone){ // if server return false, something went wrong.
@@ -45,7 +49,12 @@ export default function CallForm() {
 
             }
 
-            
+            toast({
+                title: "Chamado enviado com sucesso!",
+                description: "Os operadores foram notificados.",
+            })
+
+            setIsWaiting(false);
             return form.reset();
         })
     }
@@ -67,7 +76,12 @@ export default function CallForm() {
                         </FormItem>
                 )}
                 />
-                <Button type="submit" className="w-full md:w-max"><Mail size={20} className="mr-2"/> Enviar chamado </Button>
+                <Button 
+                    type="submit" 
+                    disabled={ isWaiting ? true : false }
+                    className="w-full md:w-max">
+                        <Mail size={20} className="mr-2"/> Enviar chamado 
+                </Button>
             </form>
         </Form>
     )
