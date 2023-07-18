@@ -27,7 +27,7 @@ export default function CallForm() {
                     name="description"
                     control={form.control}
                     render={({ field }) => (
-                        <FormItem>
+                        <FormItem className="space-y-4">
                             <FormLabel>Descreva seu problema para os operadores</FormLabel>
                             <FormControl>
                                 <Input placeholder="O problema é..." {...field} />
@@ -37,7 +37,7 @@ export default function CallForm() {
                         </FormItem>
                 )}
                 />
-                <Button type="submit">Enviar chamado</Button>
+                <Button type="submit" className="w-full md:w-max">Enviar chamado</Button>
             </form>
         </Form>
     )
