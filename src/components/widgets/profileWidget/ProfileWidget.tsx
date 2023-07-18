@@ -25,7 +25,7 @@ export default function ProfileWidget() {
     
 
     return (
-        <Card className="m-8 sm:max-w-md">
+        <Card className="sm:max-w-md">
             <CardHeader>
                 <CardTitle>Informações</CardTitle>
                 <CardDescription>Lembre-se, se algo estiver errado inicie um chamado!</CardDescription>
