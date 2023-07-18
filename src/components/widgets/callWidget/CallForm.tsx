@@ -31,7 +31,7 @@ export default function CallForm() {
                         <FormItem className="space-y-4">
                             <FormLabel>Descreva seu problema para os operadores</FormLabel>
                             <FormControl>
-                                <Input placeholder="O problema é..." {...field} />
+                                <Input autoComplete={"off"} placeholder="O problema é..." {...field} />
                             </FormControl>
                             <FormDescription>Seja direto(a) para melhor entendimento.</FormDescription>
                             <FormMessage />
