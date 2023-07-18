@@ -1,4 +1,5 @@
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import CallForm from "./CallForm";
 
 export default function CallWidget() {
     return (
@@ -6,6 +7,9 @@ export default function CallWidget() {
             <CardHeader>
                 <CardTitle>Algum problema?</CardTitle>
                 <CardDescription>contate os operadores</CardDescription>
+                <CardContent>
+                    <CallForm />
+                </CardContent>
             </CardHeader>
         </Card>
     )
