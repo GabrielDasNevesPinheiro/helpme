@@ -134,11 +134,13 @@ export async function makeCall(description: string, userInfo: ParsedUser): Promi
 
     try {
 
+
         await connectDatabase();
         const user: IUser = (await User.findOne({ email: userInfo.email })) as IUser;
         const sector: ISector = (await Sector.findOne({ name: userInfo.sector })) as ISector;
         const company: ICompany = (await Company.findOne({ name: userInfo.company })) as ICompany;
         
+        if(user.level === UserLevel.OPERATOR) return false;
         if(!user) return false;
         if(!sector) return false;
         if(!company) return false;
