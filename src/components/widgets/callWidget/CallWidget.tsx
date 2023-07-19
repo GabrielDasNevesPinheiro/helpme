@@ -29,7 +29,7 @@ export default function CallWidget() {
                 <CardTitle className="flex">Algum problema? <HelpCircle className="ml-2"/></CardTitle>
                 <CardDescription>contate os operadores</CardDescription>
                 <CardContent>
-                    <CallForm session={session as Session} user={user as ParsedUser}/>
+                    <CallForm user={user as ParsedUser}/>
                 </CardContent>
             </CardHeader>
         </Card>

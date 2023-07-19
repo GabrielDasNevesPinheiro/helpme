@@ -11,9 +11,8 @@ import { Mail } from "lucide-react";
 import { makeCall } from "@/app/utils/actions";
 import { ParsedUser } from "@/app/utils/ActionsResponses";
 import { useToast } from "@/components/ui/use-toast";
-import { Session } from "next-auth";
 
-export default function CallForm({ session, user}: { session: Session, user: ParsedUser}) {
+export default function CallForm({ user }: { user: ParsedUser}) {
     
     const [isWaiting, setIsWaiting] = useState<boolean>(false);
     const { toast } = useToast();
