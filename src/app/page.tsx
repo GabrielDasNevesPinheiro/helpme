@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <MainLayout>
       <AppBar />
-      <div className="m-4 space-y-4 md:flex md:space-x-4">
+      <div className="m-4 space-y-2 md:flex md:space-x-4 md:space-y-0">
         <ProfileWidget />
         <CallWidget />
       </div>
