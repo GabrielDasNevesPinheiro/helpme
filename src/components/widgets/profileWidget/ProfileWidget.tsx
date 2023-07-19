@@ -55,7 +55,7 @@ export default function ProfileWidget() {
                         <span className="flex space-x-2">
                             <Mail/>
                             {/* this <p> tag contains a code to hide some email chars */}
-                            <p>{user?.email.replace(user?.email.slice(2, user.email.indexOf("@")), "*".repeat(user.email.indexOf("@") - 2))}</p> 
+                            <p>{user.email}</p> 
                         </span>
                     </div>
                 </section>
