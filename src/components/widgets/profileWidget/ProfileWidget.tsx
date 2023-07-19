@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { Avatar, AvatarImage } from "../../ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import { Briefcase, BuildingIcon, Crown, KanbanSquare, Mail } from "lucide-react";
+import { Briefcase, BuildingIcon, Crown, InfoIcon, KanbanSquare, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ParsedUser } from "@/app/utils/ActionsResponses";
 import { getUserInfo } from "@/app/utils/actions";
@@ -27,7 +27,7 @@ export default function ProfileWidget() {
     return (
         <Card className="sm:max-w-md">
             <CardHeader>
-                <CardTitle>Informações</CardTitle>
+                <CardTitle className="flex">Informações <InfoIcon className="ml-2" /></CardTitle>
                 <CardDescription>Lembre-se, se algo estiver errado inicie um chamado!</CardDescription>
             </CardHeader>
             <CardContent>
