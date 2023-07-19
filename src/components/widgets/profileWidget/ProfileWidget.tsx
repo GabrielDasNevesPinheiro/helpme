@@ -2,11 +2,11 @@ import { useSession } from "next-auth/react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { Avatar, AvatarImage } from "../../ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import { Briefcase, BuildingIcon, Crown, InfoIcon, KanbanSquare, Mail } from "lucide-react";
+import { Briefcase, BuildingIcon, InfoIcon, KanbanSquare, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ParsedUser } from "@/app/utils/ActionsResponses";
 import { getUserInfo } from "@/app/utils/actions";
-import ProfileWidgetSkeleton from "./Skeleton";
+import ProfileWidgetSkeleton from "./profileWidgetSkeleton";
 
 
 export default function ProfileWidget() {
