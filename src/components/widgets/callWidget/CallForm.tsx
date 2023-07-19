@@ -8,15 +8,13 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
-import { getUserInfo, makeCall } from "@/app/utils/actions";
+import { makeCall } from "@/app/utils/actions";
 import { ParsedUser } from "@/app/utils/ActionsResponses";
-import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
+import { Session } from "next-auth";
 
-export default function CallForm() {
+export default function CallForm({ session, user}: { session: Session, user: ParsedUser}) {
     
-    const { data: session } = useSession();
-    const [user, setUser] = useState<ParsedUser>();
     const [isWaiting, setIsWaiting] = useState<boolean>(false);
     const { toast } = useToast();
 
@@ -26,13 +24,6 @@ export default function CallForm() {
             description: ""
         }
     })
-
-    useEffect(() => {
-        getUserInfo(`${session?.user?.email}`).then((userInfo) => {
-            setUser(userInfo);
-        })
-    }, []);
-
 
     function onSubmit(values: z.infer<typeof callFormSchema>) {
         
