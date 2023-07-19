@@ -1,5 +1,6 @@
 import { HandIcon } from "lucide-react";
-import ThemeButton from "../theme-button";
+import ThemeButton from "../ui/theme-button";
+
 
 export default function AppBar() {
 
