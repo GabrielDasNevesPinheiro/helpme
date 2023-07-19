@@ -11,7 +11,7 @@ import ProfileWidgetSkeleton from "./Skeleton";
 
 export default function ProfileWidget() {
 
-    const { data: session } = useSession({ required: true });
+    const { data: session } = useSession();
     const [user, setUser] = useState<ParsedUser>();
 
     useEffect(() => {
