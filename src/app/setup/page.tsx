@@ -4,6 +4,7 @@ import AppBar from "@/components/layout/AppBar";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Settings2Icon } from "lucide-react";
+import AccountSetupForm from "./accountSetupForm";
 
 export default function AccountSetupPage() {
     
@@ -16,7 +17,7 @@ export default function AccountSetupPage() {
                         <CardTitle className="flex">Configuração de conta <Settings2Icon className="ml-2"/></CardTitle>
                         <CardDescription>Este procedimento é necessário.</CardDescription>
                         <CardContent>
-                            aqui fica o form
+                            <AccountSetupForm/>
                         </CardContent>
                     </CardHeader>
                 </Card>
