@@ -7,17 +7,20 @@ import { Settings2Icon } from "lucide-react";
 import AccountSetupForm from "./accountSetupForm";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { checkUser } from "../utils/actions";
+import AccountSetupFormSkeleton from "./accountSetupFormSkeleton";
 
 export default function AccountSetupPage() {
 
     const { data: session } = useSession();
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
         checkUser(`${session?.user?.email}`).then((res) => {
-            if(res === "REGISTERED") router.push("/");
+            setLoading(false);
+            if(res === "REGISTERED") return router.push("/");
         });
     }, []);
     
@@ -30,7 +33,9 @@ export default function AccountSetupPage() {
                         <CardTitle className="flex">Configuração de conta <Settings2Icon className="ml-2"/></CardTitle>
                         <CardDescription>Este procedimento é necessário.</CardDescription>
                         <CardContent>
-                            <AccountSetupForm session={session} router={router}/>
+                            { !loading ? <AccountSetupForm session={session} router={router}/>
+                                : <AccountSetupFormSkeleton />
+                            }
                         </CardContent>
                     </CardHeader>
                 </Card>

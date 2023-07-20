@@ -31,13 +31,13 @@ export default function AccountSetupForm({ session, router }: { session: Session
         resolver: zodResolver(setupFormSchema),
         
     })
-
+    
     function onSubmit(values: z.infer<typeof setupFormSchema>) {
         
         setIsWaiting(true);
 
         const showError = (message: string) => {
-            
+
             setIsWaiting(false);
             
             form.setError(`company`, {
