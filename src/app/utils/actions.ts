@@ -153,7 +153,7 @@ export async function makeCall(description: string, userInfo: ParsedUser): Promi
             sector: sector._id,
             company: company._id,
             description,
-            status: false, // true = chamado ainda em aberto / false = chamado fechado  (resolvido).
+            status: true, // true = chamado ainda em aberto / false = chamado fechado  (resolvido).
 
         });
 
