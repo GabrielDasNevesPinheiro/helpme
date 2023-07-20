@@ -52,6 +52,9 @@ export async function getSectors(): Promise<string[]> {
 // this function must be used when setup a new account
 export async function setupUser({email, sector, company, level}: { email: string, sector: string, company: string, level: number}): Promise<SetupResponse> {
 
+
+    company = company.toLowerCase();
+
     try {
 
         await connectDatabase();
@@ -138,7 +141,7 @@ export async function makeCall(description: string, userInfo: ParsedUser): Promi
         await connectDatabase();
         const user: IUser = (await User.findOne({ email: userInfo.email })) as IUser;
         const sector: ISector = (await Sector.findOne({ name: userInfo.sector })) as ISector;
-        const company: ICompany = (await Company.findOne({ name: userInfo.company })) as ICompany;
+        const company: ICompany = (await Company.findOne({ name: userInfo.company.toLowerCase() })) as ICompany;
         
         if(user.level === UserLevel.OPERATOR) return false;
         if(!user) return false;
