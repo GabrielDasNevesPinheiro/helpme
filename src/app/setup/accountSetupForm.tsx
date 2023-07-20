@@ -35,6 +35,17 @@ export default function AccountSetupForm({ session, router }: { session: Session
     function onSubmit(values: z.infer<typeof setupFormSchema>) {
         
         setIsWaiting(true);
+
+        const showError = (message: string) => {
+            
+            setIsWaiting(false);
+            
+            form.setError(`company`, {
+                type: "custom",
+                message: message,
+            }, { 
+                shouldFocus: true 
+            })}
         
         setupUser({
             email: `${session?.user?.email}`,
@@ -43,36 +54,21 @@ export default function AccountSetupForm({ session, router }: { session: Session
             company: values.company
         }).then((res) => {
             
-            setIsWaiting(false);
-            
-            if(res === "COMPANY HAS OWNER")  // If a boss try to register an existent organization
-                return form.setError("company", {
-                    type: "custom",
-                    message: "Você não pode ser chefe dessa organização.",
-                }, { shouldFocus: true });
-
-            if(res === "NO COMPANY") // if no company found
-                return form.setError("company", {
-                    type: "custom",
-                    message: "Organização não encontrada",
-                }, { shouldFocus: true });
-
-            if(res === "ERROR") // server error 
-                return form.setError("root", {
-                    type: "custom",
-                    message: "Erro interno, tente novamente",
-                }, { shouldFocus: true });
+            // If a boss try to register an existent organization
+            if(res === "COMPANY HAS OWNER") return showError("Você não pode ser chefe dessa organização.");
+            // if no company found
+            if(res === "NO COMPANY") return showError("Organização não encontrada");
+            // server error 
+            if(res === "ERROR") return showError("Erro interno, tente novamente");
 
             if(res === "SUCCESS") {
 
                 form.reset();
-
-                toast({
+                setTimeout(() => router.push("/"), 5000);
+                return toast({
                     title: "Configuração efetuada com sucesso",
                     description: "Você será redirecionado em alguns segundos...",
                 });
-                setTimeout(() => router.push("/"), 5000);
-
             }
             
         });
