@@ -10,33 +10,25 @@ import { Input } from "@/components/ui/input";
 import { BadgeCheck } from "lucide-react";
 import { Session } from "next-auth";
 import { toast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 
-export default function AccountSetupForm({ session }: { session: Session | null }) {
+export default function AccountSetupForm({ session, router }: { session: Session | null, router: AppRouterInstance }) {
 
     const [sectors, setSectors] = useState<string[]>([]);
     const [isWaiting, setIsWaiting] = useState(false);
-    const router = useRouter();
 
     useEffect(() => {
-
-        checkUser(`${session?.user?.email}`).then((res) => {
-            if(res === "REGISTERED") router.push("/");
-        });
 
         getSectors().then((res) => {
             setSectors(res);
         })
+
     }, []);
 
     
     const form = useForm<z.infer<typeof setupFormSchema>>({
         resolver: zodResolver(setupFormSchema),
-        defaultValues: {
-            level: "2",
-            sector: "Administrativo",
-        }
         
     })
 
@@ -79,10 +71,8 @@ export default function AccountSetupForm({ session }: { session: Session | null 
                     title: "Configuração efetuada com sucesso",
                     description: "Você será redirecionado em alguns segundos...",
                 });
+                setTimeout(() => router.push("/"), 5000);
 
-                setTimeout(() => {
-                    router.push("/");
-                }, 4000);
             }
             
         });
@@ -114,6 +104,7 @@ export default function AccountSetupForm({ session }: { session: Session | null 
                                     <option value={0}>Chefe</option>
                                     <option value={1}>Operador</option>
                                     <option value={2} selected>Funcionário</option>
+                                    <option disabled hidden selected>Selecionar</option>
                                 </select>
                             </FormControl>
                         </FormItem>
@@ -128,7 +119,9 @@ export default function AccountSetupForm({ session }: { session: Session | null 
                                 <select form="setup" className="border bg-transparent rounded dark:hover:bg-slate-600" {...field}>
                                     {sectors.map((sector) => (
                                     <option key={sector} value={sector}>{sector}</option>    
-                                ))}</select>
+                                ))}
+                                <option disabled hidden selected>Selecionar</option>
+                                </select>
                             </FormControl>
                         </FormItem>
                     )} />
