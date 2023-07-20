@@ -9,7 +9,6 @@ export default function CallWidgetSkeleton() {
             <Skeleton className="ml-4 w-78 h-8"/>
             <Skeleton className="ml-4 w-52 h-4"/>
             <Skeleton className="ml-4 w-52 h-12"/>
-
         </div>
     )
 }
