@@ -60,7 +60,7 @@ export default function CallHistoryWidget() {
                     {calls.map((call) => (
                         <React.Fragment key={call.id}>
                             <Separator />
-                            <div className="text-sm max-w-xs hover:cursor-pointer hover:animate-pulse" onClick={() => showInfo(call)}>
+                            <div className="text-sm max-w-xs hover:cursor-pointer hover:text-green-300" onClick={() => showInfo(call)}>
                                 <p className="text-ellipsis overflow-clip">{call.description}</p>
                                 <span className="flex space-x-2">
                                     <p className="opacity-75">{call.time}</p>
