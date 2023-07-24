@@ -193,7 +193,7 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 
             })
         }
-        console.log(parsedCalls);
+        
         return parsedCalls;
 
     } catch {
@@ -213,7 +213,7 @@ function getTimeDiff(time: Date): string {
 
     // Difference between call createdAt and date.now
     let timeResult: string;
-    
+
     if (differenceInSeconds < 60) { // if created seconds ago
 
         timeResult = `há ${differenceInSeconds} segundo${differenceInSeconds !== 1 ? 's' : ''}`;
