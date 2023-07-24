@@ -1,4 +1,4 @@
-import { ParsedCall, ParsedUser } from "@/app/utils/ActionsResponses";
+import { ParsedCall, ParsedUser, UserLevel } from "@/app/utils/ActionsResponses";
 import { getCalls, getUserInfo } from "@/app/utils/actions";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -26,9 +26,11 @@ export default function CallHistoryWidget() {
     }, [user]);
 
     function refreshCalls() {
-        getCalls(`${user?.company}`).then((res) => {
-            setCalls(res);
-        })
+
+        if(!(user?.level === "Funcionário"))
+            getCalls(`${user?.company}`).then((res) => {
+                setCalls(res);
+            })
     }
 
     function showInfo(call: ParsedCall) {
