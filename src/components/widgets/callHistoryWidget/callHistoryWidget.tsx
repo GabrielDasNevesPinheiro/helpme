@@ -45,7 +45,7 @@ export default function CallHistoryWidget() {
                 <div className="flex justify-between items-center">
                     
                     <span className="flex space-x-2">
-                        <h3>Chamados</h3>
+                        <h3 className="text-2xl font-bold">Chamados</h3>
                         <BadgeAlertIcon />
                     
                     </span>
@@ -57,13 +57,13 @@ export default function CallHistoryWidget() {
                 <div className="p-4 space-y-4">
                     {calls.map((call) => (
                         <React.Fragment key={call.id}>
+                            <Separator />
                             <div className="text-sm max-w-xs hover:cursor-pointer hover:animate-pulse" onClick={() => showInfo(call)}>
                                 <p className="text-ellipsis overflow-clip">{call.description}</p>
                                 <span className="flex space-x-2">
                                     <p className="opacity-75">{call.time}</p>
                                 </span>
                             </div>
-                            <Separator />
                         </React.Fragment>
                     ))}
                 </div>
