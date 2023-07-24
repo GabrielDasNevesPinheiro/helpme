@@ -24,7 +24,7 @@ export default function CallWidget() {
     if(!user) return <CallWidgetSkeleton />
 
     return (
-        <Card className="sm:max-w-md p-2">
+        <Card className="p-2">
             <CardHeader>
                 <CardTitle className="flex">Algum problema? <HelpCircle className="ml-2"/></CardTitle>
                 <CardDescription>contate os operadores</CardDescription>
