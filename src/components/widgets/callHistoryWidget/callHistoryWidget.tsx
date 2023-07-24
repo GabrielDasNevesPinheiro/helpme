@@ -7,6 +7,7 @@ import { BadgeAlertIcon, LucideRefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import CallHistorySkeleton from "./callHistorySkeleton";
+import { toast } from "@/components/ui/use-toast";
 
 
 export default function CallHistoryWidget() {
@@ -22,15 +23,22 @@ export default function CallHistoryWidget() {
     }, []);
 
     useEffect(() => {
-        refreshCalls();
+        refreshCalls(false);
     }, [user]);
 
-    function refreshCalls() {
+    function refreshCalls(toastEnabled: boolean) {
 
         if(!(user?.level === "Funcionário"))
             getCalls(`${user?.company}`).then((res) => {
                 setCalls(res);
+
+                if(toastEnabled)
+                    toast({
+                    title: "Atualização efetuada com sucesso!",
+                    description: "O Histórico de chamados está atualizado."
+                })
             })
+            
     }
 
     function showInfo(call: ParsedCall) {
@@ -52,7 +60,7 @@ export default function CallHistoryWidget() {
                     
                     </span>
                     
-                    <Button variant={"ghost"} onClick={() => refreshCalls()}><LucideRefreshCcw/></Button>
+                    <Button variant={"ghost"} onClick={() => refreshCalls(true)}><LucideRefreshCcw/></Button>
                 
                 </div>
                 
