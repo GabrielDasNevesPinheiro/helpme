@@ -183,7 +183,7 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 
             const timeResult = getTimeDiff(call.createdAt);
 
-            parsedCalls.push({
+            parsedCalls.unshift({
                 id: call._id.toString(),
                 user: user.name,
                 description: call.description,
