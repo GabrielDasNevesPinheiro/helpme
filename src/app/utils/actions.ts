@@ -169,7 +169,7 @@ export async function makeCall(description: string, userInfo: ParsedUser): Promi
 
 export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 
-    let parsedCalls: ParsedCall[] = []
+    let parsedCalls: ParsedCall[] = [];
 
     try {
         await connectDatabase();
