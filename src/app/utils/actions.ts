@@ -212,7 +212,37 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 
 }
 
+export async function getCall(callID: string): Promise<ParsedCall> {
+    
+    let call: ParsedCall = {
+        id: "",
+        user: "",
+        description: "",
+        sector: "",
+        status: false,
+        time: "",
+    };
 
+    try {
+        await connectDatabase();
+        const callQuery: ICall = (await Call.findOne({ _id: callID })) as ICall;
+        const user: IUser = (await User.findOne({ _id: callQuery.user })) as IUser;
+        const sector: ISector = (await Sector.findOne({ _id: callQuery.sector })) as ISector;
+
+        call.id = callQuery._id;
+        call.user = user.name;
+        call.description = callQuery.description;
+        call.status = callQuery.status;
+        call.sector = sector.name;
+        call.time = getTimeDiff(callQuery.createdAt);
+
+        return call;
+        
+
+    } catch (error) {
+        return call;
+    }
+}
 
 function getTimeDiff(time: Date): string {
 
