@@ -23,7 +23,7 @@ export default function AuthProvider({ children }: Props) { // if user has not a
       });
   })
 
-  if (status === "loading" || !company) {
+  if (status === "loading" || !company) { // if we have not enough information, dont load the page
     return (
       <main>Loading..</main>
     )
