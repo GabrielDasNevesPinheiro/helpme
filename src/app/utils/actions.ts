@@ -6,6 +6,9 @@ import { ISector, Sector } from "@/models/Sector";
 import { IUser, User } from "@/models/User";
 import { ParsedCall, ParsedUser, SetupResponse, UserLevel, UserStatus } from "./ActionsResponses";
 import { Call, ICall } from "@/models/Call";
+import { Socket, io } from "socket.io-client";
+import { ClientToServer, ServerToClient } from "./SocketActions";
+
 
 
 export async function checkUser(email: string): Promise<UserStatus> { // check if user need to complete registration
@@ -135,6 +138,9 @@ export async function getUserInfo(email: string): Promise<ParsedUser> {
 
 export async function makeCall(description: string, userInfo: ParsedUser): Promise<boolean> {
 
+    let socket: Socket<ServerToClient, ClientToServer> = io("http://localhost:3001");
+    
+
     try {
 
         await connectDatabase();
@@ -155,6 +161,8 @@ export async function makeCall(description: string, userInfo: ParsedUser): Promi
             status: true, // true = chamado ainda em aberto / false = chamado fechado  (resolvido).
 
         });
+
+        socket.emit("sendCallAlert", call._id.toString(), company.name);
 
         await call.save();
 
