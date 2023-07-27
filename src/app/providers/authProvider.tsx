@@ -5,6 +5,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { checkUser, getUserInfo } from "../utils/actions";
 import SocketProvider from "./socketProvider";
+import { UserLevel } from "../utils/ActionsResponses";
 
 interface Props {
   children?: React.ReactNode;
@@ -15,11 +16,13 @@ export default function AuthProvider({ children }: Props) { // if user has not a
   const router = useRouter();
   const { data: session, status } = useSession({ required: true });
   const [company, setCompany] = useState<string>();
+  const [userLevel, setUserLevel] = useState<number>();
 
   useEffect(() => {
     if(!company)
       getUserInfo(`${session?.user?.email}`).then((res) => {
         setCompany(res.company);
+        setUserLevel(res.level === "Operador" ? 1 : 2);
       });
   })
 
@@ -36,6 +39,6 @@ export default function AuthProvider({ children }: Props) { // if user has not a
 
   return <>
     {children}
-    <SocketProvider company={company as string}/>
+    <SocketProvider company={company as string} userLevel={userLevel as number}/> 
     </>
 }
