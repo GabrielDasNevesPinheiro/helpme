@@ -35,7 +35,7 @@ export default function AuthProvider({ children }: Props) { // if user has not a
   });
 
   return <>
-    <SocketProvider company={company as string}/>
     {children}
+    <SocketProvider company={company as string}/>
     </>
 }
