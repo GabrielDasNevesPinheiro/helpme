@@ -229,7 +229,7 @@ export async function getCall(callID: string): Promise<ParsedCall> {
         const user: IUser = (await User.findOne({ _id: callQuery.user })) as IUser;
         const sector: ISector = (await Sector.findOne({ _id: callQuery.sector })) as ISector;
 
-        call.id = callQuery._id;
+        call.id = callQuery._id.toString();
         call.user = user.name;
         call.description = callQuery.description;
         call.status = callQuery.status;
