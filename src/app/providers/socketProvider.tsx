@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Socket, io } from "socket.io-client";
 import { ClientToServer, ServerToClient } from "../utils/SocketActions";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, Clock, Info, User, XCircle } from "lucide-react";
+import { Clock, Info, User, XCircle } from "lucide-react";
 import { ParsedCall } from "../utils/ActionsResponses";
 import { getCall } from "../utils/actions";
 
