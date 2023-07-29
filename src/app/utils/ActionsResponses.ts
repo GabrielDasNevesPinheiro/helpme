@@ -20,6 +20,7 @@ export interface ParsedCall {
     description: string
     status: boolean
     time: string
+    datetime: string
 
 }
 

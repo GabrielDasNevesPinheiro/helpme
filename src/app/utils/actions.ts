@@ -198,6 +198,7 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
                 sector: sector.name,
                 status: call.status,
                 time: timeResult,
+                datetime: getFormattedDate(call.createdAt),
 
             })
         }
@@ -221,6 +222,7 @@ export async function getCall(callID: string): Promise<ParsedCall> {
         sector: "",
         status: false,
         time: "",
+        datetime: "",
     };
 
     try {
@@ -235,6 +237,7 @@ export async function getCall(callID: string): Promise<ParsedCall> {
         call.status = callQuery.status;
         call.sector = sector.name;
         call.time = getTimeDiff(callQuery.createdAt);
+        call.datetime = getFormattedDate(callQuery.createdAt);
 
         return call;
         
@@ -274,4 +277,8 @@ function getTimeDiff(time: Date): string {
     }
 
     return timeResult;
+}
+
+function getFormattedDate(date: Date) {
+    return `${date.getDate()}/${date.getMonth()}/${date.getUTCFullYear()} ${date.getHours()}:${date.getMinutes()}`
 }
