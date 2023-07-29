@@ -57,6 +57,9 @@ export default function CallPopover({ call }: Props) {
                             {call.status ? "Aberto" : "Resolvido"}
                         </p>
                     </span>
+                    <span className="flex space-x-2 text-center overflow-clip break-all max-w-full p-4">
+                        <p className="">{call.description}</p>
+                    </span>
                     <span className="flex space-x-2 text-sm opacity-70 self-end">
                         <p >{call.datetime}</p>
                     </span>
