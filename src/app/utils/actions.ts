@@ -247,6 +247,21 @@ export async function getCall(callID: string): Promise<ParsedCall> {
     }
 }
 
+export async function closeCall(callID: string): Promise<boolean> {
+
+    try {
+        
+        await connectDatabase();
+        await Call.findOneAndUpdate({ _id: callID }, { status: false });
+        
+        return true;
+
+    } catch (error) {
+        return false;
+    }
+
+}
+
 function getTimeDiff(time: Date): string {
 
     const now = new Date();
