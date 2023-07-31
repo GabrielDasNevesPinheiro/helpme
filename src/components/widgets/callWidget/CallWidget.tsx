@@ -7,6 +7,8 @@ import { ParsedUser } from "@/app/utils/ActionsResponses";
 import { Session } from "next-auth";
 import { getUserInfo } from "@/app/utils/actions";
 import CallWidgetSkeleton from "./callWidgetSkeleton";
+import { motion } from "framer-motion";
+import MotionDiv from "@/components/ui/animation/MotionDiv";
 
 export default function CallWidget() {
 
@@ -14,24 +16,27 @@ export default function CallWidget() {
     const [user, setUser] = useState<ParsedUser>();
 
     useEffect(() => {
-        
+
         getUserInfo(`${session?.user?.email}`).then((res) => {
             setUser(res);
         });
 
     }, [])
 
-    if(!user) return <CallWidgetSkeleton />
+    if (!user) return <CallWidgetSkeleton />
 
     return (
-        <Card className="p-2">
-            <CardHeader>
-                <CardTitle className="flex">Algum problema? <HelpCircle className="ml-2"/></CardTitle>
-                <CardDescription>contate os operadores</CardDescription>
-                <CardContent>
-                    <CallForm user={user as ParsedUser}/>
-                </CardContent>
-            </CardHeader>
-        </Card>
+        <MotionDiv animation="fadeIn">
+
+            <Card className="p-2">
+                <CardHeader>
+                    <CardTitle className="flex">Algum problema? <HelpCircle className="ml-2" /></CardTitle>
+                    <CardDescription>contate os operadores</CardDescription>
+                    <CardContent>
+                        <CallForm user={user as ParsedUser} />
+                    </CardContent>
+                </CardHeader>
+            </Card>
+        </MotionDiv>
     )
 }
