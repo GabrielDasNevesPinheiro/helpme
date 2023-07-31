@@ -4,10 +4,18 @@ import React from "react";
 
 type Animations = "fadeIn"
 
-export default function MotionDiv({children, animation}: { children: React.ReactNode, animation: Animations}) {
+export default function MotionDiv({
+        children, 
+        animation, 
+        className
+    }: { 
+        children: React.ReactNode, 
+        animation: Animations, 
+        className?: string 
+    }) {
 
     return (
-        <motion.div {...animations[animation]}>
+        <motion.div {...animations[animation]} className={className}>
             {children}
         </motion.div>
     )
