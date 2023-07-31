@@ -9,6 +9,8 @@ import React, { useEffect, useState } from "react";
 import CallHistorySkeleton from "./callHistorySkeleton";
 import { toast } from "@/components/ui/use-toast";
 import CallPopover from "./callPopover";
+import { motion } from "framer-motion";
+import MotionDiv from "@/components/ui/animation/MotionDiv";
 
 
 export default function CallHistoryWidget() {
@@ -48,6 +50,7 @@ export default function CallHistoryWidget() {
     if (calls.length === 0) return <CallHistorySkeleton />
 
     return (
+        <MotionDiv animation={"fadeIn"}>
         <ScrollArea className="border rounded-md w-auto h-screen">
 
             <div className="p-4">
@@ -73,6 +76,7 @@ export default function CallHistoryWidget() {
                 </div>
             </div>
         </ScrollArea>
+        </MotionDiv>
     )
 
 }
