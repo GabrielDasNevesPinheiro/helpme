@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 import { ParsedUser } from "@/app/utils/ActionsResponses";
 import { getUserInfo } from "@/app/utils/actions";
 import ProfileWidgetSkeleton from "./profileWidgetSkeleton";
-
+import { motion } from "framer-motion";
+import MotionDiv from "@/components/ui/animation/MotionDiv";
 
 export default function ProfileWidget() {
 
@@ -20,47 +21,49 @@ export default function ProfileWidget() {
         })
     }, []);
 
-    if(!user) return <ProfileWidgetSkeleton />// if info is loading, display loading skeleton
-        
-    
+    if (!user) return <ProfileWidgetSkeleton />// if info is loading, display loading skeleton
+
+
 
     return (
-        <Card className="">
-            <CardHeader>
-                <CardTitle className="flex">Informações <InfoIcon className="ml-2" /></CardTitle>
-                <CardDescription>Lembre-se, se algo estiver errado inicie um chamado!</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <section className="flex flex-col space-y-4">
-                    <span className="flex items-center space-x-4 text-2xl">
-                        <Avatar className="border-2 border-foreground">
-                            <AvatarImage src={`${session?.user?.image}`}/>
-                            <AvatarFallback>{session?.user?.name}</AvatarFallback>
-                        </Avatar>
-                        <h1>{session?.user?.name}</h1>
-                    </span>
-                    <div className="flex flex-col pl-2 space-y-2">
-                        <span className="flex space-x-2">
-                            <BuildingIcon />
-                            <p>{user?.company}</p>
+        <MotionDiv animation="fadeIn">
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex">Informações <InfoIcon className="ml-2" /></CardTitle>
+                    <CardDescription>Lembre-se, se algo estiver errado inicie um chamado!</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <section className="flex flex-col space-y-4">
+                        <span className="flex items-center space-x-4 text-2xl">
+                            <Avatar className="border-2 border-foreground">
+                                <AvatarImage src={`${session?.user?.image}`} />
+                                <AvatarFallback>{session?.user?.name}</AvatarFallback>
+                            </Avatar>
+                            <h1>{session?.user?.name}</h1>
                         </span>
-                        <span className="flex space-x-2">
-                            <Briefcase/>
-                            <p>{user?.level}</p>
-                        </span>
-                        <span className="flex space-x-2">
-                            <KanbanSquare/>
-                            <p>{user?.sector}</p>
-                        </span>
-                        <span className="flex space-x-2">
-                            <Mail/>
-                            {/* this <p> tag contains a code to hide some email chars */}
-                            <p>{user.email}</p> 
-                        </span>
-                    </div>
-                </section>
-            </CardContent>
+                        <div className="flex flex-col pl-2 space-y-2">
+                            <span className="flex space-x-2">
+                                <BuildingIcon />
+                                <p>{user?.company}</p>
+                            </span>
+                            <span className="flex space-x-2">
+                                <Briefcase />
+                                <p>{user?.level}</p>
+                            </span>
+                            <span className="flex space-x-2">
+                                <KanbanSquare />
+                                <p>{user?.sector}</p>
+                            </span>
+                            <span className="flex space-x-2">
+                                <Mail />
+                                {/* this <p> tag contains a code to hide some email chars */}
+                                <p>{user.email}</p>
+                            </span>
+                        </div>
+                    </section>
+                </CardContent>
 
-        </Card>
+            </Card>
+        </MotionDiv>
     )
 }
