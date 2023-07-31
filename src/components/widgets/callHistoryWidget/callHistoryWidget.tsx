@@ -1,14 +1,13 @@
-import { ParsedCall, ParsedUser, UserLevel } from "@/app/utils/ActionsResponses";
-import { closeCall, getCalls, getUserInfo } from "@/app/utils/actions";
+import { ParsedCall, ParsedUser } from "@/app/utils/ActionsResponses";
+import { getCalls, getUserInfo } from "@/app/utils/actions";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { BadgeAlertIcon, CheckCircle, HelpCircle, KanbanSquareIcon, LucideRefreshCcw, UserIcon } from "lucide-react";
+import { BadgeAlertIcon, LucideRefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import CallHistorySkeleton from "./callHistorySkeleton";
 import { toast } from "@/components/ui/use-toast";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import CallPopover from "./callPopover";
 
 
@@ -49,7 +48,7 @@ export default function CallHistoryWidget() {
     if (calls.length === 0) return <CallHistorySkeleton />
 
     return (
-        <ScrollArea className="border rounded-md w-auto h-80">
+        <ScrollArea className="border rounded-md w-auto h-screen">
 
             <div className="p-4">
                 <div className="flex justify-between items-center">

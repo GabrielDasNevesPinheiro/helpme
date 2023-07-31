@@ -3,7 +3,7 @@ import { closeCall } from "@/app/utils/actions";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";
-import { CheckCircle, HelpCircle, KanbanSquareIcon, UserIcon } from "lucide-react";
+import { CheckCircle, CheckIcon, HelpCircle, KanbanSquareIcon, UserIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
@@ -34,10 +34,11 @@ export default function CallPopover({ call }: Props) {
     return (
         <Popover>
             <PopoverTrigger>
-                <div className="text-sm w-auto hover:cursor-pointer hover:text-green-300">
+                <div className={`text-sm w-auto hover:cursor-pointer`}>
                     <p className="text-ellipsis w-96 overflow-clip text-start">{call.description}</p>
-                    <span className="flex space-x-2">
-                        <p className="opacity-75">{call.time}</p>
+                    <span className="flex space-x-2 items-center opacity-75">
+                        <p>{call.time}</p>
+                        { call.status ? <XIcon className="text-red-400" size={14}/> : <CheckIcon className="text-green-400" size={14}/>}
                     </span>
                 </div>
             </PopoverTrigger>
