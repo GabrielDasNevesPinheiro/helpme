@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Clock, Info, User, XCircle } from "lucide-react";
 import { ParsedCall } from "../utils/ActionsResponses";
 import { getCall } from "../utils/actions";
+import { motion, useAnimate } from "framer-motion";
 
 
 
@@ -12,6 +13,7 @@ export default function SocketProvider({ company, userLevel }: { company: string
 
     const [isVisible, setVisible] = useState(false);
     const [call, setCall] = useState<ParsedCall>();
+    const [scope, animate] = useAnimate();
 
 
     useEffect(() => {
@@ -29,6 +31,7 @@ export default function SocketProvider({ company, userLevel }: { company: string
                     setCall(res);
                 })
                 setVisible(true);
+                animate(scope.current, { opacity: 1 }, { duration: 0.3});
             });
 
         return () => {
@@ -39,11 +42,14 @@ export default function SocketProvider({ company, userLevel }: { company: string
     }, []);
 
     return (
-        <div
+        <motion.div ref={scope}
             className={`border rounded-md bg-primary-foreground w-96 h-[500px] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${isVisible ? "block" : "hidden"}`}>
             <div className="absolute w-full h-4">
                 <section className="flex flex-col justify-start space-x-1 mt-2 ml-2">
-                    <span className={`w-4 h-4 rounded-full bg-red-400 hover:opacity-50 cursor-pointer`} onClick={() => setVisible(false)}></span>
+                    <span className={`w-4 h-4 rounded-full bg-red-400 hover:opacity-50 cursor-pointer`} onClick={() => {
+                        animate(scope.current, { opacity: 0 }, { duration: 0.3}).then(() => setVisible(false));
+                        
+                        }}></span>
                     <Card className="m-4 bg-transparent border-0">
                         <CardHeader>
                             <CardTitle>
@@ -65,7 +71,7 @@ export default function SocketProvider({ company, userLevel }: { company: string
                                     </span>
                                     <span className="flex space-x-2 items-center">
                                         <Clock />
-                                        <p>{call?.time}</p>
+                                        <p>{call?.datetime}</p>
                                     </span>
                                 </div>
                                 <div className="flex justify-start m-4 opacity-75">
@@ -76,7 +82,7 @@ export default function SocketProvider({ company, userLevel }: { company: string
                     </Card>
                 </section>
             </div>
-        </div>
+        </motion.div>
     )
 
 }
