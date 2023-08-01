@@ -8,6 +8,7 @@ const nextConfig = {
         GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
         NEXTAUTH_URL: process.env.NEXTAUTH_URL,
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+        SOCKET_URL: process.env.SOCKET_URL,
     },
     experimental: {
         serverActions: true,
