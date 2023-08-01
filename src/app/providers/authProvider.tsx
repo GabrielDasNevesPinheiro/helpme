@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { checkUser, getUserInfo } from "../utils/actions";
 import SocketProvider from "./socketProvider";
 import { UserLevel } from "../utils/ActionsResponses";
+import ApplicationSkeleton from "@/components/layout/ApplicationLoadingSkeleton";
 
 interface Props {
   children?: React.ReactNode;
@@ -28,7 +29,7 @@ export default function AuthProvider({ children }: Props) { // if user has not a
 
   if (status === "loading" || !company) { // if we have not enough information, dont load the page
     return (
-      <main>Loading..</main>
+      <ApplicationSkeleton />
     )
   }
 
