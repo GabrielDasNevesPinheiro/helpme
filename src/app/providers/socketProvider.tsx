@@ -17,7 +17,7 @@ export default function SocketProvider({ company, userLevel }: { company: string
 
 
     useEffect(() => {
-        const socket: Socket<ServerToClient, ClientToServer> = io("http://localhost:3001", {
+        const socket: Socket<ServerToClient, ClientToServer> = io(`${process.env.SOCKET_URL}`, {
             auth: { token: company }
         });
 
