@@ -9,7 +9,7 @@ import { Toaster } from '@/components/ui/toaster'
 const inter = Rubik({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Dynamic title', // deve ser modificado futuramente
+  title: 'Helpme', // deve ser modificado futuramente
   description: 'thinking yet',
 }
 
