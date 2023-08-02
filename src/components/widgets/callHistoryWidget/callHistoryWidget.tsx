@@ -57,7 +57,7 @@ export default function CallHistoryWidget() {
                 <div className="flex justify-between items-center">
 
                     <span className="flex space-x-2">
-                        <h3 className="text-2xl font-bold">Chamados</h3>
+                        <h3 className="text-2xl font-bold">Chamados Recentes</h3>
                         <BadgeAlertIcon />
 
                     </span>

@@ -184,14 +184,14 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 
         const company: ICompany = (await Company.findOne({ name: companyName })) as ICompany;
         const calls: ICall[] = (await Call.find({ company })) as ICall[];
-        for (const call of calls.slice(0, 3)) {
+        for (const call of calls.reverse().slice(0, 10)) {
 
             const user: IUser = (await User.findOne({ _id: call.user })) as IUser;
             const sector: ISector = (await Sector.findOne({ _id: call.sector })) as ISector;
 
             const timeResult = getTimeDiff(call.createdAt);
 
-            parsedCalls.unshift({
+            parsedCalls.push({
                 id: call._id.toString(),
                 user: user.name,
                 description: call.description,
