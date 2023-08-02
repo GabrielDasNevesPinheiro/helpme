@@ -12,6 +12,7 @@ import { motion, useAnimate } from "framer-motion";
 export default function SocketProvider({ company, userLevel }: { company: string, userLevel: number }) {
 
     const [isVisible, setVisible] = useState(false);
+    const [audio] = useState(new Audio("/notify.mp3"));
     const [call, setCall] = useState<ParsedCall>();
     const [scope, animate] = useAnimate();
 
@@ -24,13 +25,13 @@ export default function SocketProvider({ company, userLevel }: { company: string
         socket.on("connect", () => {
             console.log("CONNECTED TO SOCKET SERVER");
         });
-
         if (userLevel == 1)
             socket.on("callAlert", (callID) => {
                 getCall(callID).then((res) => {
                     setCall(res);
                 })
                 setVisible(true);
+                audio.play();
                 animate(scope.current, { opacity: 1 }, { duration: 0.3});
             });
 

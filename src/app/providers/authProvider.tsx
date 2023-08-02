@@ -20,8 +20,9 @@ export default function AuthProvider({ children }: Props) { // if user has not a
   const [userLevel, setUserLevel] = useState<number>();
 
   useEffect(() => {
-    if(!company)
+    if(!company && status !== "loading")
       getUserInfo(`${session?.user?.email}`).then((res) => {
+        console.log(res);
         setCompany(res.company);
         setUserLevel(res.level === "Operador" ? 1 : 2);
       });
@@ -37,10 +38,9 @@ export default function AuthProvider({ children }: Props) { // if user has not a
       if (res === "NEW USER") router.push("/setup");
       if (res === "NOT REGISTERED") signOut();
     });
-    
 
   return <>
     {children}
-    <SocketProvider company={company as string} userLevel={userLevel as number}/> 
+    { !userLevel ? <></> : <SocketProvider company={company as string} userLevel={userLevel as number}/> }
     </>
 }
