@@ -205,8 +205,8 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
         
         return parsedCalls;
 
-    } catch (err) {
-        console.log(`ERROR IN GETCALLS FUNCTION ${err}`);
+    } catch {
+
         return [];
 
     }
