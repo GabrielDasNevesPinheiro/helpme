@@ -184,7 +184,7 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 
         const company: ICompany = (await Company.findOne({ name: companyName })) as ICompany;
         const calls: ICall[] = (await Call.find({ company })) as ICall[];
-        for (const call of calls.reverse().slice(0, 10)) {
+        for (const call of calls.reverse().slice(0, 15)) {
 
             const user: IUser = (await User.findOne({ _id: call.user })) as IUser;
             const sector: ISector = (await Sector.findOne({ _id: call.sector })) as ISector;
