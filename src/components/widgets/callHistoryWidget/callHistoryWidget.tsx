@@ -19,13 +19,11 @@ export default function CallHistoryWidget() {
     const [user, setUser] = useState<ParsedUser>();
     const { data: session } = useSession();
 
+
     useEffect(() => {
         getUserInfo(`${session?.user?.email}`).then((res) => {
             setUser(res);
         })
-    }, []);
-
-    useEffect(() => {
         refreshCalls(false);
     }, [user]);
 
