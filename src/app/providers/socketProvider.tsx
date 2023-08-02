@@ -22,9 +22,6 @@ export default function SocketProvider({ company, userLevel }: { company: string
             auth: { token: company }
         });
 
-        socket.on("connect", () => {
-            console.log("CONNECTED TO SOCKET SERVER");
-        });
         if (userLevel == 1)
             socket.on("callAlert", (callID) => {
                 getCall(callID).then((res) => {

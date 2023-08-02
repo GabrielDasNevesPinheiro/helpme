@@ -22,7 +22,6 @@ export default function AuthProvider({ children }: Props) { // if user has not a
   useEffect(() => {
     if(!company && status !== "loading")
       getUserInfo(`${session?.user?.email}`).then((res) => {
-        console.log(res);
         setCompany(res.company);
         setUserLevel(res.level === "Operador" ? 1 : 2);
       });
