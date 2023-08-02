@@ -3,6 +3,7 @@
 import AppBar from "@/components/layout/AppBar";
 import MainLayout from "@/components/layout/MainLayout";
 import { Label } from "@/components/ui/label";
+import CallHistoryWidget from "@/components/widgets/callHistoryWidget/callHistoryWidget";
 import CallWidget from "@/components/widgets/callWidget/CallWidget";
 import ProfileWidget from "@/components/widgets/profileWidget/ProfileWidget";
 export default function Home() {
@@ -19,7 +20,7 @@ export default function Home() {
           <ProfileWidget />
           <CallWidget />
         </div>
-        <div></div>
+        <CallHistoryWidget />
       </div>
     </MainLayout>
   )
