@@ -15,7 +15,7 @@ import MotionDiv from "@/components/ui/animation/MotionDiv";
 
 export default function CallHistoryWidget() {
 
-    const [calls, setCalls] = useState<ParsedCall[]>([]);
+    const [calls, setCalls] = useState<ParsedCall[]>();
     const [user, setUser] = useState<ParsedUser>();
     const { data: session } = useSession();
 
@@ -47,7 +47,7 @@ export default function CallHistoryWidget() {
     
     
 
-    if (calls.length === 0) return <CallHistorySkeleton />
+    if (!calls) return <CallHistorySkeleton />
 
     return (
         <MotionDiv animation={"fadeIn"}>
