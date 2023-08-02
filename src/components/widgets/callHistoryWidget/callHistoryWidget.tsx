@@ -19,11 +19,13 @@ export default function CallHistoryWidget() {
     const [user, setUser] = useState<ParsedUser>();
     const { data: session } = useSession();
 
-
     useEffect(() => {
         getUserInfo(`${session?.user?.email}`).then((res) => {
             setUser(res);
         })
+    }, []);
+
+    useEffect(() => {
         refreshCalls(false);
     }, [user]);
 
@@ -40,9 +42,12 @@ export default function CallHistoryWidget() {
                     })
             })
 
-    } 
+    }
 
-    if (!calls?.length) return <CallHistorySkeleton />
+    
+    
+
+    if (!calls) return <CallHistorySkeleton />
 
     return (
         <MotionDiv animation={"fadeIn"}>
