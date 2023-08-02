@@ -27,16 +27,17 @@ export default function AuthProvider({ children }: Props) { // if user has not a
       });
   })
 
-  if (status === "loading" || !company) { // if we have not enough information, dont load the page
+  if (status === "loading") { // if we have not enough information, dont load the page
     return (
       <ApplicationSkeleton />
-    )
-  }
-
-  checkUser(session.user?.email as string).then((res) => { // if new user redirect to registration
-    if (res === "NEW USER") router.push("/setup");
-    if (res === "NOT REGISTERED") signOut();
-  });
+      )
+    }
+    
+    checkUser(session.user?.email as string).then((res) => { // if new user redirect to registration
+      if (res === "NEW USER") router.push("/setup");
+      if (res === "NOT REGISTERED") signOut();
+    });
+    
 
   return <>
     {children}
