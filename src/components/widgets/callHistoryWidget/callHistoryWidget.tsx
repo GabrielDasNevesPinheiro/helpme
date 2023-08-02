@@ -44,10 +44,10 @@ export default function CallHistoryWidget() {
 
     }
 
-    
+    console.log(calls);
     
 
-    if (!calls) return <CallHistorySkeleton />
+    if (!calls?.length) return <CallHistorySkeleton />
 
     return (
         <MotionDiv animation={"fadeIn"}>
