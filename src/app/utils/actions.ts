@@ -164,10 +164,11 @@ export async function makeCall(description: string, userInfo: ParsedUser): Promi
             status: true, // true = chamado ainda em aberto / false = chamado fechado  (resolvido).
 
         });
+        
+        await call.save();
 
         socket.emit("sendCallAlert", call._id.toString(), company.name);
 
-        await call.save();
 
         return true;
 
@@ -235,22 +236,22 @@ export async function getCall(callID: string): Promise<ParsedCall> {
         await connectDatabase();
         const callQuery: ICall = (await Call.findOne({ _id: callID })) as ICall;
         const user: IUser = (await User.findOne({ _id: callQuery.user })) as IUser;
-        const operator: IUser = (await User.findOne({ _id: call.closedBy })) as IUser || null;
         const sector: ISector = (await Sector.findOne({ _id: callQuery.sector })) as ISector;
 
         call.id = callQuery._id.toString();
         call.user = user.name;
         call.description = callQuery.description;
         call.status = callQuery.status;
-        call.closedBy = operator.name;
+        call.closedBy = callQuery.closedBy ? callQuery.closedBy.toString() : "";
         call.sector = sector.name;
         call.time = getTimeDiff(callQuery.createdAt);
         call.datetime = getFormattedDate(callQuery.createdAt);
-
+        
         return call;
         
 
     } catch (error) {
+        console.log(error);
         return call;
     }
 }
