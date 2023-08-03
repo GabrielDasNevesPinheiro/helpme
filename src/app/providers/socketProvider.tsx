@@ -55,7 +55,7 @@ export default function SocketProvider({ company, userLevel }: { company: string
                                     <p>Novo Chamado</p>
                                     <Info className="text-orange-300"/>
                                 </span>
-                                <CardDescription>{"Financeiro"}</CardDescription>
+                                <CardDescription>{call?.sector}</CardDescription>
                             </CardTitle>
                             <CardContent>
                                 <div className="flex flex-col space-y-4 pt-4">
