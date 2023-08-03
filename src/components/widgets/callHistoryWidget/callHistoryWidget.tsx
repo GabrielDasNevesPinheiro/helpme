@@ -44,10 +44,9 @@ export default function CallHistoryWidget() {
     }
 
     
-    
+    console.log(calls)
 
     if (!calls) return <CallHistorySkeleton />
-
     return (
         <MotionDiv animation={"fadeIn"}>
         <ScrollArea className="border rounded-md w-auto h-screen">
@@ -69,7 +68,7 @@ export default function CallHistoryWidget() {
                     {calls.map((call) => (
                         <React.Fragment key={call.id}>
                             <Separator />
-                            <CallPopover call={call}/>
+                            <CallPopover call={call} userID={`${user?.id}`}/>
                         </React.Fragment>
                     ))}
                 </div>

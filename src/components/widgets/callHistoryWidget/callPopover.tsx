@@ -7,14 +7,15 @@ import { CheckCircle, CheckIcon, HelpCircle, KanbanSquareIcon, UserIcon, XIcon }
 import { useState } from "react";
 
 interface Props {
-    call: ParsedCall
+    call: ParsedCall,
+    userID: string,
 }
 
-export default function CallPopover({ call }: Props) {
+export default function CallPopover({ call, userID }: Props) {
     const [done, setDone] = useState(false);
 
     function killCall(callID: string) {
-        closeCall(callID).then((success) => {
+        closeCall(callID, userID).then((success) => {
             if (success) {
                 toast({
                     title: "Chamado finalizado com êxito",
@@ -30,7 +31,6 @@ export default function CallPopover({ call }: Props) {
         setDone(true);
         call.status = false;
     }
-
     return (
         <Popover>
             <PopoverTrigger>
@@ -52,11 +52,12 @@ export default function CallPopover({ call }: Props) {
                         <KanbanSquareIcon />
                         <p>{call.sector}</p>
                     </span>
-                    <span className="flex space-x-2">
+                    <span className="flex space-x-2 text-sm">
                         <HelpCircle />
                         <p className={call.status ? "text-red-500" : "text-green-500"}>
                             {call.status ? "Aberto" : "Resolvido"}
                         </p>
+                        {call.closedBy ? <p>por {call.closedBy}</p> : <></>}
                     </span>
                     <span className="flex space-x-2 text-center overflow-clip break-all max-w-full p-4">
                         <p className="">{call.description}</p>

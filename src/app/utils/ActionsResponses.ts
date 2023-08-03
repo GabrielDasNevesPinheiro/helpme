@@ -6,7 +6,8 @@ export type SetupResponse = "COMPANY HAS OWNER" | "NO COMPANY" | "SUCCESS" | "ER
 
 // Parsed interface must be used as response types for front-end
 export interface ParsedUser {
-    name: string,
+    id: string
+    name: string
     email: string
     level: string
     company: string
@@ -19,6 +20,7 @@ export interface ParsedCall {
     sector: string
     description: string
     status: boolean
+    closedBy: string
     time: string
     datetime: string
 

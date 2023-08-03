@@ -8,6 +8,7 @@ import { ParsedCall, ParsedUser, SetupResponse, UserLevel, UserStatus } from "./
 import { Call, ICall } from "@/models/Call";
 import { Socket, io } from "socket.io-client";
 import { ClientToServer, ServerToClient } from "./SocketActions";
+import { Types } from "mongoose";
 
 
 
@@ -117,6 +118,7 @@ export async function getUserInfo(email: string): Promise<ParsedUser> {
 
 
         return {
+            id: user._id.toString(),
             name: user.name,
             email: user.email,
             company: company.name,
@@ -126,6 +128,7 @@ export async function getUserInfo(email: string): Promise<ParsedUser> {
 
     } catch (error) {
         return {
+            id: "",
             name: "",
             email: "",
             company: "",
@@ -187,6 +190,7 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
         for (const call of calls.reverse().slice(0, 15)) {
 
             const user: IUser = (await User.findOne({ _id: call.user })) as IUser;
+            const operator: IUser = (await User.findOne({ _id: call.closedBy })) as IUser;
             const sector: ISector = (await Sector.findOne({ _id: call.sector })) as ISector;
 
             const timeResult = getTimeDiff(call.createdAt);
@@ -197,6 +201,7 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
                 description: call.description,
                 sector: sector.name,
                 status: call.status,
+                closedBy: operator ? operator.name : "",
                 time: timeResult,
                 datetime: getFormattedDate(call.createdAt),
 
@@ -221,6 +226,7 @@ export async function getCall(callID: string): Promise<ParsedCall> {
         description: "",
         sector: "",
         status: false,
+        closedBy: "",
         time: "",
         datetime: "",
     };
@@ -229,12 +235,14 @@ export async function getCall(callID: string): Promise<ParsedCall> {
         await connectDatabase();
         const callQuery: ICall = (await Call.findOne({ _id: callID })) as ICall;
         const user: IUser = (await User.findOne({ _id: callQuery.user })) as IUser;
+        const operator: IUser = (await User.findOne({ _id: call.closedBy })) as IUser || null;
         const sector: ISector = (await Sector.findOne({ _id: callQuery.sector })) as ISector;
 
         call.id = callQuery._id.toString();
         call.user = user.name;
         call.description = callQuery.description;
         call.status = callQuery.status;
+        call.closedBy = operator.name;
         call.sector = sector.name;
         call.time = getTimeDiff(callQuery.createdAt);
         call.datetime = getFormattedDate(callQuery.createdAt);
@@ -247,12 +255,19 @@ export async function getCall(callID: string): Promise<ParsedCall> {
     }
 }
 
-export async function closeCall(callID: string): Promise<boolean> {
+export async function closeCall(callID: string, userID: string): Promise<boolean> {
 
     try {
         
         await connectDatabase();
-        await Call.findOneAndUpdate({ _id: callID }, { status: false });
+        const call = (await Call.findOne({ _id: callID })) as ICall;
+        
+        if (call.closedBy) return false;
+
+        call.status = false;
+        call.closedBy = new Types.ObjectId(userID);
+
+        await call.save();
         
         return true;
 

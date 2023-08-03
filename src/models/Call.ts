@@ -6,7 +6,7 @@ interface ICall extends Document {
     company: mongoose.ObjectId;
     description: string;
     status: boolean;
-    closedBy: mongoose.ObjectId;
+    closedBy: mongoose.Types.ObjectId | mongoose.ObjectId;
     createdAt: Date;
     updatedAt: Date;
 }
