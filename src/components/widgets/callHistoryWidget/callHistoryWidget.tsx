@@ -9,7 +9,6 @@ import React, { useEffect, useState } from "react";
 import CallHistorySkeleton from "./callHistorySkeleton";
 import { toast } from "@/components/ui/use-toast";
 import CallPopover from "./callPopover";
-import { motion } from "framer-motion";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
 
 
