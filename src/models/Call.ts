@@ -6,6 +6,7 @@ interface ICall extends Document {
     company: mongoose.ObjectId;
     description: string;
     status: boolean;
+    closedBy: mongoose.ObjectId;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -35,6 +36,9 @@ const callSchema = new mongoose.Schema<ICall>({
     status: {
         type: Boolean,
         required: true,
+    },
+    closedBy: {
+        type: mongoose.Types.ObjectId,
     }
 
 }, {
