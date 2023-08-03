@@ -26,7 +26,7 @@ export default function ProfileWidget() {
 
 
     return (
-        <MotionDiv animation="fadeIn">
+        <MotionDiv animation="fadeIn" className="w-full h-full lg:h-auto">
             <Card>
                 <CardHeader>
                     <CardTitle className="flex">Informações <InfoIcon className="ml-2" /></CardTitle>
