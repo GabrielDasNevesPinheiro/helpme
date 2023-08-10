@@ -20,7 +20,6 @@ export default function Home() {
           <ProfileWidget />
           <CallWidget />
         </div>
-        <CallHistoryWidget />
       </div>
     </MainLayout>
   )
