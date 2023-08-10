@@ -25,8 +25,11 @@ export default function CallHistoryWidget() {
     }, []);
 
     useEffect(() => {
-        refreshCalls(false);
-    }, [user]);
+        console.log("EVOKED")
+        setInterval(() => {
+            refreshCalls(false);
+        }, 1000);
+    }, []);
 
     function refreshCalls(toastEnabled: boolean) {
 
