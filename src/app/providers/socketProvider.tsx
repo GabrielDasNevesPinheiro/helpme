@@ -21,17 +21,18 @@ export default function SocketProvider({ company, userLevel }: { company: string
         const socket: Socket<ServerToClient, ClientToServer> = io(`${process.env.SOCKET_URL}`, {
             auth: { token: company }
         });
-        
+
         if (userLevel == 1)
             socket.on("callAlert", (callID) => {
                 console.log("ALERT")
                 getCall(callID).then((res) => {
                     setCall(res);
+                    setVisible(true);
+                    audio.play();
+                    animate(scope.current, { opacity: 1 }, { duration: 0.3 });
+                    console.log("ALERT ALERT");
                 });
-                setVisible(true);
-                audio.play();
-                animate(scope.current, { opacity: 1 }, { duration: 0.3});
-                console.log("ALERT ALERT");
+
             });
 
         return () => {
@@ -47,22 +48,22 @@ export default function SocketProvider({ company, userLevel }: { company: string
             <div className="absolute w-full h-4">
                 <section className="flex flex-col justify-start space-x-1 mt-2 ml-2">
                     <span className={`w-4 h-4 rounded-full bg-red-400 hover:opacity-50 cursor-pointer`} onClick={() => {
-                        animate(scope.current, { opacity: 0 }, { duration: 0.3}).then(() => setVisible(false));
-                        
-                        }}></span>
+                        animate(scope.current, { opacity: 0 }, { duration: 0.3 }).then(() => setVisible(false));
+
+                    }}></span>
                     <Card className="m-4 bg-transparent border-0">
                         <CardHeader>
                             <CardTitle>
                                 <span className="flex max-w-full space-x-2 shadow-none">
                                     <p>Novo Chamado</p>
-                                    <Info className="text-orange-300"/>
+                                    <Info className="text-orange-300" />
                                 </span>
                                 <CardDescription>{call?.sector}</CardDescription>
                             </CardTitle>
                             <CardContent>
                                 <div className="flex flex-col space-y-4 pt-4">
                                     <span className="flex space-x-2 items-center">
-                                        <User /> 
+                                        <User />
                                         <p>{call?.user}</p>
                                     </span>
                                     <span className="flex space-x-2 items-center">
