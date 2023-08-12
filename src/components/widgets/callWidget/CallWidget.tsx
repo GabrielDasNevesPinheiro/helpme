@@ -2,28 +2,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import CallForm from "./CallForm";
 import { HelpCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { ParsedUser } from "@/app/utils/ActionsResponses";
-import { Session } from "next-auth";
-import { getUserInfo } from "@/app/utils/actions";
 import CallWidgetSkeleton from "./callWidgetSkeleton";
 import { motion } from "framer-motion";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
+import { useUserContext } from "@/app/providers/userContextProvider";
 
 export default function CallWidget() {
 
     const { data: session } = useSession();
-    const [user, setUser] = useState<ParsedUser>();
+    const userContext = useUserContext();
 
-    useEffect(() => {
-
-        getUserInfo(`${session?.user?.email}`).then((res) => {
-            setUser(res);
-        });
-
-    }, [])
-
-    if (!user) return <CallWidgetSkeleton />
+    if (!userContext?.user) return <CallWidgetSkeleton />
 
     return (
         <MotionDiv animation="fadeIn">
@@ -33,7 +22,7 @@ export default function CallWidget() {
                     <CardTitle className="flex">Algum problema? <HelpCircle className="ml-2" /></CardTitle>
                     <CardDescription>contate os operadores</CardDescription>
                     <CardContent>
-                        <CallForm user={user as ParsedUser} />
+                        <CallForm user={userContext.user} />
                     </CardContent>
                 </CardHeader>
             </Card>

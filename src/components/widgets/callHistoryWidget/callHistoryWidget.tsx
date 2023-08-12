@@ -1,5 +1,5 @@
 import { ParsedCall, ParsedUser } from "@/app/utils/ActionsResponses";
-import { getCalls, getUserInfo } from "@/app/utils/actions";
+import { getCalls } from "@/app/utils/actions";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -10,28 +10,22 @@ import CallHistorySkeleton from "./callHistorySkeleton";
 import { toast } from "@/components/ui/use-toast";
 import CallPopover from "./callPopover";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
+import { useUserContext } from "@/app/providers/userContextProvider";
 
 
 export default function CallHistoryWidget() {
 
     const [calls, setCalls] = useState<ParsedCall[]>();
-    const [user, setUser] = useState<ParsedUser>();
-    const { data: session } = useSession();
-
-    useEffect(() => {
-        getUserInfo(`${session?.user?.email}`).then((res) => {
-            setUser(res);
-        })
-    }, []);
+    const userContext = useUserContext();
 
     useEffect(() => {
         refreshCalls(false);
-    }, [user]);
+    })
 
     function refreshCalls(toastEnabled: boolean) {
 
-        if (!(user?.level === "Funcionário"))
-            getCalls(`${user?.company}`).then((res) => {
+        if (!(userContext?.user.level === "Funcionário"))
+            getCalls(`${userContext?.user.company}`).then((res) => {
                 setCalls(res);
 
                 if (toastEnabled)
@@ -65,7 +59,7 @@ export default function CallHistoryWidget() {
                     {calls.map((call) => (
                         <React.Fragment key={call.id}>
                             <Separator />
-                            <CallPopover call={call} userID={`${user?.id}`}/>
+                            <CallPopover call={call} userID={`${userContext?.user.id}`}/>
                         </React.Fragment>
                     ))}
                 </div>
