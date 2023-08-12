@@ -37,7 +37,6 @@ export default function SocketProvider({ company, userLevel }: { company: string
             socket.disconnect();
         }
 
-
     }, []);
 
     return (

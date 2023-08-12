@@ -26,7 +26,7 @@ export default function AuthProvider({ children }: Props) { // if user has not a
   const { status, data: session } = useSession({ required: true });
   const userContext = useUserContext();
 
-  if (status === "loading" ) { // if we have not enough information, dont load the page
+  if (status === "loading" || userContext.user.company === "") { // if we have not enough information, dont load the page
     return (
       <ApplicationSkeleton />
       )
@@ -38,9 +38,8 @@ export default function AuthProvider({ children }: Props) { // if user has not a
         if (res === "NEW USER") router.push("/setup");
         if (res === "NOT REGISTERED") signOut();
       });
-
   return <>
     {children}
-    { <SocketProvider company={userContext.user.company as string} userLevel={levels[userContext.user.level as userLevels]}/> }
+    { <SocketProvider company={userContext.user.company} userLevel={levels[userContext.user.level as userLevels]}/> }
     </>
 }
