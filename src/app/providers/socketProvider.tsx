@@ -24,13 +24,11 @@ export default function SocketProvider({ company, userLevel }: { company: string
 
         if (userLevel == 1)
             socket.on("callAlert", (callID) => {
-                console.log("ALERT")
                 getCall(callID).then((res) => {
                     setCall(res);
                     setVisible(true);
                     audio.play();
                     animate(scope.current, { opacity: 1 }, { duration: 0.3 });
-                    console.log("ALERT ALERT");
                 });
 
             });
