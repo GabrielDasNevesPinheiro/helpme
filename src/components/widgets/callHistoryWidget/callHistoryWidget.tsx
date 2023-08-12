@@ -19,12 +19,12 @@ export default function CallHistoryWidget() {
 
     useEffect(() => {
         refreshCalls(false);
-    })
+    }, [])
 
     function refreshCalls(toastEnabled: boolean) {
 
-        if (!(userContext?.user.level === "Funcionário"))
-            getCalls(`${userContext?.user.company}`).then((res) => {
+        if (!(userContext.user.level === "Funcionário"))
+            getCalls(`${userContext.user.company}`).then((res) => {
                 setCalls(res);
 
                 if (toastEnabled)

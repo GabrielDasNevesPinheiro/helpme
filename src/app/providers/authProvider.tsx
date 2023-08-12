@@ -23,7 +23,7 @@ const levels = {
 export default function AuthProvider({ children }: Props) { // if user has not an authorized account yet, it will redirect to registration
 
   const router = useRouter();
-  const { data: session, status } = useSession({ required: true });
+  const { status } = useSession({ required: true });
   const userContext = useUserContext();
 
   if (status === "loading" || userContext?.user.name === "") { // if we have not enough information, dont load the page
@@ -32,13 +32,13 @@ export default function AuthProvider({ children }: Props) { // if user has not a
       )
     }
 
-    checkUser(userContext?.user.email as string).then((res) => { // if new user redirect to registration
+    checkUser(userContext.user.email as string).then((res) => { // if new user redirect to registration
       if (res === "NEW USER") router.push("/setup");
       if (res === "NOT REGISTERED") signOut();
     });
 
   return <>
     {children}
-    { <SocketProvider company={userContext?.user.company as string} userLevel={levels[userContext?.user.level as userLevels]}/> }
+    { <SocketProvider company={userContext.user.company as string} userLevel={levels[userContext.user.level as userLevels]}/> }
     </>
 }

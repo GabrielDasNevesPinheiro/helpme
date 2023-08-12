@@ -23,10 +23,10 @@ const defaultUser = {
     sector: "" 
 }
 
-export const UserContext = createContext<UserContext | null>(null);
+export const UserContext = createContext<UserContext>({ user: defaultUser });
 
 export default function UserContextProvider({ children }: ProviderProps) {
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const [user, setUser] = useState<ParsedUser>(defaultUser);
 
     useEffect(() => {
@@ -47,8 +47,5 @@ export default function UserContextProvider({ children }: ProviderProps) {
 
 export function useUserContext() {
     const context = useContext(UserContext);
-    if (context === undefined) {
-        throw Error("No User context");
-    }
     return context;
 }
