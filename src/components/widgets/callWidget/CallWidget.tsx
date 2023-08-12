@@ -10,7 +10,7 @@ export default function CallWidget() {
 
     const userContext = useUserContext();
 
-    if (!userContext?.user) return <CallWidgetSkeleton />
+    if (!userContext.user) return <CallWidgetSkeleton />
 
     return (
         <MotionDiv animation="fadeIn">
