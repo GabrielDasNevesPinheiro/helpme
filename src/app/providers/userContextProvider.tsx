@@ -26,13 +26,16 @@ const defaultUser = {
 export const UserContext = createContext<UserContext>({ user: defaultUser });
 
 export default function UserContextProvider({ children }: ProviderProps) {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const [user, setUser] = useState<ParsedUser>(defaultUser);
 
-    useEffect(() => {
-        getUserInfo(`${session?.user?.email}`).then((res) => setUser(res));
-    }, [session]);
+    if (status === "loading") return <></>
 
+    if (user.name === ""){
+        getUserInfo(`${session?.user?.email}`).then((res) => setUser(res));
+    }
+    
+    
 
     return (
         <UserContext.Provider

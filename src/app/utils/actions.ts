@@ -114,7 +114,7 @@ export async function getUserInfo(email: string): Promise<ParsedUser> {
         const company: ICompany = (await Company.findOne({ _id: user.company })) as ICompany;
         const sector: ISector = (await Sector.findOne({ _id: user.sector })) as ISector;
 
-
+        
 
         return {
             id: user._id.toString(),
