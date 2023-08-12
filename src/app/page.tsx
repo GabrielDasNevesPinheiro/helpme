@@ -6,8 +6,9 @@ import { Label } from "@/components/ui/label";
 import CallHistoryWidget from "@/components/widgets/callHistoryWidget/callHistoryWidget";
 import CallWidget from "@/components/widgets/callWidget/CallWidget";
 import ProfileWidget from "@/components/widgets/profileWidget/ProfileWidget";
-export default function Home() {
 
+export default function Home() {
+  
   return (
     <MainLayout>
       <AppBar />

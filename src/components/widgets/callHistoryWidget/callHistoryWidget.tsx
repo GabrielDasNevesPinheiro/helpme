@@ -1,10 +1,9 @@
-import { ParsedCall, ParsedUser } from "@/app/utils/ActionsResponses";
+import { ParsedCall } from "@/app/utils/ActionsResponses";
 import { getCalls } from "@/app/utils/actions";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { BadgeAlertIcon, LucideRefreshCcw } from "lucide-react";
-import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import CallHistorySkeleton from "./callHistorySkeleton";
 import { toast } from "@/components/ui/use-toast";

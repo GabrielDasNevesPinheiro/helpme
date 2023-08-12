@@ -6,7 +6,6 @@ import { Briefcase, BuildingIcon, InfoIcon, KanbanSquare, Mail } from "lucide-re
 import { useState } from "react";
 import { ParsedUser } from "@/app/utils/ActionsResponses";
 import ProfileWidgetSkeleton from "./profileWidgetSkeleton";
-import { motion } from "framer-motion";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
 import { useUserContext } from "@/app/providers/userContextProvider";
 

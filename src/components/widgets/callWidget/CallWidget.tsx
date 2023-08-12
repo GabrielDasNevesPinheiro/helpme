@@ -3,13 +3,11 @@ import CallForm from "./CallForm";
 import { HelpCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
 import CallWidgetSkeleton from "./callWidgetSkeleton";
-import { motion } from "framer-motion";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
 import { useUserContext } from "@/app/providers/userContextProvider";
 
 export default function CallWidget() {
 
-    const { data: session } = useSession();
     const userContext = useUserContext();
 
     if (!userContext?.user) return <CallWidgetSkeleton />
