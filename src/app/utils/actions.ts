@@ -6,9 +6,8 @@ import { ISector, Sector } from "@/models/Sector";
 import { IUser, User } from "@/models/User";
 import { ParsedCall, ParsedUser, SetupResponse, UserLevel, UserStatus } from "./ActionsResponses";
 import { Call, ICall } from "@/models/Call";
-import { Socket, io } from "socket.io-client";
-import { ClientToServer, ServerToClient } from "./SocketActions";
 import { Types } from "mongoose";
+import { socket } from "@/controllers/socketConnectionController";
 
 
 
@@ -139,10 +138,7 @@ export async function getUserInfo(email: string): Promise<ParsedUser> {
 
 }
 
-export async function makeCall(description: string, userInfo: ParsedUser): Promise<boolean> {
-
-    let socket: Socket<ServerToClient, ClientToServer> = io(`${process.env.SOCKET_URL}`);
-    
+export async function makeCall(description: string, userInfo: ParsedUser): Promise<boolean> {    
 
     try {
 
