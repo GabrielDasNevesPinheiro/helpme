@@ -15,7 +15,7 @@ export default function ProfileWidget() {
     const [user, setUser] = useState<ParsedUser>();
     const userContext = useUserContext();
 
-    if (!userContext?.user) return <ProfileWidgetSkeleton />// if info is loading, display loading skeleton
+    if (!userContext.user) return <ProfileWidgetSkeleton />// if info is loading, display loading skeleton
 
 
 
