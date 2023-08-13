@@ -1,4 +1,3 @@
-"use client";
 import { ParsedCall } from "@/app/utils/ActionsResponses";
 import { closeCall } from "@/app/utils/actions";
 import { Button } from "@/components/ui/button";
@@ -60,11 +59,12 @@ export default function CallPopover({ call, userID }: Props) {
                         </p>
                         {call.closedBy ? <p>por {call.closedBy}</p> : <></>}
                     </span>
-                    <span className="flex space-x-2 text-center overflow-clip break-all max-w-full p-4">
+                    <span className="flex space-x-2 text-center overflow-clip break-inside-auto border rounded-md max-w-full p-4">
                         <p className="">{call.description}</p>
                     </span>
                     <span className="flex space-x-2 text-sm opacity-70 self-end">
-                        <p >{call.datetime}</p>
+                        <p>criado em </p>
+                        <p>{call.datetime}</p>
                     </span>
                 </div>
                 <Button className="space-x-2 w-full" onClick={() => killCall(call.id)} disabled={!call.status || done}>

@@ -65,7 +65,7 @@ export default function CallHistoryWidget() {
                         <Separator />
                         {calls.map((call) => (
                             <React.Fragment key={call.id}>
-                                <CallPopover call={call} userID={`${userContext?.user.id}`} />
+                                <CallPopover call={call} userID={`${userContext.user.id}`} />
                                 <Separator />
                             </React.Fragment>
                         ))}
