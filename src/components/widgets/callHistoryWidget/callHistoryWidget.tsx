@@ -49,7 +49,7 @@ export default function CallHistoryWidget() {
 
     return (
         <MotionDiv animation={"fadeIn"}>
-            <ScrollArea className="border rounded-md w-auto h-full">
+            <ScrollArea className="border rounded-md w-auto h-[77dvh]">
 
                 <div className="p-4">
                     <div className="flex justify-between items-center">
