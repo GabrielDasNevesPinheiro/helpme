@@ -1,3 +1,5 @@
+"use client";
+
 import { ParsedCall } from "@/app/utils/ActionsResponses";
 import { getCalls } from "@/app/utils/actions";
 import { Button } from "@/components/ui/button";

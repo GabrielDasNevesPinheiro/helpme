@@ -1,7 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import CallForm from "./CallForm";
 import { HelpCircle } from "lucide-react";
-import { useSession } from "next-auth/react";
 import CallWidgetSkeleton from "./callWidgetSkeleton";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
 import { useUserContext } from "@/app/providers/userContextProvider";

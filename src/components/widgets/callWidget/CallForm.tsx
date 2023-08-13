@@ -1,3 +1,4 @@
+"use client";
 
 import callFormSchema from "./callFormSchema";
 import * as z from "zod";

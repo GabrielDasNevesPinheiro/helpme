@@ -1,10 +1,10 @@
+"use client";
+
 import { useSession } from "next-auth/react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { Avatar, AvatarImage } from "../../ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Briefcase, BuildingIcon, InfoIcon, KanbanSquare, Mail } from "lucide-react";
-import { useState } from "react";
-import { ParsedUser } from "@/app/utils/ActionsResponses";
 import ProfileWidgetSkeleton from "./profileWidgetSkeleton";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
 import { useUserContext } from "@/app/providers/userContextProvider";
@@ -12,7 +12,6 @@ import { useUserContext } from "@/app/providers/userContextProvider";
 export default function ProfileWidget() {
 
     const { data: session } = useSession();
-    const [user, setUser] = useState<ParsedUser>();
     const userContext = useUserContext();
 
     if (!userContext.user) return <ProfileWidgetSkeleton />// if info is loading, display loading skeleton
