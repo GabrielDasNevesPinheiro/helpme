@@ -182,23 +182,23 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
     try {
         await connectDatabase();
 
-        const company: ICompany = (await Company.findOne({ name: companyName })) as ICompany;
-        const calls: ICall[] = (await Call.find({ company })) as ICall[];
+        const { _id: companyId } = (await Company.findOne({ name: companyName })) as ICompany;
+        const calls: ICall[] = (await Call.find({ company: companyId })) as ICall[];
         for (const call of calls.reverse().slice(0, 15)) {
 
-            const user: IUser = (await User.findOne({ _id: call.user })) as IUser;
-            const operator: IUser = (await User.findOne({ _id: call.closedBy })) as IUser;
-            const sector: ISector = (await Sector.findOne({ _id: call.sector })) as ISector;
+            const {name: userName} = (await User.findOne({ _id: call.user })) as IUser;
+            const {name: operatorName} = (await User.findOne({ _id: call.closedBy })) as IUser || { name: "" };
+            const {name: sectorName} = (await Sector.findOne({ _id: call.sector })) as ISector;
 
             const timeResult = getTimeDiff(call.createdAt);
 
             parsedCalls.push({
                 id: call._id.toString(),
-                user: user.name,
+                user: userName,
                 description: call.description,
-                sector: sector.name,
+                sector: sectorName,
                 status: call.status,
-                closedBy: operator ? operator.name : "",
+                closedBy: operatorName,
                 time: timeResult,
                 datetime: getFormattedDate(call.createdAt),
 
@@ -207,8 +207,8 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
         
         return parsedCalls;
 
-    } catch {
-
+    } catch(error) {
+        console.log("ERRO ", error)
         return [];
 
     }
