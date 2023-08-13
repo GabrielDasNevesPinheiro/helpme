@@ -5,7 +5,7 @@ import { getCalls } from "@/app/utils/actions";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { BadgeAlertIcon, LucideRefreshCcw } from "lucide-react";
+import { BadgeAlertIcon, Loader2Icon, LucideRefreshCcw } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import CallHistorySkeleton from "./callHistorySkeleton";
 import { toast } from "@/components/ui/use-toast";
@@ -38,34 +38,40 @@ export default function CallHistoryWidget() {
 
     }
 
-    if (!calls) return <CallHistorySkeleton />
+    if (!calls) return (
+        <div className="w-full h-full flex items-center justify-center border rounded-md">
+            <Loader2Icon className="animate-spin" />
+        </div>
+    )
+
     return (
         <MotionDiv animation={"fadeIn"}>
-        <ScrollArea className="border rounded-md w-auto h-screen">
+            <ScrollArea className="border rounded-md w-auto h-full">
 
-            <div className="p-4">
-                <div className="flex justify-between items-center">
+                <div className="p-4">
+                    <div className="flex justify-between items-center">
 
-                    <span className="flex space-x-2">
-                        <h3 className="text-2xl font-bold">Chamados Recentes</h3>
-                        <BadgeAlertIcon />
+                        <span className="flex space-x-2">
+                            <h3 className="text-2xl font-bold">Chamados Recentes</h3>
+                            <BadgeAlertIcon />
 
-                    </span>
+                        </span>
 
-                    <Button variant={"ghost"} onClick={() => refreshCalls(true)}><LucideRefreshCcw /></Button>
+                        <Button variant={"ghost"} onClick={() => refreshCalls(true)}><LucideRefreshCcw /></Button>
 
+                    </div>
+
+                    <div className="p-4 space-y-4">
+                        <Separator />
+                        {calls.map((call) => (
+                            <React.Fragment key={call.id}>
+                                <CallPopover call={call} userID={`${userContext?.user.id}`} />
+                                <Separator />
+                            </React.Fragment>
+                        ))}
+                    </div>
                 </div>
-
-                <div className="p-4 space-y-4">
-                    {calls.map((call) => (
-                        <React.Fragment key={call.id}>
-                            <Separator />
-                            <CallPopover call={call} userID={`${userContext?.user.id}`}/>
-                        </React.Fragment>
-                    ))}
-                </div>
-            </div>
-        </ScrollArea>
+            </ScrollArea>
         </MotionDiv>
     )
 
