@@ -7,7 +7,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { BadgeAlertIcon, Loader2Icon, LucideRefreshCcw } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import CallHistorySkeleton from "./callHistorySkeleton";
 import { toast } from "@/components/ui/use-toast";
 import CallPopover from "./callPopover";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
@@ -17,6 +16,7 @@ import { useUserContext } from "@/app/providers/userContextProvider";
 export default function CallHistoryWidget() {
 
     const [calls, setCalls] = useState<ParsedCall[]>();
+    const [refreshing, setRefreshing] = useState<boolean>(false);
     const userContext = useUserContext();
 
     useEffect(() => {
@@ -24,7 +24,8 @@ export default function CallHistoryWidget() {
     }, [])
 
     function refreshCalls(toastEnabled: boolean) {
-
+        setRefreshing(true);
+        
         if (!(userContext.user.level === "Funcionário"))
             getCalls(`${userContext.user.company}`).then((res) => {
                 setCalls(res);
@@ -34,6 +35,8 @@ export default function CallHistoryWidget() {
                         title: "Atualização efetuada com sucesso!",
                         description: "O Histórico de chamados está atualizado."
                     })
+                
+                setRefreshing(false);
             })
 
     }
@@ -57,7 +60,12 @@ export default function CallHistoryWidget() {
 
                         </span>
 
-                        <Button variant={"ghost"} onClick={() => refreshCalls(true)}><LucideRefreshCcw /></Button>
+                        <Button variant={"ghost"} onClick={() => refreshCalls(true)} disabled={refreshing}>
+                            { refreshing ?
+                                <Loader2Icon className="animate-spin" />
+                                : <LucideRefreshCcw /> 
+                            }
+                            </Button>
 
                     </div>
 
