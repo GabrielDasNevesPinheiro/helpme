@@ -12,8 +12,6 @@ import { socket } from "@/controllers/socketConnectionController";
 
 
 export async function checkUser(email: string): Promise<UserStatus> { // check if user need to complete registration
-
-
     try {
         await connectDatabase();
 
@@ -111,8 +109,8 @@ export async function getUserInfo(email: string): Promise<ParsedUser> {
 
         await connectDatabase();
         const user: IUser = (await User.findOne({ email })) as IUser;
-        const company: ICompany = (await Company.findOne({ _id: user.company })) as ICompany;
-        const sector: ISector = (await Sector.findOne({ _id: user.sector })) as ISector;
+        const { name: companyName } = (await Company.findOne({ _id: user.company })) as ICompany || { name: "" };
+        const { name: sectorName } = (await Sector.findOne({ _id: user.sector })) as ISector || { name: "" };
 
 
 
@@ -120,12 +118,13 @@ export async function getUserInfo(email: string): Promise<ParsedUser> {
             id: user._id.toString(),
             name: user.name,
             email: user.email,
-            company: company.name,
+            company: companyName,
             level: userLevels[user.level as UserLevel],
-            sector: sector.name,
+            sector: sectorName,
         };
 
     } catch (error) {
+        console.log(error)
         return {
             id: "",
             name: "",
@@ -184,7 +183,7 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 
         const { _id: companyId } = (await Company.findOne({ name: companyName })) as ICompany;
         const calls: ICall[] = (await Call.find({ company: companyId })) as ICall[];
-        
+
         for (const call of calls.reverse().slice(0, 15)) {
 
             const { name: userName } = (await User.findOne({ _id: call.user })) as IUser;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getUserInfo } from "../utils/actions";
 import { ParsedUser } from "../utils/ActionsResponses";
 import { useSession } from "next-auth/react";
@@ -25,11 +25,15 @@ export default function UserContextProvider({ children }: ProviderProps) {
     const [user, setUser] = useState<ParsedUser>(defaultUser);
     const [connected, setConnected] = useState<boolean>(false);
 
-    if (status === "loading") return <></>
-
-    if (user.name === ""){
-        getUserInfo(`${session?.user?.email}`).then((res) => setUser(res));
-    }
+    
+    useEffect(() => {
+        if (user.name === "" && session !== undefined){
+            getUserInfo(`${session?.user?.email}`).then((res) => {
+                setUser(res);
+                console.log(res);
+            });
+        }
+    }, [status]);
 
     return (
         <UserContext.Provider
