@@ -7,7 +7,7 @@ import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Briefcase, BuildingIcon, InfoIcon, KanbanSquare, Mail } from "lucide-react";
 import ProfileWidgetSkeleton from "./profileWidgetSkeleton";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
-import { useUserContext } from "@/app/providers/userContextProvider";
+import { useUserContext } from "@/app/context/UserContext";
 
 export default function ProfileWidget() {
 

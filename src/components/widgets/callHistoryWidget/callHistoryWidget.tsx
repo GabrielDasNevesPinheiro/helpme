@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import CallPopover from "./callPopover";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
-import { useUserContext } from "@/app/providers/userContextProvider";
+import { useUserContext } from "@/app/context/UserContext";
 
 
 export default function CallHistoryWidget() {

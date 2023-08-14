@@ -6,6 +6,7 @@ import { Clock, Info, User, XCircle } from "lucide-react";
 import { ParsedCall } from "../utils/ActionsResponses";
 import { getCall } from "../utils/actions";
 import { motion, useAnimate } from "framer-motion";
+import { useUserContext } from "../context/UserContext";
 
 
 
@@ -15,12 +16,25 @@ export default function SocketProvider({ company, userLevel }: { company: string
     const [audio] = useState(new Audio("/notify.mp3"));
     const [call, setCall] = useState<ParsedCall>();
     const [scope, animate] = useAnimate();
+    const context = useUserContext();
 
 
     useEffect(() => {
         const socket: Socket<ServerToClient, ClientToServer> = io(`${process.env.SOCKET_URL}`, {
             auth: { token: company }
         });
+
+        socket.on("connect", () => {
+            context.setConnected(true);
+        })
+
+        socket.on("connect_error", () => {
+            context.setConnected(false);
+        })
+
+        socket.on("disconnect", () => {
+            context.setConnected(false);
+        })
 
         if (userLevel == 1)
             socket.on("callAlert", (callID) => {

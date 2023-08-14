@@ -4,14 +4,10 @@ import { createContext, useContext, useState } from "react";
 import { getUserInfo } from "../utils/actions";
 import { ParsedUser } from "../utils/ActionsResponses";
 import { useSession } from "next-auth/react";
-
+import { UserContext } from "../context/UserContext";
 
 interface ProviderProps {
     children: React.ReactNode;
-}
-
-type UserContext = {
-    user: ParsedUser
 }
 
 const defaultUser = { 
@@ -23,11 +19,10 @@ const defaultUser = {
     sector: "" 
 }
 
-export const UserContext = createContext<UserContext>({ user: defaultUser });
-
 export default function UserContextProvider({ children }: ProviderProps) {
     const { data: session, status } = useSession();
     const [user, setUser] = useState<ParsedUser>(defaultUser);
+    const [connected, setConnected] = useState<boolean>(false);
 
     if (status === "loading") return <></>
 
@@ -40,7 +35,9 @@ export default function UserContextProvider({ children }: ProviderProps) {
     return (
         <UserContext.Provider
             value={{
-                user
+                user,
+                connected,
+                setConnected
             }}>
             {children}
         </UserContext.Provider>
@@ -48,7 +45,3 @@ export default function UserContextProvider({ children }: ProviderProps) {
 
 }
 
-export function useUserContext() {
-    const context = useContext(UserContext);
-    return context;
-}

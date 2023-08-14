@@ -6,8 +6,12 @@ import { Label } from "@/components/ui/label";
 import CallHistoryWidget from "@/components/widgets/callHistoryWidget/callHistoryWidget";
 import CallWidget from "@/components/widgets/callWidget/CallWidget";
 import ProfileWidget from "@/components/widgets/profileWidget/ProfileWidget";
+import { useUserContext } from "./context/UserContext";
+
 
 export default function Home() {
+
+  const context = useUserContext();
   
   return (
     <MainLayout>
@@ -16,6 +20,9 @@ export default function Home() {
       <div className="flex flex-col pt-4 justify-start items-center">
           <Label className="text-4xl">Helpme</Label>
           <Label className="text-base opacity-70" >A sua plataforma de suporte técnico</Label>
+          <Label>
+            {context.connected ? "Conectado" : "Desconectado"}
+          </Label>
         </div>
         <div className="flex flex-col space-y-4">
           <ProfileWidget />

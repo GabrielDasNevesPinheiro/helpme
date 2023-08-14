@@ -114,7 +114,7 @@ export async function getUserInfo(email: string): Promise<ParsedUser> {
         const company: ICompany = (await Company.findOne({ _id: user.company })) as ICompany;
         const sector: ISector = (await Sector.findOne({ _id: user.sector })) as ISector;
 
-        
+
 
         return {
             id: user._id.toString(),
@@ -138,7 +138,7 @@ export async function getUserInfo(email: string): Promise<ParsedUser> {
 
 }
 
-export async function makeCall(description: string, userInfo: ParsedUser): Promise<boolean> {    
+export async function makeCall(description: string, userInfo: ParsedUser): Promise<boolean> {
 
     try {
 
@@ -160,7 +160,7 @@ export async function makeCall(description: string, userInfo: ParsedUser): Promi
             status: true, // true = chamado ainda em aberto / false = chamado fechado  (resolvido).
 
         });
-        
+
         await call.save();
 
         socket.emit("sendCallAlert", call._id.toString(), company.name);
@@ -184,11 +184,12 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 
         const { _id: companyId } = (await Company.findOne({ name: companyName })) as ICompany;
         const calls: ICall[] = (await Call.find({ company: companyId })) as ICall[];
+        
         for (const call of calls.reverse().slice(0, 15)) {
 
-            const {name: userName} = (await User.findOne({ _id: call.user })) as IUser;
-            const {name: operatorName} = (await User.findOne({ _id: call.closedBy })) as IUser || { name: "" };
-            const {name: sectorName} = (await Sector.findOne({ _id: call.sector })) as ISector;
+            const { name: userName } = (await User.findOne({ _id: call.user })) as IUser;
+            const { name: operatorName } = (await User.findOne({ _id: call.closedBy })) as IUser || { name: "" };
+            const { name: sectorName } = (await Sector.findOne({ _id: call.sector })) as ISector;
 
             const timeResult = getTimeDiff(call.createdAt);
 
@@ -204,10 +205,10 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 
             })
         }
-        
+
         return parsedCalls;
 
-    } catch(error) {
+    } catch (error) {
         console.log("ERRO ", error)
         return [];
 
@@ -216,7 +217,7 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 }
 
 export async function getCall(callID: string): Promise<ParsedCall> {
-    
+
     let call: ParsedCall = {
         id: "",
         user: "",
@@ -242,9 +243,9 @@ export async function getCall(callID: string): Promise<ParsedCall> {
         call.sector = sector.name;
         call.time = getTimeDiff(callQuery.createdAt);
         call.datetime = getFormattedDate(callQuery.createdAt);
-        
+
         return call;
-        
+
 
     } catch (error) {
         console.log(error);
@@ -255,17 +256,17 @@ export async function getCall(callID: string): Promise<ParsedCall> {
 export async function closeCall(callID: string, userID: string): Promise<boolean> {
 
     try {
-        
+
         await connectDatabase();
         const call = (await Call.findOne({ _id: callID })) as ICall;
-        
+
         if (call.closedBy) return false;
 
         call.status = false;
         call.closedBy = new Types.ObjectId(userID);
 
         await call.save();
-        
+
         return true;
 
     } catch (error) {

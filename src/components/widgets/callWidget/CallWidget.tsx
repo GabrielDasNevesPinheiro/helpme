@@ -3,7 +3,7 @@ import CallForm from "./CallForm";
 import { HelpCircle } from "lucide-react";
 import CallWidgetSkeleton from "./callWidgetSkeleton";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
-import { useUserContext } from "@/app/providers/userContextProvider";
+import { useUserContext } from "@/app/context/UserContext";
 
 export default function CallWidget() {
 
