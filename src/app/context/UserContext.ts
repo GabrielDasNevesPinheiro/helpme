@@ -1,8 +1,6 @@
 import { createContext, useContext } from "react";
 import { ParsedUser } from "../utils/ActionsResponses";
 
-
-
 type UserContextType = {
     user: ParsedUser
     connected: boolean

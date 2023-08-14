@@ -10,8 +10,8 @@ import UserContextProvider from './providers/userContextProvider'
 const inter = Rubik({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Helpme', // deve ser modificado futuramente
-  description: 'thinking yet',
+  title: 'Helpme',
+  description: 'Gerencie o suporte técnico em sua empresa do jeito certo. Conecte seus técnicos e funcionários na Helpme.',
 }
 
 export default function RootLayout({

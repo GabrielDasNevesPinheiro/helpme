@@ -20,6 +20,7 @@ const defaultUser = {
 }
 
 export default function UserContextProvider({ children }: ProviderProps) {
+
     const { data: session, status } = useSession();
     const [user, setUser] = useState<ParsedUser>(defaultUser);
     const [connected, setConnected] = useState<boolean>(false);
@@ -29,8 +30,6 @@ export default function UserContextProvider({ children }: ProviderProps) {
     if (user.name === ""){
         getUserInfo(`${session?.user?.email}`).then((res) => setUser(res));
     }
-    
-    
 
     return (
         <UserContext.Provider
