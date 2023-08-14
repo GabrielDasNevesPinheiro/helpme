@@ -27,7 +27,7 @@ export default function AuthProvider({ children }: Props) { // if user has not a
   const { status, data: session } = useSession({ required: true });
   const userContext = useUserContext();
 
-  if (status === "loading" || userContext.user.company === "") { // if we have not enough information, dont load the page
+  if (status === "loading" || userContext.user.name === "") { // if we have not enough information, dont load the page
     return (
       <ApplicationSkeleton />
       )
