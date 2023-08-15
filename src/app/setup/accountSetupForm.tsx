@@ -64,7 +64,10 @@ export default function AccountSetupForm({ session, router }: { session: Session
             if(res === "SUCCESS") {
 
                 form.reset();
-                setTimeout(() => router.push("/"), 5000);
+                setTimeout(() => {
+                    router.refresh()
+                    router.push("/")
+            }, 5000);
                 return toast({
                     title: "Configuração efetuada com sucesso",
                     description: "Você será redirecionado em alguns segundos...",

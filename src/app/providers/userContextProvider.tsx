@@ -10,13 +10,13 @@ interface ProviderProps {
     children: React.ReactNode;
 }
 
-const defaultUser = { 
-    company: "", 
-    email: "", 
-    id: "", 
-    level: "", 
-    name: "", 
-    sector: "" 
+const defaultUser = {
+    company: "",
+    email: "",
+    id: "",
+    level: "",
+    name: "",
+    sector: ""
 }
 
 export default function UserContextProvider({ children }: ProviderProps) {
@@ -25,16 +25,13 @@ export default function UserContextProvider({ children }: ProviderProps) {
     const [user, setUser] = useState<ParsedUser>(defaultUser);
     const [connected, setConnected] = useState<boolean>(false);
 
-    
+
     useEffect(() => {
-        if (user.name === "" && session !== undefined){
+        if (session?.user?.email !== undefined)
             getUserInfo(`${session?.user?.email}`).then((res) => {
                 setUser(res);
-                console.log(res);
             });
-        }
-    }, [status]);
-
+    }, [session?.user?.email]);
     return (
         <UserContext.Provider
             value={{
