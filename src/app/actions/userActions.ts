@@ -1,3 +1,5 @@
+"use server";
+
 import connectDatabase from "@/connections/db";
 import { Company, ICompany } from "@/models/Company";
 import { ISector, Sector } from "@/models/Sector";

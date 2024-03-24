@@ -1,3 +1,5 @@
+"use server";
+
 import connectDatabase from "@/connections/db";
 import { socket } from "@/connections/socket";
 import { Call, ICall } from "@/models/Call";
