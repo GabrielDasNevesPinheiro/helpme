@@ -1,11 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-        // Note: we provide webpack above so you should not `require` it
-        // Perform customizations to webpack config
-        config.plugins.push(new webpack.IgnorePlugin({ resourceRegExp: /\.node$/ }));
-        return config;
-    },
+
     env: {
         MONGO_URL: process.env.MONGO_URL,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
