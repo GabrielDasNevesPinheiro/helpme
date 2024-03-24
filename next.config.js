@@ -1,6 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
+    webpack: (config, options) => {
+        // Note: we provide webpack above so you should not `require` it
+        // Perform customizations to webpack config
+        config.module.rules.push({
+            test: /\.node/,
+            use: [
+                options.defaultLoaders.babel,
+                {
+                    loader: 'node-loader',
+                },
+            ],
+        })
+        return config;
+    },
     env: {
         MONGO_URL: process.env.MONGO_URL,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
@@ -19,8 +32,7 @@ const nextConfig = {
                 port: "",
             }
         ]
-    },
-    loaders: [{ test: /.txt$/, use: 'raw-loader' }]
+    }
 }
 
 module.exports = nextConfig
