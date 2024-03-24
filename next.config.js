@@ -19,7 +19,8 @@ const nextConfig = {
                 port: "",
             }
         ]
-    }
+    },
+    loaders: [{ test: /.txt$/, use: 'raw-loader' }]
 }
 
 module.exports = nextConfig
