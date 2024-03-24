@@ -1,0 +1,1 @@
+declare type UserStatus = "NEW USER" | "REGISTERED" | "NOT REGISTERED";

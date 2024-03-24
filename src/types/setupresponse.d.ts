@@ -1,0 +1,1 @@
+declare type SetupResponse = "COMPANY HAS OWNER" | "NO COMPANY" | "SUCCESS" | "ERROR";
