@@ -3,10 +3,10 @@
 import React, { useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { checkUser } from "../utils/actions";
 import SocketProvider from "./socketProvider";
 import ApplicationSkeleton from "@/components/layout/ApplicationLoadingSkeleton";
 import { useUserContext } from "../context/UserContext";
+import { checkUser } from "../actions/userActions";
 
 
 interface Props {

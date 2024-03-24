@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
 import { Socket, io } from "socket.io-client";
-import { ClientToServer, ServerToClient } from "../utils/SocketActions";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Info, User, XCircle } from "lucide-react";
-import { ParsedCall } from "../utils/ActionsResponses";
-import { getCall } from "../utils/actions";
 import { motion, useAnimate } from "framer-motion";
 import { useUserContext } from "../context/UserContext";
+import { getCall } from "../actions/callActions";
 
 
 
@@ -37,7 +35,7 @@ export default function SocketProvider({ company, userLevel }: { company: string
         })
 
         if (userLevel == 1)
-            socket.on("callAlert", (callID) => {
+            socket.on("callAlert", (callID: string) => {
                 getCall(callID).then((res) => {
                     setCall(res);
                     setVisible(true);

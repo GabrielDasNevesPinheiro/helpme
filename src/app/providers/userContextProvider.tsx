@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getUserInfo } from "../utils/actions";
-import { ParsedUser } from "../utils/ActionsResponses";
 import { useSession } from "next-auth/react";
 import { UserContext } from "../context/UserContext";
+import { getUserInfo } from "../actions/userActions";
 
 interface ProviderProps {
     children: React.ReactNode;
