@@ -3,7 +3,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(win32-x64-msvc\.node)$/,
+                test: /\.(.node)$/,
                 loader: 'ignore-loader'
             }
         ]
