@@ -1,5 +1,5 @@
-import { ParsedCall } from "@/app/utils/ActionsResponses";
-import { closeCall } from "@/app/utils/actions";
+
+import { closeCall } from "@/app/actions/callActions";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";
@@ -38,7 +38,7 @@ export default function CallPopover({ call, userID }: Props) {
                     <p className="text-ellipsis w-96 overflow-clip text-start">{call.description}</p>
                     <span className="flex space-x-2 items-center opacity-75">
                         <p>{call.time}</p>
-                        { call.status ? <XIcon className="text-red-400" size={14}/> : <CheckIcon className="text-green-400" size={14}/>}
+                        {call.status ? <XIcon className="text-red-400" size={14} /> : <CheckIcon className="text-green-400" size={14} />}
                     </span>
                 </div>
             </PopoverTrigger>

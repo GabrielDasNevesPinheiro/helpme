@@ -1,5 +1,4 @@
 import { createContext, useContext } from "react";
-import { ParsedUser } from "../utils/ActionsResponses";
 
 type UserContextType = {
     user: ParsedUser
@@ -18,7 +17,7 @@ const defaultUser = {
 
 
 export const UserContext = createContext<UserContextType>({
-    user: defaultUser, 
+    user: defaultUser,
     connected: false, setConnected: (value: boolean) => { }
 });
 

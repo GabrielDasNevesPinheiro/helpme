@@ -9,12 +9,11 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
-import { makeCall } from "@/app/utils/actions";
-import { ParsedUser } from "@/app/utils/ActionsResponses";
 import { useToast } from "@/components/ui/use-toast";
+import { makeCall } from "@/app/actions/callActions";
 
-export default function CallForm({ user }: { user: ParsedUser}) {
-    
+export default function CallForm({ user }: { user: ParsedUser }) {
+
     const [isWaiting, setIsWaiting] = useState<boolean>(false);
     const { toast } = useToast();
 
@@ -26,12 +25,12 @@ export default function CallForm({ user }: { user: ParsedUser}) {
     })
 
     function onSubmit(values: z.infer<typeof callFormSchema>) {
-        
+
         setIsWaiting(true); // is waiting until we done here
 
         makeCall(values.description, user as ParsedUser).then((isDone) => {
 
-            if(!isDone){ // if server return false, something went wrong.
+            if (!isDone) { // if server return false, something went wrong.
 
                 return form.setError("description", {
                     type: "custom",
@@ -53,7 +52,7 @@ export default function CallForm({ user }: { user: ParsedUser}) {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField 
+                <FormField
                     name="description"
                     control={form.control}
                     render={({ field }) => (
@@ -65,13 +64,13 @@ export default function CallForm({ user }: { user: ParsedUser}) {
                             <FormDescription>Seja direto(a) para melhor entendimento.</FormDescription>
                             <FormMessage />
                         </FormItem>
-                )}
+                    )}
                 />
-                <Button 
-                    type="submit" 
-                    disabled={ isWaiting ? true : false }
+                <Button
+                    type="submit"
+                    disabled={isWaiting ? true : false}
                     className="w-full md:w-max">
-                        <Mail size={20} className="mr-2"/> Enviar chamado 
+                    <Mail size={20} className="mr-2" /> Enviar chamado
                 </Button>
             </form>
         </Form>

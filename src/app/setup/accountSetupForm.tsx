@@ -4,13 +4,14 @@ import setupFormSchema from "./accountSetupFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useEffect, useState } from "react";
-import { getSectors, setupUser } from "../utils/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BadgeCheck } from "lucide-react";
 import { Session } from "next-auth";
 import { toast } from "@/components/ui/use-toast";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import { getSectors } from "../actions/sectorActions";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { setupUser } from "../actions/userActions";
 
 
 export default function AccountSetupForm({ session, router }: { session: Session | null, router: AppRouterInstance }) {
@@ -26,61 +27,62 @@ export default function AccountSetupForm({ session, router }: { session: Session
 
     }, []);
 
-    
+
     const form = useForm<z.infer<typeof setupFormSchema>>({
         resolver: zodResolver(setupFormSchema),
-        
+
     })
-    
+
     function onSubmit(values: z.infer<typeof setupFormSchema>) {
-        
+
         setIsWaiting(true);
 
         const showError = (message: string) => {
 
             setIsWaiting(false);
-            
+
             form.setError(`company`, {
                 type: "custom",
                 message: message,
-            }, { 
-                shouldFocus: true 
-            })}
-        
+            }, {
+                shouldFocus: true
+            })
+        }
+
         setupUser({
             email: `${session?.user?.email}`,
             sector: values.sector,
             level: Number(values.level),
             company: values.company
         }).then((res) => {
-            
-            // If a boss try to register an existent organization
-            if(res === "COMPANY HAS OWNER") return showError("Você não pode ser chefe dessa organização.");
-            // if no company found
-            if(res === "NO COMPANY") return showError("Organização não encontrada");
-            // server error 
-            if(res === "ERROR") return showError("Erro interno, tente novamente");
 
-            if(res === "SUCCESS") {
+            // If a boss try to register an existent organization
+            if (res === "COMPANY HAS OWNER") return showError("Você não pode ser chefe dessa organização.");
+            // if no company found
+            if (res === "NO COMPANY") return showError("Organização não encontrada");
+            // server error 
+            if (res === "ERROR") return showError("Erro interno, tente novamente");
+
+            if (res === "SUCCESS") {
 
                 form.reset();
                 setTimeout(() => {
                     router.refresh()
                     router.push("/")
-            }, 5000);
+                }, 5000);
                 return toast({
                     title: "Configuração efetuada com sucesso",
                     description: "Você será redirecionado em alguns segundos...",
                 });
             }
-            
+
         });
     }
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" id="setup">
-                <FormField 
+                <FormField
                     name="company"
                     control={form.control}
                     render={({ field }) => (
@@ -91,8 +93,8 @@ export default function AccountSetupForm({ session, router }: { session: Session
                             </FormControl>
                             <FormMessage />
                         </FormItem>
-                    )}/>
-                <FormField 
+                    )} />
+                <FormField
                     name="level"
                     control={form.control}
                     render={({ field }) => (
@@ -107,7 +109,7 @@ export default function AccountSetupForm({ session, router }: { session: Session
                                 </select>
                             </FormControl>
                         </FormItem>
-                    )}/>
+                    )} />
                 <FormField
                     name="sector"
                     control={form.control}
@@ -117,14 +119,14 @@ export default function AccountSetupForm({ session, router }: { session: Session
                             <FormControl>
                                 <select form="setup" className="border bg-transparent rounded dark:hover:bg-slate-600" {...field}>
                                     {sectors.map((sector) => (
-                                    <option key={sector} value={sector}>{sector}</option>    
-                                ))}
-                                <option disabled hidden selected>Selecionar</option>
+                                        <option key={sector} value={sector}>{sector}</option>
+                                    ))}
+                                    <option disabled hidden selected>Selecionar</option>
                                 </select>
                             </FormControl>
                         </FormItem>
                     )} />
-                    <Button type="submit" className="w-full md:w-auto" disabled={ isWaiting ? true : false}><BadgeCheck className="mr-2"/> Confirmar</Button>
+                <Button type="submit" className="w-full md:w-auto" disabled={isWaiting ? true : false}><BadgeCheck className="mr-2" /> Confirmar</Button>
             </form>
         </Form>
     )

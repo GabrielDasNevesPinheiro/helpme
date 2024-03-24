@@ -1,7 +1,5 @@
 "use client";
 
-import { ParsedCall } from "@/app/utils/ActionsResponses";
-import { getCalls } from "@/app/utils/actions";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -11,6 +9,7 @@ import { toast } from "@/components/ui/use-toast";
 import CallPopover from "./callPopover";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
 import { useUserContext } from "@/app/context/UserContext";
+import { getCalls } from "@/app/actions/callActions";
 
 
 export default function CallHistoryWidget() {
@@ -25,7 +24,7 @@ export default function CallHistoryWidget() {
 
     function refreshCalls(toastEnabled: boolean) {
         setRefreshing(true);
-        
+
         if (!(userContext.user.level === "Funcionário"))
             getCalls(`${userContext.user.company}`).then((res) => {
                 setCalls(res);
@@ -35,7 +34,7 @@ export default function CallHistoryWidget() {
                         title: "Atualização efetuada com sucesso!",
                         description: "O Histórico de chamados está atualizado."
                     })
-                
+
                 setRefreshing(false);
             })
 
@@ -61,11 +60,11 @@ export default function CallHistoryWidget() {
                         </span>
 
                         <Button variant={"ghost"} onClick={() => refreshCalls(true)} disabled={refreshing}>
-                            { refreshing ?
+                            {refreshing ?
                                 <Loader2Icon className="animate-spin" />
-                                : <LucideRefreshCcw /> 
+                                : <LucideRefreshCcw />
                             }
-                            </Button>
+                        </Button>
 
                     </div>
 

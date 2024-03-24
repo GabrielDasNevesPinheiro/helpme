@@ -2,30 +2,29 @@ import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import { User, IUser } from "@/models/User";
-import connectDatabase from "@/controllers/databaseController";
-import { UserLevel } from "@/app/utils/ActionsResponses";
+import connectDatabase from "@/connections/db";
 
 export const authOptions: NextAuthOptions = {
 
     providers: [
-        GoogleProvider ({
+        GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         }),
-        GitHubProvider ({
+        GitHubProvider({
             clientId: process.env.GITHUB_CLIENT_ID as string,
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
         }),
     ], callbacks: {
         async signIn({ user }) {
-            
+
             await connectDatabase();
-            
+
             let dbUser: IUser = (await User.findOne({ email: user.email })) as IUser;
 
-            if(!dbUser) {
-                
-                dbUser = new User({ 
+            if (!dbUser) {
+
+                dbUser = new User({
                     name: user?.name as string,
                     email: user?.email as string,
                     level: UserLevel.EMPLOYEE
