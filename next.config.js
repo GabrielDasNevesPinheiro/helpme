@@ -10,10 +10,6 @@ const nextConfig = {
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
         SOCKET_URL: process.env.SOCKET_URL,
     },
-    experimental: {
-        serverActions: true,
-        appDir: true,
-    },
     images: {
         remotePatterns: [
             {
