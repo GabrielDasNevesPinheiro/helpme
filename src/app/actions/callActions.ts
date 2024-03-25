@@ -2,20 +2,22 @@
 
 import connectDatabase from "@/connections/db";
 import { socket } from "@/connections/socket";
-import { Call, ICall } from "@/models/Call";
-import { Company, ICompany } from "@/models/Company";
-import { ISector, Sector } from "@/models/Sector";
-import { IUser, User } from "@/models/User";
+import { Call } from "@/models/Call";
+import { Company } from "@/models/Company";
+import { Sector } from "@/models/Sector";
+import { User } from "@/models/User";
+import { UserLevel } from "@/types/userlevel";
+import mongoose from "mongoose";
 import { Types } from "mongoose";
 
-export async function makeCall(description: string, userInfo: ParsedUser): Promise<boolean> {
+export async function makeCall(description: string, userInfo: User): Promise<boolean> {
 
     try {
 
         await connectDatabase();
-        const user: IUser = (await User.findOne({ email: userInfo.email })) as IUser;
-        const sector: ISector = (await Sector.findOne({ name: userInfo.sector })) as ISector;
-        const company: ICompany = (await Company.findOne({ name: userInfo.company.toLowerCase() })) as ICompany;
+        const user: UserSchemaType<mongoose.Document> = (await User.findOne({ email: userInfo.email }))!;
+        const sector: SectorSchemaType<mongoose.Document> = (await Sector.findOne({ name: userInfo.sector }))!;
+        const company: CompanySchemaType<Document> = (await Company.findOne({ name: userInfo.company.toLowerCase() }))!;
 
         if (user.level === UserLevel.OPERATOR) return false;
         if (!user) return false;
@@ -45,21 +47,21 @@ export async function makeCall(description: string, userInfo: ParsedUser): Promi
     }
 }
 
-export async function getCalls(companyName: string): Promise<ParsedCall[]> {
+export async function getCalls(companyName: string): Promise<Call[]> {
 
-    let parsedCalls: ParsedCall[] = [];
+    let parsedCalls: Call[] = [];
 
     try {
         await connectDatabase();
 
-        const { _id: companyId } = (await Company.findOne({ name: companyName })) as ICompany;
-        const calls: ICall[] = (await Call.find({ company: companyId })) as ICall[];
+        const { _id: companyId } = (await Company.findOne({ name: companyName })) as CompanySchemaType;
+        const calls: CallSchemaType[] = (await Call.find({ company: companyId }));
 
         for (const call of calls.reverse().slice(0, 15)) {
 
-            const { name: userName } = (await User.findOne({ _id: call.user })) as IUser;
-            const { name: operatorName } = (await User.findOne({ _id: call.closedBy })) as IUser || { name: "" };
-            const { name: sectorName } = (await Sector.findOne({ _id: call.sector })) as ISector;
+            const { name: userName } = (await User.findOne({ _id: call.user })) as User;
+            const { name: operatorName } = (await User.findOne({ _id: call.closedBy })) as User || { name: "" };
+            const { name: sectorName } = (await Sector.findOne({ _id: call.sector })) as Sector;
 
             const timeResult = getTimeDiff(call.createdAt);
 
@@ -86,9 +88,9 @@ export async function getCalls(companyName: string): Promise<ParsedCall[]> {
 
 }
 
-export async function getCall(callID: string): Promise<ParsedCall> {
+export async function getCall(callID: string): Promise<Call> {
 
-    let call: ParsedCall = {
+    let call: Call = {
         id: "",
         user: "",
         description: "",
@@ -101,9 +103,9 @@ export async function getCall(callID: string): Promise<ParsedCall> {
 
     try {
         await connectDatabase();
-        const callQuery: ICall = (await Call.findOne({ _id: callID })) as ICall;
-        const user: IUser = (await User.findOne({ _id: callQuery.user })) as IUser;
-        const sector: ISector = (await Sector.findOne({ _id: callQuery.sector })) as ISector;
+        const callQuery: CallSchemaType = (await Call.findOne({ _id: callID })) as CallSchemaType;
+        const user: User = (await User.findOne({ _id: callQuery.user }))!;
+        const sector: SectorSchemaType<mongoose.Document> = (await Sector.findOne({ _id: callQuery.sector }))!;
 
         call.id = callQuery._id.toString();
         call.user = user.name;
@@ -128,7 +130,7 @@ export async function closeCall(callID: string, userID: string): Promise<boolean
     try {
 
         await connectDatabase();
-        const call = (await Call.findOne({ _id: callID })) as ICall;
+        const call = (await Call.findOne({ _id: callID })) as CallSchemaType<mongoose.Document>;
 
         if (call.closedBy) return false;
 
