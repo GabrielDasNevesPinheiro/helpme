@@ -52,7 +52,7 @@ export default function AccountSetupForm({ session, router }: { session: Session
         setupUser({
             email: `${session?.user?.email}`,
             sector: values.sector,
-            level: Number(values.level),
+            level: Number(values.level) as 0 | 1 | 2,
             company: values.company
         }).then((res) => {
 
