@@ -12,7 +12,7 @@ import { Mail } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { makeCall } from "@/app/actions/callActions";
 
-export default function CallForm({ user }: { user: ParsedUser }) {
+export default function CallForm({ user }: { user: User }) {
 
     const [isWaiting, setIsWaiting] = useState<boolean>(false);
     const { toast } = useToast();
@@ -28,7 +28,7 @@ export default function CallForm({ user }: { user: ParsedUser }) {
 
         setIsWaiting(true); // is waiting until we done here
 
-        makeCall(values.description, user as ParsedUser).then((isDone) => {
+        makeCall(values.description, user as User).then((isDone) => {
 
             if (!isDone) { // if server return false, something went wrong.
 
