@@ -1,11 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
-interface ISector extends Document {
-    name: string;
-}
-
-
-const sectorSchema = new mongoose.Schema<ISector>({
+const sectorSchema = new mongoose.Schema<SectorSchemaType<Document>>({
 
     name: {
         type: String,
@@ -14,6 +9,6 @@ const sectorSchema = new mongoose.Schema<ISector>({
 
 });
 
-const Sector = mongoose.models.Sector || mongoose.model<ISector>("Sector", sectorSchema);
+const Sector = mongoose.models.Sector || mongoose.model<SectorSchemaType<Document>>("Sector", sectorSchema);
 
-export { Sector, type ISector };
+export { Sector };

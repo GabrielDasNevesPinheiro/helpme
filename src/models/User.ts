@@ -1,16 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
-interface IUser extends Document {
-    name: string;
-    email: string;
-    level: Number;
-    company?: mongoose.ObjectId;
-    sector?: mongoose.ObjectId;
-    createdAt?: Date;
-    updatedAt?: Date;
-}
-
-const userSchema = new mongoose.Schema<IUser>({
+const userSchema = new mongoose.Schema<UserSchemaType<Document>>({
 
     name: {
         type: String,
@@ -36,6 +26,6 @@ const userSchema = new mongoose.Schema<IUser>({
     timestamps: true,
 });
 
-const User = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
+const User = mongoose.models.User || mongoose.model<UserSchemaType<Document>>("User", userSchema);
 
-export { User, type IUser };
+export { User };

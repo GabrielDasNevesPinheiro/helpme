@@ -1,17 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
-interface ICall extends Document {
-    user: mongoose.ObjectId;
-    sector: mongoose.ObjectId;
-    company: mongoose.ObjectId;
-    description: string;
-    status: boolean;
-    closedBy: mongoose.Types.ObjectId | mongoose.ObjectId;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-const callSchema = new mongoose.Schema<ICall>({
+const callSchema = new mongoose.Schema<CallSchemaType<Document>>({
 
     user: {
         type: mongoose.Types.ObjectId,
@@ -45,6 +34,6 @@ const callSchema = new mongoose.Schema<ICall>({
     timestamps: true,
 });
 
-const Call = mongoose.models.Call || mongoose.model<ICall>("Call", callSchema);
+const Call = mongoose.models.Call || mongoose.model<CallSchemaType<Document>>("Call", callSchema);
 
-export { Call, type ICall };
+export { Call };

@@ -1,13 +1,5 @@
 import mongoose, { Document } from "mongoose";
-
-interface ICompany extends Document {
-    name: string;
-    owner: mongoose.ObjectId;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-const companySchema = new mongoose.Schema<ICompany>({
+const companySchema = new mongoose.Schema<CompanySchemaType<Document>>({
 
     name: {
         type: String,
@@ -24,6 +16,6 @@ const companySchema = new mongoose.Schema<ICompany>({
     timestamps: true,
 });
 
-const Company = mongoose.models.Company || mongoose.model<ICompany>("Company", companySchema);
+const Company = mongoose.models.Company || mongoose.model<CompanySchemaType<Document>>("Company", companySchema);
 
-export { Company, type ICompany };
+export { Company };
