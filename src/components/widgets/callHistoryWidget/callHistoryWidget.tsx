@@ -14,7 +14,7 @@ import { getCalls } from "@/app/actions/callActions";
 
 export default function CallHistoryWidget() {
 
-    const [calls, setCalls] = useState<ParsedCall[]>();
+    const [calls, setCalls] = useState<Call[]>();
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const userContext = useUserContext();
 
