@@ -1,8 +1,10 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-import { User, IUser } from "@/models/User";
+import { User } from "@/models/User";
 import connectDatabase from "@/connections/db";
+import { UserLevel } from "@/types/userlevel";
+import mongoose from "mongoose";
 
 export const authOptions: NextAuthOptions = {
 
@@ -17,10 +19,10 @@ export const authOptions: NextAuthOptions = {
         }),
     ], callbacks: {
         async signIn({ user }) {
-
+            console.log(user);
             await connectDatabase();
 
-            let dbUser: IUser = (await User.findOne({ email: user.email })) as IUser;
+            let dbUser: UserSchemaType<mongoose.Document> = (await User.findOne({ email: user.email }))!;
 
             if (!dbUser) {
 
