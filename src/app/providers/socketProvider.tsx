@@ -12,7 +12,7 @@ export default function SocketProvider({ company, userLevel }: { company: string
 
     const [isVisible, setVisible] = useState(false);
     const [audio] = useState(new Audio("/notify.mp3"));
-    const [call, setCall] = useState<ParsedCall>();
+    const [call, setCall] = useState<Call>();
     const [scope, animate] = useAnimate();
     const context = useUserContext();
 
