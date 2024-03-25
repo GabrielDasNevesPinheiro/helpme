@@ -1,6 +1,6 @@
 "use server";
 import connectDatabase from "@/connections/db";
-import { ISector, Sector } from "@/models/Sector";
+import { Sector } from "@/models/Sector";
 
 export async function getSectors(): Promise<string[]> {
 
@@ -10,7 +10,7 @@ export async function getSectors(): Promise<string[]> {
 
         await connectDatabase();
 
-        const sectors: ISector[] = await Sector.find();
+        const sectors: Sector[] = await Sector.find();
 
         sectors.map((sector) => {
             sectorList.push(sector.name);
