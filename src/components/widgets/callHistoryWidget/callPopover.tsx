@@ -7,7 +7,7 @@ import { CheckCircle, CheckIcon, HelpCircle, KanbanSquareIcon, UserIcon, XIcon }
 import { useState } from "react";
 
 interface Props {
-    call: ParsedCall,
+    call: Call,
     userID: string,
 }
 
