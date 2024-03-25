@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 type UserContextType = {
-    user: ParsedUser
+    user: User
     connected: boolean
     setConnected: (value: boolean) => void
 }
