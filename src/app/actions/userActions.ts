@@ -1,17 +1,23 @@
 "use server";
 
 import connectDatabase from "@/connections/db";
-import { Company, ICompany } from "@/models/Company";
-import { ISector, Sector } from "@/models/Sector";
-import { IUser, User } from "@/models/User";
+import { Company } from "@/models/Company";
+import { Sector } from "@/models/Sector";
+import { User } from "@/models/User";
+import { UserLevel } from "@/types/userlevel";
+import mongoose from "mongoose";
 
-
+const userLevels = {
+    0: "Chefe",
+    1: "Operador",
+    2: "Funcionário",
+}
 
 export async function checkUser(email: string): Promise<UserStatus> { // check if user need to complete registration
     try {
         await connectDatabase();
 
-        const user: IUser = (await User.findOne({ email })) as IUser;
+        const user: User = (await User.findOne({ email }))!;
 
         if (!user) return "NOT REGISTERED";
         if (!user?.company) return "NEW USER";
@@ -25,7 +31,7 @@ export async function checkUser(email: string): Promise<UserStatus> { // check i
 }
 
 // this function must be used when setup a new account
-export async function setupUser({ email, sector, company, level }: { email: string, sector: string, company: string, level: number }): Promise<SetupResponse> {
+export async function setupUser({ email, sector, company, level }: { email: string, sector: string, company: string, level: 0 | 1 | 2 }): Promise<SetupResponse> {
 
 
     company = company.toLowerCase();
@@ -34,9 +40,9 @@ export async function setupUser({ email, sector, company, level }: { email: stri
 
         await connectDatabase();
 
-        const user = (await User.findOne({ email })) as IUser;
-        const userSector = (await Sector.findOne({ name: sector })) as ISector;
-        let userCompany = (await Company.findOne({ name: company })) as ICompany;
+        const user = (await User.findOne({ email })) as UserSchemaType<mongoose.Document>;
+        const userSector = (await Sector.findOne({ name: sector })) as Sector;
+        let userCompany = (await Company.findOne({ name: company })) as CompanySchemaType<mongoose.Document>;
 
         user.level = level;
         user.sector = userSector._id;
@@ -72,20 +78,14 @@ export async function setupUser({ email, sector, company, level }: { email: stri
 }
 
 
-export async function getUserInfo(email: string): Promise<ParsedUser> {
-
-    const userLevels = {
-        0: "Chefe",
-        1: "Operador",
-        2: "Funcionário",
-    }
+export async function getUserInfo(email: string): Promise<User> {
 
     try {
 
         await connectDatabase();
-        const user: IUser = (await User.findOne({ email })) as IUser;
-        const { name: companyName } = (await Company.findOne({ _id: user.company })) as ICompany || { name: "" };
-        const { name: sectorName } = (await Sector.findOne({ _id: user.sector })) as ISector || { name: "" };
+        const user: UserSchemaType<mongoose.Document> = (await User.findOne({ email }))!;
+        const { name: companyName } = (await Company.findOne({ _id: user.company })) as CompanySchemaType || { name: "" };
+        const { name: sectorName } = (await Sector.findOne({ _id: user.sector })) as Sector || { name: "" };
 
 
 
