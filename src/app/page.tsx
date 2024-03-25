@@ -23,11 +23,6 @@ export default function Home() {
       <AppBar />
       <div className="grid grid-cols-1 grid-rows-1 lg:grid-cols-3 gap-4 lg:grid-rows-1 p-4">
         <div className="flex flex-col pt-4 justify-start items-center space-y-8">
-          <p className="flex flex-col items-center">
-            <Label className="text-4xl">Helpme</Label>
-            <Label className="text-base opacity-70" >A sua plataforma de suporte técnico</Label>
-          </p>
-
           <section className="space-y-3">
             <span className="flex items-center space-x-2">
               <div className={connectionStyle[`${context.connected}`]}></div>
