@@ -1,13 +1,12 @@
-import React from "react";;
-import MotionDiv from "../ui/animation/MotionDiv";
+import React from "react";
 
 
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
     return (
-        <MotionDiv animation="fadeIn"
-            className="flex flex-col h-screen">
+        <div
+            className="flex flex-col">
             {children}
-        </MotionDiv>
+        </div>
     )
 }
