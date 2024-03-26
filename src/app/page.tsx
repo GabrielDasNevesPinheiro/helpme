@@ -4,10 +4,14 @@ import ProfileWidget from "@/components/widgets/profileWidget/ProfileWidget";
 import { Suspense } from 'react';
 import Connection from '../components/ui/connection';
 import ProfileWidgetSkeleton from "@/components/widgets/profileWidget/profileWidgetSkeleton";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession();
 
+  if (!session) redirect("/api/auth/signin");
 
   return (
     <MainLayout>
