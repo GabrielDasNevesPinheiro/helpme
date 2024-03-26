@@ -3,6 +3,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import ProfileWidget from "@/components/widgets/profileWidget/ProfileWidget";
 import { Suspense } from 'react';
 import Connection from '../components/ui/connection';
+import ProfileWidgetSkeleton from "@/components/widgets/profileWidget/profileWidgetSkeleton";
 
 
 export default function Home() {
@@ -11,8 +12,8 @@ export default function Home() {
   return (
     <MainLayout>
       <AppBar />
-      <div className="flex flex-col md:flex-row justify-between p-12 gap-y-4 md:gap-y-0">
-        <Suspense fallback={<div>Loading...</div>}>
+      <div className="flex flex-col md:flex-row justify-between p-12 gap-y-4 md:gap-y-0 min-h-[288px]">
+        <Suspense fallback={<ProfileWidgetSkeleton />}>
           <ProfileWidget />
         </Suspense>
         <Connection />
