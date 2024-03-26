@@ -1,40 +1,28 @@
-"use client";
-
 import AppBar from "@/components/layout/AppBar";
 import MainLayout from "@/components/layout/MainLayout";
-import { Label } from "@/components/ui/label";
-import CallHistoryWidget from "@/components/widgets/callHistoryWidget/callHistoryWidget";
-import CallWidget from "@/components/widgets/callWidget/CallWidget";
 import ProfileWidget from "@/components/widgets/profileWidget/ProfileWidget";
-import { useUserContext } from "./context/UserContext";
+import { Suspense } from 'react';
+import Connection from '../components/ui/connection';
 
-
-const connectionStyle = {
-  "true": "block w-4 h-4 bg-green-500 rounded-full animate-pulse",
-  "false": "block w-4 h-4 bg-red-500 rounded-full animate-pulse"
-}
 
 export default function Home() {
 
-  const context = useUserContext();
 
   return (
     <MainLayout>
       <AppBar />
-      <div className="grid grid-cols-1 grid-rows-1 lg:grid-cols-3 gap-4 lg:grid-rows-1 p-4">
-        <div className="flex flex-col pt-4 justify-start items-center space-y-8">
-          <section className="space-y-3">
-            <span className="flex items-center space-x-2">
-              <div className={connectionStyle[`${context.connected}`]}></div>
-              <Label className="text-xl">{context.connected ? "Conectado" : "Desconectado"}</Label>
-            </span>
-          </section>
-        </div>
-        <div className="flex flex-col space-y-4">
+      <div className="flex flex-col md:flex-row justify-between p-12 gap-y-4 md:gap-y-0">
+        <Suspense fallback={<div>Loading...</div>}>
           <ProfileWidget />
-          <CallWidget />
-        </div>
-        <CallHistoryWidget />
+        </Suspense>
+        <Connection />
+      </div>
+      <div className="flex flex-col items-center justify-center text-2xl h-max">
+        <h1>Se você passou aqui para ver do que se trata a aplicação, relaxe, ela está passando por um rework 🔥</h1>
+        <h1>Logo, a interface estará linda(eu acredito), a aplicação escalável e perfeita para uso.</h1>
+        <h1>Atenciosamente,
+          <a href="https://github.com/gabrieldasnevespinheiro" className="text-purple-500 hover:bg-white/10 rounded-md transition-colors"> Gabriel das Neves Pinheiro.</a>
+        </h1>
       </div>
     </MainLayout>
   )
