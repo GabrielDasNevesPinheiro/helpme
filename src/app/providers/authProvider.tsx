@@ -20,11 +20,6 @@ export default function AuthProvider({ children }: Props) { // if user has not a
   useEffect(() => {
 
     const authCheck = async () => {
-      //if username not set and not session loaded, return
-
-      if (status === "loading") return () => { }
-
-      if (!session) signIn();
 
       if (!(userContext.user.name !== "" && session?.user?.email)) return () => { };
 
@@ -33,7 +28,6 @@ export default function AuthProvider({ children }: Props) { // if user has not a
       if (authStatus === "NEW USER") router.push("/setup");
       if (authStatus === "NOT REGISTERED") signOut();
 
-      console.log("AUTH CHECKED");
     }
 
     authCheck();
