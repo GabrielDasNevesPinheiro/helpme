@@ -4,6 +4,7 @@ import { ThemeProvider } from './themeProvider'
 import UserContextProvider from './userContextProvider'
 import { Toaster } from '@/components/ui/toaster'
 import SocketProvider from './socketProvider'
+import AuthProvider from './authProvider'
 
 interface globalProviderProps {
     children: React.ReactNode
@@ -14,7 +15,9 @@ const Providers: FC<globalProviderProps> = ({ children }) => {
         <NextAuthSessionProvider>
             <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
                 <UserContextProvider>
-                    {children}
+                    <AuthProvider>
+                        {children}
+                    </AuthProvider>
                     <Toaster />
                     <SocketProvider />
                 </UserContextProvider>

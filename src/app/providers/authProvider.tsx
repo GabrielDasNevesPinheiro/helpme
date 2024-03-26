@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import SocketProvider from "./socketProvider";
-import ApplicationSkeleton from "@/components/layout/ApplicationLoadingSkeleton";
 import { useUserContext } from "../context/UserContext";
 import { checkUser } from "../actions/userActions";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 
 interface Props {
   children?: React.ReactNode;
 }
 
-type userLevels = "Chefe" | "Operador" | "Funcionário";
+
 
 const levels = {
   "Chefe": 0,
@@ -23,28 +21,30 @@ const levels = {
 
 export default function AuthProvider({ children }: Props) { // if user has not an authorized account yet, it will redirect to registration
 
-  const router = useRouter();
-  const { status, data: session } = useSession({ required: true });
+  const { data: session } = useSession({ required: true });
+  const router = useRouter()
   const userContext = useUserContext();
 
+  useEffect(() => {
 
-  if (!(userContext.user.name === ""))
-    checkUser(session?.user?.email as string).then((res) => { // if new user redirect to registration
-      if (res === "NEW USER") router.push("/setup");
-      if (res === "NOT REGISTERED") signOut();
-    });
+    const authCheck = async () => {
+      //if username not set and not session loaded, return
+      if (!(userContext.user.name !== "" && session?.user?.email)) return () => { };
 
+      const authStatus = await checkUser(session.user.email);
 
-  if (status === "loading" || userContext.user.name === "") { // if we have not enough information, dont load the page
-    return (
-      <ApplicationSkeleton />
-    )
-  }
+      if (authStatus === "NEW USER") router.push("/setup");
+      if (authStatus === "NOT REGISTERED") signOut();
 
+      console.log("AUTH CHECKED");
+    }
+
+    authCheck();
+
+  }, [session?.user?.email, userContext.user.name]);
 
 
   return <>
     {children}
-    {<SocketProvider company={userContext.user.company} userLevel={levels[userContext.user.level as userLevels]} />}
   </>
 }
