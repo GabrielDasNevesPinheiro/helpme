@@ -22,6 +22,7 @@ export default function UserContextProvider({ children }: ProviderProps) {
 
     const { data: session } = useSession();
     const [user, setUser] = useState<User>(defaultUser);
+    const [image, setImage] = useState<string>("");
     const [connected, setConnected] = useState<boolean>(false);
 
 
@@ -31,6 +32,7 @@ export default function UserContextProvider({ children }: ProviderProps) {
                 try {
                     const userInfo = await getUserInfo(session.user.email);
                     setUser(userInfo);
+                    setImage(session.user.image!);
 
                 } catch (error) {
 
@@ -46,7 +48,8 @@ export default function UserContextProvider({ children }: ProviderProps) {
             value={{
                 user,
                 connected,
-                setConnected
+                setConnected,
+                image
             }}>
             {children}
         </UserContext.Provider>
