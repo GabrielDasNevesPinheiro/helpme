@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react"
 import { Socket, io } from "socket.io-client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,48 +10,60 @@ import { getCall } from "../actions/callActions";
 
 
 
-export default function SocketProvider({ company, userLevel }: { company: string, userLevel: number }) {
+export default function SocketProvider() {
 
     const [isVisible, setVisible] = useState(false);
-    const [audio] = useState(new Audio("/notify.mp3"));
+    const [audio, setAudio] = useState<HTMLAudioElement>();
     const [call, setCall] = useState<Call>();
     const [scope, animate] = useAnimate();
-    const context = useUserContext();
+    const userContext = useUserContext();
 
 
     useEffect(() => {
-        const socket: Socket<ServerToClient, ClientToServer> = io(`${process.env.SOCKET_URL}`, {
-            auth: { token: company }
-        });
 
-        socket.on("connect", () => {
-            context.setConnected(true);
-        })
+        const setupSocket = async () => {
+            setAudio(new Audio("/notify.mp3"));
+            if (userContext.user.company !== "") {
 
-        socket.on("connect_error", () => {
-            context.setConnected(false);
-        })
 
-        socket.on("disconnect", () => {
-            context.setConnected(false);
-        })
-
-        if (userLevel == 1)
-            socket.on("callAlert", (callID: string) => {
-                getCall(callID).then((res) => {
-                    setCall(res);
-                    setVisible(true);
-                    audio.play();
-                    animate(scope.current, { opacity: 1 }, { duration: 0.3 });
+                const socket: Socket<ServerToClient, ClientToServer> = io(`${process.env.SOCKET_URL}`, {
+                    auth: { token: userContext.user.company }
                 });
 
-            });
+                socket.on("connect", () => {
+                    userContext.setConnected(true);
+                })
 
-        return () => {
-            socket.disconnect();
+                socket.on("connect_error", () => {
+                    userContext.setConnected(false);
+                })
+
+                socket.on("disconnect", () => {
+                    userContext.setConnected(false);
+                })
+
+                if (userContext.user.level === "Operador")
+                    socket.on("callAlert", async (callID: string) => {
+                        const call = await getCall(callID);
+                        setCall(call);
+                        setVisible(true);
+                        audio?.play();
+                        animate(scope.current, { opacity: 1 }, { duration: 0.3 });
+
+                    });
+
+                return () => {
+                    socket.disconnect();
+                }
+
+            }
+
         }
 
-    }, []);
+
+        setupSocket();
+
+    }, [userContext.user]);
 
     return (
         <motion.div ref={scope}
