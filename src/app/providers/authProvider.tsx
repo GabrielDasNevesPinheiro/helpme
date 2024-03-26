@@ -11,14 +11,6 @@ interface Props {
   children?: React.ReactNode;
 }
 
-
-
-const levels = {
-  "Chefe": 0,
-  "Operador": 1,
-  "Funcionário": 2
-}
-
 export default function AuthProvider({ children }: Props) { // if user has not an authorized account yet, it will redirect to registration
 
   const { data: session } = useSession({ required: true });
