@@ -9,7 +9,7 @@ interface ProviderProps {
     children: React.ReactNode;
 }
 
-const defaultUser = {
+const defaultUser: User = {
     company: "",
     email: "",
     id: "",
@@ -20,16 +20,26 @@ const defaultUser = {
 
 export default function UserContextProvider({ children }: ProviderProps) {
 
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const [user, setUser] = useState<User>(defaultUser);
     const [connected, setConnected] = useState<boolean>(false);
 
 
     useEffect(() => {
-        if (session?.user?.email)
-            getUserInfo(`${session?.user?.email}`).then((res) => {
-                setUser(res);
-            });
+        const fetchUserInfo = async () => {
+            if (session?.user?.email) {
+                try {
+                    const userInfo = await getUserInfo(session.user.email);
+                    setUser(userInfo);
+
+                } catch (error) {
+
+                }
+            }
+        };
+
+        fetchUserInfo();
+
     }, [session?.user?.email]);
     return (
         <UserContext.Provider
