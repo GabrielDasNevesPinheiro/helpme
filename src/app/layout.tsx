@@ -1,7 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Rubik } from 'next/font/google'
-import GlobalProvider from './providers/globalProvider'
+import Providers from './providers/Providers'
 
 const inter = Rubik({ subsets: ['latin'] })
 
@@ -18,9 +18,9 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body className={inter.className}>
-        <GlobalProvider>
+        <Providers>
           {children}
-        </GlobalProvider>
+        </Providers>
       </body>
     </html>
   )
