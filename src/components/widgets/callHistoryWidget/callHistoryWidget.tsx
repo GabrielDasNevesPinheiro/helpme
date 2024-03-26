@@ -19,8 +19,10 @@ export default function CallHistoryWidget() {
     const userContext = useUserContext();
 
     useEffect(() => {
-        refreshCalls(false);
-    }, [])
+        if (userContext.user.company !== "") {
+            refreshCalls(false);
+        }
+    }, [userContext.user.company])
 
     function refreshCalls(toastEnabled: boolean) {
         setRefreshing(true);
