@@ -4,6 +4,7 @@ type UserContextType = {
     user: User
     connected: boolean
     setConnected: (value: boolean) => void
+    setUser: (value: User) => void
     image: string
 }
 
@@ -19,7 +20,7 @@ const defaultImage = "";
 
 
 export const UserContext = createContext<UserContextType>({
-    user: defaultUser,
+    user: defaultUser, setUser: (value: User) => { },
     image: defaultImage,
     connected: false, setConnected: (value: boolean) => { }
 });
