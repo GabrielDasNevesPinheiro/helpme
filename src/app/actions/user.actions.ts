@@ -30,19 +30,16 @@ export async function checkUser(email: string): Promise<UserStatus> { // check i
 }
 
 // this function must be used when setup a new account
-export async function setupUser({ email, sector, company, level }: { email: string, sector: string, company: string, level: 0 | 1 | 2 }): Promise<SetupResponse> {
-
-
-    company = company.toLowerCase();
+export async function setupUser({ email, sector, code, level }: { email: string, sector: string, code: string, level: string }): Promise<SetupResponse> {
 
     try {
 
         await connectDatabase();
 
         const user = (await User.findOne({ email })) as UserSchemaType<mongoose.Document>;
-        let userCompany = (await Company.findOne({ name: company })) as CompanySchemaType<mongoose.Document>;
+        let userCompany = (await Company.findOne({ code })) as CompanySchemaType<mongoose.Document>;
 
-        user.level = level;
+        user.level = Number(level);
         user.sector = sector;
 
 
