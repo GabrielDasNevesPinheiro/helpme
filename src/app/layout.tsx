@@ -1,10 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Rubik } from 'next/font/google'
+import { Work_Sans } from 'next/font/google'
 import Providers from './providers/Providers'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
-const inter = Rubik({ subsets: ['latin'] })
+const font = Work_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Helpme',
@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt">
-      <body className={inter.className}>
+      <body className={font.className}>
         <Providers>
           {children}
         </Providers>
