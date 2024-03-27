@@ -9,7 +9,7 @@ import { toast } from "@/components/ui/use-toast";
 import CallPopover from "./callPopover";
 import MotionDiv from "@/components/ui/animation/MotionDiv";
 import { useUserContext } from "@/app/context/UserContext";
-import { getCalls } from "@/app/actions/callActions";
+import { getCalls } from "@/app/actions/call.actions";
 
 
 export default function CallHistoryWidget() {

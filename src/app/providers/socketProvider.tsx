@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Clock, Info, User, XCircle } from "lucide-react";
 import { motion, useAnimate } from "framer-motion";
 import { useUserContext } from "../context/UserContext";
-import { getCall } from "../actions/callActions";
+import { getCall } from "../actions/call.actions";
 
 
 

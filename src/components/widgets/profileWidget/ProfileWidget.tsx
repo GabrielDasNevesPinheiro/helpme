@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { getUserInfo } from "@/app/actions/userActions";
+import { getUserInfo } from "@/app/actions/user.actions";
 
 export default async function ProfileWidget() {
     const session = await getServerSession();

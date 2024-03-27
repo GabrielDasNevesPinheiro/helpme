@@ -2,7 +2,7 @@
 
 import { signOut, useSession } from "next-auth/react";
 import { useUserContext } from "../context/UserContext";
-import { checkUser } from "../actions/userActions";
+import { checkUser } from "../actions/user.actions";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 

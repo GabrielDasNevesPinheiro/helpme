@@ -9,9 +9,9 @@ import { Input } from "@/components/ui/input";
 import { BadgeCheck } from "lucide-react";
 import { Session } from "next-auth";
 import { toast } from "@/components/ui/use-toast";
-import { getSectors } from "../actions/sectorActions";
+import { getSectors } from "../actions/sector.actions";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { setupUser } from "../actions/userActions";
+import { setupUser } from "../actions/user.actions";
 
 
 export default function AccountSetupForm({ session, router }: { session: Session | null, router: AppRouterInstance }) {

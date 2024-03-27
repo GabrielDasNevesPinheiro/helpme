@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { UserContext } from "../context/UserContext";
-import { getUserInfo } from "../actions/userActions";
+import { getUserInfo } from "../actions/user.actions";
 
 interface ProviderProps {
     children: React.ReactNode;

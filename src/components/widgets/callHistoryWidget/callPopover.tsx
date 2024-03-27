@@ -1,5 +1,5 @@
 
-import { closeCall } from "@/app/actions/callActions";
+import { closeCall } from "@/app/actions/call.actions";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";

@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { makeCall } from "@/app/actions/callActions";
+import { makeCall } from "@/app/actions/call.actions";
 
 export default function CallForm({ user }: { user: User }) {
 
