@@ -27,9 +27,9 @@ export default function AccountSetupPage() {
     }
 
     useEffect(() => {
-        if (!session?.user?.email) return () => { };
 
         const check = async () => {
+            if (!session?.user?.email) return;
             const res = await checkUser(session.user.email);
             if (res === "REGISTERED") return router.push("/");
         }
