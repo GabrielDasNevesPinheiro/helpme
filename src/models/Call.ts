@@ -8,7 +8,7 @@ const callSchema = new mongoose.Schema<CallSchemaType<Document>>({
         immutable: true,
     },
     sector: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         required: true,
         immutable: true,
     },
@@ -34,6 +34,6 @@ const callSchema = new mongoose.Schema<CallSchemaType<Document>>({
     timestamps: true,
 });
 
-const Call = mongoose.models.Call || mongoose.model<CallSchemaType<Document>>("Call", callSchema);
+const Call = mongoose.models.Call as mongoose.Model<CallSchemaType<Document>> || mongoose.model<CallSchemaType<Document>>("Call", callSchema);
 
 export { Call };

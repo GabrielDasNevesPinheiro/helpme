@@ -19,13 +19,13 @@ const userSchema = new mongoose.Schema<UserSchemaType<Document>>({
         type: mongoose.Types.ObjectId,
     },
     sector: {
-        type: mongoose.Types.ObjectId,
+        type: String,
     }
 
 }, {
     timestamps: true,
 });
 
-const User = mongoose.models.User || mongoose.model<UserSchemaType<Document>>("User", userSchema);
+const User = mongoose.models.User as mongoose.Model<UserSchemaType<mongoose.Document>> || mongoose.model<UserSchemaType<Document>>("User", userSchema);
 
 export { User };
