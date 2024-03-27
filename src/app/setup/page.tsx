@@ -12,9 +12,10 @@ import CompanyForm from "./companyForm";
 
 export default function AccountSetupPage() {
 
-    const { data: session } = useSession();
-    const [registerType, setRegisterType] = useState<"none" | "companyOwner" | "normal">("none");
+    const { data: session } = useSession({ required: true });
     const router = useRouter();
+
+    const [registerType, setRegisterType] = useState<"none" | "companyOwner" | "normal">("none");
 
     const registerCompany = () => {
         setRegisterType("companyOwner")
@@ -25,12 +26,14 @@ export default function AccountSetupPage() {
     }
 
     useEffect(() => {
+        if (!session?.user?.email) return () => { };
+
         const check = async () => {
-            const res = await checkUser(`${session?.user?.email}`);
+            const res = await checkUser(session.user.email);
             if (res === "REGISTERED") return router.push("/");
         }
         check();
-    }, []);
+    }, [session?.user?.email]);
 
     return (
         <MainLayout>
