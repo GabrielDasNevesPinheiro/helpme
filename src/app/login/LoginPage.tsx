@@ -1,10 +1,8 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 
 
-export default async function LoginPage() {
+export default function LoginPage() {
 
     return (
         <div className="flex lg:flex-row flex-col h-screen w-full bg-[url('/servers.jpg')] repeat-0 bg-center">
