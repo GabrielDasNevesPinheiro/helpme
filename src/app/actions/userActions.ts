@@ -84,10 +84,8 @@ export async function getUserInfo(email: string): Promise<User> {
 
         await connectDatabase();
         const user: UserSchemaType<mongoose.Document> = (await User.findOne({ email }))!;
-        const { name: companyName } = (await Company.findOne({ _id: user.company })) as CompanySchemaType || { name: "" };
-        const { name: sectorName } = (await Sector.findOne({ _id: user.sector })) as Sector || { name: "" };
-
-
+        const { name: companyName } = (await Company.findOne({ _id: user?.company })) as CompanySchemaType || { name: "" };
+        const { name: sectorName } = (await Sector.findOne({ _id: user?.sector })) as Sector || { name: "" };
 
         return {
             id: user._id.toString(),
