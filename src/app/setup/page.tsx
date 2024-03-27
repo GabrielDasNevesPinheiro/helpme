@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { checkUser } from "../actions/user.actions";
 import { Button } from "@/components/ui/button";
 import CompanyForm from "./companyForm";
+import UserForm from "./userForm";
 
 export default function AccountSetupPage() {
 
@@ -60,6 +61,12 @@ export default function AccountSetupPage() {
                 {registerType === "companyOwner" &&
                     <div className="w-full flex flex-col gap-y-4 md:max-w-[400px] p-4 md:p-0">
                         <CompanyForm />
+                    </div>
+
+                }
+                {registerType === "normal" &&
+                    <div className="w-full flex flex-col gap-y-4 md:max-w-[400px] p-4 md:p-0">
+                        <UserForm />
                     </div>
 
                 }
