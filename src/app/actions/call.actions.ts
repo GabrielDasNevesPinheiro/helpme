@@ -4,7 +4,6 @@ import connectDatabase from "@/connections/db";
 import { socket } from "@/connections/socket";
 import { Call } from "@/models/Call";
 import { Company } from "@/models/Company";
-import { Sector } from "@/models/Sector";
 import { User } from "@/models/User";
 import { UserLevel } from "@/types/userlevel";
 import mongoose from "mongoose";
@@ -16,17 +15,16 @@ export async function makeCall(description: string, userInfo: User): Promise<boo
 
         await connectDatabase();
         const user: UserSchemaType<mongoose.Document> = (await User.findOne({ email: userInfo.email }))!;
-        const sector: SectorSchemaType<mongoose.Document> = (await Sector.findOne({ name: userInfo.sector }))!;
         const company: CompanySchemaType<Document> = (await Company.findOne({ name: userInfo.company.toLowerCase() }))!;
 
         if (user.level === UserLevel.OPERATOR) return false;
         if (!user) return false;
-        if (!sector) return false;
+        if (!user?.sector) return false;
         if (!company) return false;
 
         const call = new Call({
             user: user._id,
-            sector: sector._id,
+            sector: user.sector,
             company: company._id,
             description,
             status: true, // true = chamado ainda em aberto / false = chamado fechado  (resolvido).
@@ -61,7 +59,6 @@ export async function getCalls(companyName: string): Promise<Call[]> {
 
             const { name: userName } = (await User.findOne({ _id: call.user })) as User;
             const { name: operatorName } = (await User.findOne({ _id: call.closedBy })) as User || { name: "" };
-            const { name: sectorName } = (await Sector.findOne({ _id: call.sector })) as Sector;
 
             const timeResult = getTimeDiff(call.createdAt);
 
@@ -69,7 +66,7 @@ export async function getCalls(companyName: string): Promise<Call[]> {
                 id: call._id.toString(),
                 user: userName,
                 description: call.description,
-                sector: sectorName,
+                sector: call.sector,
                 status: call.status,
                 closedBy: operatorName,
                 time: timeResult,
@@ -105,14 +102,13 @@ export async function getCall(callID: string): Promise<Call> {
         await connectDatabase();
         const callQuery: CallSchemaType = (await Call.findOne({ _id: callID })) as CallSchemaType;
         const user: User = (await User.findOne({ _id: callQuery.user }))!;
-        const sector: SectorSchemaType<mongoose.Document> = (await Sector.findOne({ _id: callQuery.sector }))!;
 
         call.id = callQuery._id.toString();
         call.user = user.name;
         call.description = callQuery.description;
         call.status = callQuery.status;
         call.closedBy = callQuery.closedBy ? callQuery.closedBy.toString() : "";
-        call.sector = sector.name;
+        call.sector = callQuery.sector;
         call.time = getTimeDiff(callQuery.createdAt);
         call.datetime = getFormattedDate(callQuery.createdAt);
 
