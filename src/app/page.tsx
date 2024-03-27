@@ -6,12 +6,13 @@ import Connection from '../components/ui/connection';
 import ProfileWidgetSkeleton from "@/components/widgets/profileWidget/profileWidgetSkeleton";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import LoginPage from "./login/LoginPage";
 
 
 export default async function Home() {
   const session = await getServerSession();
 
-  if (!session) redirect("/api/auth/signin");
+  if (!session) return <LoginPage />;
 
   return (
     <MainLayout>
