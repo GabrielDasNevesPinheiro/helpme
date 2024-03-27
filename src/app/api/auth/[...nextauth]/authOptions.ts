@@ -27,6 +27,11 @@ export const authOptions: NextAuthOptions = {
             let dbUser: UserSchemaType = (await User.findOne({ email: user.email }))!;
 
             if (!dbUser) {
+                await User.create({
+                    name: user.name,
+                    level: 2,
+                    email: user.email
+                });
                 this.redirect!({ baseUrl: `${process.env.NEXTAUTH_URL}`, url: "/setup" });
             }
 
