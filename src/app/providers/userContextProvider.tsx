@@ -47,6 +47,7 @@ export default function UserContextProvider({ children }: ProviderProps) {
         <UserContext.Provider
             value={{
                 user,
+                setUser,
                 connected,
                 setConnected,
                 image
