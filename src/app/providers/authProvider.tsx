@@ -13,7 +13,7 @@ interface Props {
 
 export default function AuthProvider({ children }: Props) { // if user has not an authorized account yet, it will redirect to registration
 
-  const { data: session, status } = useSession({ required: true });
+  const { data: session } = useSession();
   const router = useRouter()
   const userContext = useUserContext();
 
