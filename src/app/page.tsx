@@ -5,7 +5,6 @@ import { Suspense } from 'react';
 import Connection from '../components/ui/connection';
 import ProfileWidgetSkeleton from "@/components/widgets/profileWidget/profileWidgetSkeleton";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import LoginPage from "./login/LoginPage";
 
 
