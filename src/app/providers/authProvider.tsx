@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useUserContext } from "../context/UserContext";
 import { checkUser } from "../actions/userActions";
 import { useEffect } from "react";
