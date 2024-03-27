@@ -1,10 +1,9 @@
 import { GaugeIcon } from "lucide-react";
-import ThemeButton from "../ui/theme-button";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 
 
-export default function AppBar() {
+export default function AppBar({ dashboard = true }: { dashboard?: boolean }) {
 
 
     return (
@@ -12,12 +11,12 @@ export default function AppBar() {
             <p className="flex flex-col items-center">
                 <Label className="text-4xl"><a href="/">Helpme</a></Label>
             </p>
-            <div>
+            <div>{dashboard &&
                 <Button variant={"link"} className="space-x-2">
                     <GaugeIcon />
                     <p>Dashboard</p>
                 </Button>
-            </div>
+            }</div>
         </header>
     )
 }
