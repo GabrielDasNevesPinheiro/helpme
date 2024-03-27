@@ -4,7 +4,7 @@ declare type UserSchemaType<T = {}> = {
     email: string;
     level: Number;
     company?: mongoose.ObjectId;
-    sector?: mongoose.ObjectId;
+    sector?: string;
     createdAt?: Date;
     updatedAt?: Date;
 } & T;
