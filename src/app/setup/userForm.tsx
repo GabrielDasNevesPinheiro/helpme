@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "../context/UserContext";
-import { userSchema } from "./schemas";
+import { userSchema } from "../../lib/schemas";
 import { sectors } from "../actions/sector.actions";
 import { getUserInfo, setupUser } from "../actions/user.actions";
 import { toast } from "@/components/ui/use-toast";
