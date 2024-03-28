@@ -10,6 +10,7 @@ import { checkUser } from "../actions/user.actions";
 import { Button } from "@/components/ui/button";
 import CompanyForm from "./companyForm";
 import UserForm from "./userForm";
+import { toast } from "@/components/ui/use-toast";
 
 export default function AccountSetupPage() {
 
@@ -31,7 +32,13 @@ export default function AccountSetupPage() {
         const check = async () => {
             if (!session?.user?.email) return;
             const res = await checkUser(session.user.email);
-            if (res === "REGISTERED") return router.push("/");
+            if (res === "REGISTERED") {
+                toast({
+                    title: "⚠️ Não é necessário",
+                    description: "Sua conta já está configurada."
+                });
+                return router.push("/");
+            }
         }
         check();
     }, [session?.user?.email]);

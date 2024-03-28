@@ -1,10 +1,27 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
+import { toast } from "@/components/ui/use-toast";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 
 export default function LoginPage() {
+    const session = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        console.log(session);
+        if (session.status === "authenticated") {
+            toast({
+                title: "🤔 Querendo fazer Login?",
+                description: "Você já está autenticado ✅"
+            });
+            router.push("/");
+        }
+
+    }, [session.status]);
 
     return (
         <div className="flex lg:flex-row flex-col h-screen w-full bg-[url('/servers.jpg')] repeat-0 bg-center text-white">
