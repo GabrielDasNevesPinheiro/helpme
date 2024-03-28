@@ -1,17 +1,19 @@
 import { getServerSession } from "next-auth";
 import { getUserInfo } from "@/app/actions/user.actions";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 export default async function ProfileWidget() {
     const session = await getServerSession();
     const user = await getUserInfo(session?.user!.email!);
-
     return (
         <div className="flex flex-col">
             <div className="flex flex-col">
                 <div className="flex space-x-4 items-center justify-center md:justify-start">
                     {session?.user?.image &&
-                        <img src={session.user.image}
+                        <Image src={session.user.image}
+                            width={200}
+                            height={200}
                             alt="profile image"
                             className="rounded-full border border-white/30 md:h-auto"
                         />
