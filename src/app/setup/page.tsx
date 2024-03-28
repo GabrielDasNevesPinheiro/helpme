@@ -44,13 +44,13 @@ export default function AccountSetupPage() {
                 {
                     registerType === "none" &&
                     <div className="flex flex-col gap-y-2 w-full h-96 p-4 md:w-[700px]">
-                        <Button className="h-16 md:text-xl flex justify-between hover:bg-white/10 hover:h-20 transition-all"
+                        <Button className="h-16 md:text-xl flex justify-between hover:bg-primary/10 hover:h-20 transition-all"
                             variant={"link"}
                             onClick={registerUser}>
                             Registrar em organização existente
                             <ArrowRightIcon />
                         </Button>
-                        <Button className="h-16 md:text-xl flex justify-between hover:bg-white/10 hover:h-20 transition-all"
+                        <Button className="h-16 md:text-xl flex justify-between hover:bg-primary/10 hover:h-20 transition-all"
                             variant={"link"}
                             onClick={registerCompany}>
                             Registrar minha organização
