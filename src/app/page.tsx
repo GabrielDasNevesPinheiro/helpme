@@ -7,6 +7,8 @@ import ProfileWidgetSkeleton from "@/components/widgets/profileWidget/profileWid
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
+import { Button } from "@/components/ui/button";
+import CallWidget from "@/components/widgets/callWidget/CallWidget";
 
 export const metadata: Metadata = {
   title: 'Helpme - Início',
@@ -28,13 +30,7 @@ export default async function Home() {
         </Suspense>
         <Connection />
       </div>
-      <div className="flex flex-col items-center justify-center text-2xl h-max">
-        <h1>Se você passou aqui para ver do que se trata a aplicação, relaxe, ela está passando por um rework 🔥</h1>
-        <h1>Logo, a interface estará linda(eu acredito), a aplicação escalável e perfeita para uso.</h1>
-        <h1>Atenciosamente,
-          <a href="https://github.com/gabrieldasnevespinheiro" className="text-purple-500 hover:bg-white/10 rounded-md transition-colors"> Gabriel das Neves Pinheiro.</a>
-        </h1>
-      </div>
+      <CallWidget />
     </MainLayout>
   )
 }
