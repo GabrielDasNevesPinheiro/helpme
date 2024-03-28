@@ -6,7 +6,7 @@ const nextConfig = {
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
         GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
         GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-        //NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+        NEXTAUTH_URL: process.env.NEXTAUTH_URL,
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
         SOCKET_URL: process.env.SOCKET_URL,
     },
@@ -15,6 +15,11 @@ const nextConfig = {
             {
                 protocol: "https",
                 hostname: "lh3.googleusercontent.com",
+                port: "",
+            },
+            {
+                protocol: "https",
+                hostname: "avatars.githubusercontent.com",
                 port: "",
             }
         ]
