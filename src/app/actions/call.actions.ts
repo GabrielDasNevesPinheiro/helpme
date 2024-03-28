@@ -14,12 +14,12 @@ export async function makeCall(description: string, userInfo: User): Promise<boo
     try {
 
         await connectDatabase();
-        const user: UserSchemaType<mongoose.Document> = (await User.findOne({ email: userInfo.email }))!;
-        const company: CompanySchemaType<Document> = (await Company.findOne({ name: userInfo.company.toLowerCase() }))!;
+        const user = (await User.findOne({ email: userInfo.email }))!;
+        const company = (await Company.findOne({ _id: user.company }))!;
 
-        if (user.level === UserLevel.OPERATOR) return false;
         if (!user) return false;
-        if (!user?.sector) return false;
+        if (user.level === UserLevel.OPERATOR) return false;
+        if (!user.sector) return false;
         if (!company) return false;
 
         const call = new Call({
