@@ -12,7 +12,7 @@ const Connection: FC<connectionProps> = ({ }) => {
     const { connected } = useUserContext();
 
     return (
-        <div className='flex justify-start w-48 text-2xl'>
+        <div className='flex justify-center w-full md:w-48 text-2xl'>
             <div className='flex gap-2 items-center h-1'>
                 {connected ?
                     <span className='rounded-full h-5 w-5 bg-green-500'></span> :
