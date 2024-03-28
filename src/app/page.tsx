@@ -5,13 +5,13 @@ import { Suspense } from 'react';
 import Connection from '../components/ui/connection';
 import ProfileWidgetSkeleton from "@/components/widgets/profileWidget/profileWidgetSkeleton";
 import { getServerSession } from "next-auth";
-import LoginPage from "./login/LoginPage";
+import { redirect } from "next/navigation";
 
 
 export default async function Home() {
   const session = await getServerSession();
 
-  if (!session) return <LoginPage />;
+  if (!session) return redirect("/login");
 
   return (
     <MainLayout>
