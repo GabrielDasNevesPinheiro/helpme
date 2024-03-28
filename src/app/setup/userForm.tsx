@@ -86,9 +86,9 @@ export default function UserForm() {
                             <FormItem>
                                 <FormControl>
                                     <select form="setup" {...field} className="w-full h-10 bg-transparent border border-input font-sans text-sm text-center rounded-md">
-                                        <option disabled className="bg-black p-2 text-lg" selected>Selecione seu setor</option>
+                                        <option disabled className="bg-secondary p-2 text-lg" selected>Selecione seu setor</option>
                                         {sectors.map((sector) => (
-                                            <option value={sector} className="bg-black p-2 text-lg" key={sector}>{sector}</option>
+                                            <option value={sector} className="bg-secondary p-2 text-lg" key={sector}>{sector}</option>
                                         ))}
                                     </select>
                                 </FormControl>
@@ -102,9 +102,9 @@ export default function UserForm() {
                             <FormItem>
                                 <FormControl>
                                     <select form="setup" {...field} className="w-full h-10 bg-transparent border border-input font-sans text-sm text-center rounded-md">
-                                        <option disabled selected className="bg-black p-2 text-lg">Selecione sua função</option>
-                                        <option value="1" id="op" className="bg-black p-2 text-lg">Operador</option>
-                                        <option value="2" className="bg-black p-2 text-lg">Funcionário</option>
+                                        <option disabled selected className="bg-secondary p-2 text-lg">Selecione sua função</option>
+                                        <option value="1" id="op" className="bg-secondary p-2 text-lg">Operador</option>
+                                        <option value="2" className="bg-secondary p-2 text-lg">Funcionário</option>
                                     </select>
                                 </FormControl>
                                 <FormMessage />
