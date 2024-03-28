@@ -12,10 +12,10 @@ export default async function ProfileWidget() {
                     {session?.user?.image &&
                         <img src={session.user.image}
                             alt="profile image"
-                            className="rounded-md border border-white/30 md:w-48 w-36"
+                            className="rounded-md border border-white/30 md:w-48 w-36 h-32 md:h-auto"
                         />
                     }
-                    <div className="flex flex-col space-y-2 md:text-3xl text-xl">
+                    <div className="flex flex-col space-y-2 md:text-3xl text-sm sm:text-xl">
                         <p>{user.name}</p>
                         <p>{user.company}</p>
                         <p>{user.level}</p>
