@@ -1,28 +1,26 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import CallForm from "./CallForm";
-import { HelpCircle } from "lucide-react";
-import CallWidgetSkeleton from "./callWidgetSkeleton";
-import MotionDiv from "@/components/ui/animation/MotionDiv";
-import { useUserContext } from "@/app/context/UserContext";
 
 export default function CallWidget() {
 
-    const userContext = useUserContext();
-
-    if (!userContext.user) return <CallWidgetSkeleton />
-
     return (
-        <MotionDiv animation="fadeIn">
-
-            <Card className="p-2">
-                <CardHeader>
-                    <CardTitle className="flex">Algum problema? <HelpCircle className="ml-2" /></CardTitle>
-                    <CardDescription>contate os operadores</CardDescription>
-                    <CardContent>
-                        <CallForm user={userContext.user} />
-                    </CardContent>
-                </CardHeader>
-            </Card>
-        </MotionDiv>
+        <div className="flex flex-col items-center justify-center text-2xl pt-12">
+            <h1 className="text-3xl">Precisando de ajuda?</h1>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant={"link"} className="text-xl">🛠️ Contatar Técnicos</Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Criar um novo chamado</DialogTitle>
+                        <DialogDescription>Envie um chamado direto para os Operadores</DialogDescription>
+                    </DialogHeader>
+                    <div className="flex flex-col w-full">
+                        <CallForm />
+                    </div>
+                </DialogContent>
+            </Dialog>
+        </div>
     )
 }
