@@ -6,6 +6,12 @@ import Connection from '../components/ui/connection';
 import ProfileWidgetSkeleton from "@/components/widgets/profileWidget/profileWidgetSkeleton";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Helpme - Início',
+  description: 'Acesse as principais funcionalidades',
+}
 
 
 export default async function Home() {
