@@ -27,28 +27,23 @@ export default function CallForm() {
 
     const { isSubmitting } = form.formState;
 
-    function onSubmit(values: z.infer<typeof callSchema>) {
+    async function onSubmit(values: z.infer<typeof callSchema>) {
 
-        const sendCall = async () => {
-            const success = await makeCall(values.description, user);
+        const success = await makeCall(values.description, user);
 
-            if (!success)
-                return form.setError("description", {
-                    type: "custom",
-                    message: "Erro ao criar chamado.",
-                }, { shouldFocus: true });
+        if (!success)
+            return form.setError("description", {
+                type: "custom",
+                message: "Erro ao criar chamado.",
+            }, { shouldFocus: true });
 
+        toast({
+            title: "Chamado enviado com sucesso!",
+            description: "Os operadores foram notificados.",
+        })
 
+        form.setValue("description", "");
 
-            toast({
-                title: "Chamado enviado com sucesso!",
-                description: "Os operadores foram notificados.",
-            })
-
-            form.setValue("description", "");
-        }
-
-        sendCall();
     }
 
     return (
