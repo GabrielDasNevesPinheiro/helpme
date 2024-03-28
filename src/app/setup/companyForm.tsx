@@ -5,7 +5,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BadgeCheck, Loader2Icon } from "lucide-react";
-import { companySchema } from "./schemas";
+import { companySchema } from "../../lib/schemas";
 import { useSession } from "next-auth/react";
 import { createCompany } from "../actions/company.actions";
 import { useState } from "react";
