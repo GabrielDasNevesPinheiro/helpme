@@ -20,4 +20,11 @@ const userSchema = z.object({
     level: z.string({ required_error: "Selecione sua função." })
 });
 
-export { companySchema, userSchema };
+
+const callSchema = z.object({
+    description: z.string()
+        .min(5, { message: "Descreva bem o problema..." })
+        .max(300, { message: "Você ultrapassou o limite de caracteres." })
+});
+
+export { companySchema, userSchema, callSchema };
