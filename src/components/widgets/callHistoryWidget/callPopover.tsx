@@ -1,3 +1,4 @@
+"use client";
 
 import { closeCall } from "@/app/actions/call.actions";
 import { Button } from "@/components/ui/button";
@@ -34,15 +35,16 @@ export default function CallPopover({ call, userID }: Props) {
     return (
         <Popover>
             <PopoverTrigger>
-                <div className={`text-sm w-auto hover:cursor-pointer`}>
-                    <p className="text-ellipsis w-96 overflow-clip text-start">{call.description}</p>
+                <div className={`text-sm w-auto hover:cursor-pointer p-4`}>
+                    <p className="text-ellipsis w-36 overflow-clip text-start">{call.user}</p>
+                    <p className="text-ellipsis w-36 overflow-clip text-start">{call.sector}</p>
                     <span className="flex space-x-2 items-center opacity-75">
                         <p>{call.time}</p>
                         {call.status ? <XIcon className="text-red-400" size={14} /> : <CheckIcon className="text-green-400" size={14} />}
                     </span>
                 </div>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent className="dark:bg-black bg-white">
                 <div className="flex flex-col space-y-2 p-4">
                     <span className="flex space-x-2">
                         <UserIcon />

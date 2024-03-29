@@ -1,87 +1,36 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { BadgeAlertIcon, Loader2Icon, LucideRefreshCcw } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { toast } from "@/components/ui/use-toast";
+import { getRecentCalls } from "@/app/actions/call.actions";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { getServerSession } from "next-auth";
 import CallPopover from "./callPopover";
-import MotionDiv from "@/components/ui/animation/MotionDiv";
-import { useUserContext } from "@/app/context/UserContext";
-import { getCalls } from "@/app/actions/call.actions";
+import { getUserInfo } from "@/app/actions/user.actions";
 
+export default async function CallHistoryWidget() {
+    const session = await getServerSession();
+    const calls = await getRecentCalls(session!.user!.email!);
+    const { id, level } = await getUserInfo(session!.user!.email!);
 
-export default function CallHistoryWidget() {
-
-    const [calls, setCalls] = useState<Call[]>();
-    const [refreshing, setRefreshing] = useState<boolean>(false);
-    const userContext = useUserContext();
-
-    useEffect(() => {
-        if (userContext.user.company !== "") {
-            refreshCalls(false);
-        }
-    }, [userContext.user.company])
-
-    function refreshCalls(toastEnabled: boolean) {
-        setRefreshing(true);
-
-        if (!(userContext.user.level === "Funcionário"))
-            getCalls(`${userContext.user.company}`).then((res) => {
-                setCalls(res);
-
-                if (toastEnabled)
-                    toast({
-                        title: "Atualização efetuada com sucesso!",
-                        description: "O Histórico de chamados está atualizado."
-                    })
-
-                setRefreshing(false);
-            })
-
-    }
-
-    if (!calls) return (
-        <div className="w-full h-full flex items-center justify-center border rounded-md">
-            <Loader2Icon className="animate-spin" />
-        </div>
-    )
+    if (level !== "Operador") return <></>;
 
     return (
-        <MotionDiv animation={"fadeIn"}>
-            <ScrollArea className="border rounded-md w-auto h-[77dvh] ">
-
-                <div className="p-4">
-                    <div className="flex justify-between items-center">
-
-                        <span className="flex space-x-2">
-                            <h3 className="text-2xl font-bold">Chamados Recentes</h3>
-                            <BadgeAlertIcon />
-
-                        </span>
-
-                        <Button variant={"ghost"} onClick={() => refreshCalls(true)} disabled={refreshing}>
-                            {refreshing ?
-                                <Loader2Icon className="animate-spin" />
-                                : <LucideRefreshCcw />
-                            }
-                        </Button>
-
+        <div className="self-center m-4 text-center">
+            <h1 className="text-xl">Chamados recentes</h1>
+            <ScrollArea className="max-w-3xl border-t p-6">
+                {calls.length == 0 &&
+                    <div className="flex items-center justify-center w-full">
+                        <h1 className="text-2xl text-primary/70 animate-pulse"> Nenhum chamado pendente</h1>
                     </div>
+                }
+                <div className="flex flex-col md:flex-row max-h-72  w-full items-center gap-2">
+                    {calls.map((call) => (
+                        <div key={call.id} className="flex border p-2 rounded-md">
+                            <CallPopover call={call} userID={id} />
+                        </div>
+                    ))}
 
-                    <div className="p-4 space-y-4">
-                        <Separator />
-                        {calls.map((call) => (
-                            <React.Fragment key={call.id}>
-                                <CallPopover call={call} userID={`${userContext.user.id}`} />
-                                <Separator />
-                            </React.Fragment>
-                        ))}
-                    </div>
                 </div>
+                <ScrollBar orientation="horizontal" />
             </ScrollArea>
-        </MotionDiv>
+        </div>
     )
 
 }

@@ -1,8 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import CallForm from "./CallForm";
+import { getServerSession } from "next-auth";
+import { getUserInfo } from "@/app/actions/user.actions";
 
-export default function CallWidget() {
+export default async function CallWidget() {
+    const session = await getServerSession();
+    const info = await getUserInfo(session!.user!.email!);
+
+    if (info.level === "Operador") return <></>;
 
     return (
         <div className="flex flex-col items-center justify-center text-2xl pt-12">
