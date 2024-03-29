@@ -28,7 +28,7 @@ export default async function ProfileWidget() {
                 </div>
                 <div className="flex  w-full justify-center items-center gap-2 pt-2 pb-2 md:hidden">
                     <p className="text-2xl">{user.name}</p>
-                    <Badge className="md:hidden max-h-6">{user.company}</Badge>
+                    <Badge className="md:hidden max-h-6 hidden sm:block">{user.company}</Badge>
                 </div>
             </div>
         </div>
