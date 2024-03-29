@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { Socket, io } from "socket.io-client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Info, User, XCircle } from "lucide-react";
-import { motion, useAnimate } from "framer-motion";
 import { useUserContext } from "../context/UserContext";
 import { getCall } from "../actions/call.actions";
 
@@ -15,7 +14,6 @@ export default function SocketProvider() {
     const [isVisible, setVisible] = useState(false);
     const [audio, setAudio] = useState<HTMLAudioElement>();
     const [call, setCall] = useState<Call>();
-    const [scope, animate] = useAnimate();
     const userContext = useUserContext();
 
 
@@ -48,7 +46,6 @@ export default function SocketProvider() {
                         setCall(call);
                         setVisible(true);
                         audio?.play();
-                        animate(scope.current, { opacity: 1 }, { duration: 0.3 });
 
                     });
 
@@ -66,15 +63,14 @@ export default function SocketProvider() {
     }, [userContext.user]);
 
     return (
-        <motion.div ref={scope}
-            className={`border rounded-md bg-primary-foreground w-96 h-[500px] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${isVisible ? "block" : "hidden"}`}>
+        <div
+            className={`border rounded-md bg-white dark:bg-black/60 backdrop-blur-md w-96 h-[500px] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${isVisible ? "block" : "hidden"}`}>
             <div className="absolute w-full h-4">
                 <section className="flex flex-col justify-start space-x-1 mt-2 ml-2">
                     <span className={`w-4 h-4 rounded-full bg-red-400 hover:opacity-50 cursor-pointer`} onClick={() => {
-                        animate(scope.current, { opacity: 0 }, { duration: 0.3 }).then(() => setVisible(false));
-
+                        setVisible(false);
                     }}></span>
-                    <Card className="m-4 bg-transparent border-0">
+                    <Card className="m-4 bg-transparent border-0 shadow-none">
                         <CardHeader>
                             <CardTitle>
                                 <span className="flex max-w-full space-x-2 shadow-none">
@@ -106,7 +102,7 @@ export default function SocketProvider() {
                     </Card>
                 </section>
             </div>
-        </motion.div>
+        </div>
     )
 
 }
