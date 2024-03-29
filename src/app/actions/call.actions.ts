@@ -87,37 +87,19 @@ export async function getCalls(companyName: string): Promise<Call[]> {
 
 export async function getCall(callID: string): Promise<Call> {
 
-    let call: Call = {
-        id: "",
-        user: "",
-        description: "",
-        sector: "",
-        status: false,
-        closedBy: "",
-        time: "",
-        datetime: "",
-    };
-
     try {
         await connectDatabase();
         const callQuery: CallSchemaType = (await Call.findOne({ _id: callID })) as CallSchemaType;
         const user: User = (await User.findOne({ _id: callQuery.user }))!;
 
-        call.id = callQuery._id.toString();
-        call.user = user.name;
-        call.description = callQuery.description;
-        call.status = callQuery.status;
-        call.closedBy = callQuery.closedBy ? callQuery.closedBy.toString() : "";
-        call.sector = callQuery.sector;
-        call.time = getTimeDiff(callQuery.createdAt);
-        call.datetime = getFormattedDate(callQuery.createdAt);
+        const call = await parseCall(callQuery);
 
         return call;
 
 
     } catch (error) {
         console.log(error);
-        return call;
+        return createEmptyCall();
     }
 }
 
@@ -143,6 +125,56 @@ export async function closeCall(callID: string, userID: string): Promise<boolean
 
 }
 
+export async function getRecentCalls(email: string): Promise<Call[]> {
+    const now = new Date();
+    const offset = new Date(now.getTime() - 20 * 60000); // 20 minutes ago
+    const user = await User.findOne({ email });
+
+    try {
+        const query = await Call.find({
+            company: user?.company,
+            status: true
+        }).sort({ createdAt: -1 }).limit(10);
+
+        const calls: Call[] = await Promise.all(query.map(async (call) => await parseCall(call)));
+        return calls;
+
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+
+}
+
+function createEmptyCall(): Call {
+    return {
+        id: "",
+        user: "",
+        description: "",
+        sector: "",
+        status: false,
+        closedBy: "",
+        time: "",
+        datetime: "",
+    }
+}
+async function parseCall(callQuery: CallSchemaType) {
+
+    let call: Call = createEmptyCall();
+
+    const user: User = (await User.findOne({ _id: callQuery.user }))!;
+
+    call.id = callQuery._id.toString();
+    call.user = user.name;
+    call.description = callQuery.description;
+    call.status = callQuery.status;
+    call.closedBy = callQuery.closedBy ? callQuery.closedBy.toString() : "";
+    call.sector = callQuery.sector;
+    call.time = getTimeDiff(callQuery.createdAt);
+    call.datetime = getFormattedDate(callQuery.createdAt);
+
+    return call;
+}
 
 function getTimeDiff(time: Date): string {
 
