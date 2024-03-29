@@ -7,8 +7,8 @@ import ProfileWidgetSkeleton from "@/components/widgets/profileWidget/profileWid
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
-import { Button } from "@/components/ui/button";
 import CallWidget from "@/components/widgets/callWidget/CallWidget";
+import CallHistoryWidget from "@/components/widgets/callHistoryWidget/callHistoryWidget";
 
 export const metadata: Metadata = {
   title: 'Helpme - Início',
@@ -31,6 +31,7 @@ export default async function Home() {
         <Connection />
       </div>
       <CallWidget />
+      <CallHistoryWidget />
     </MainLayout>
   )
 }
