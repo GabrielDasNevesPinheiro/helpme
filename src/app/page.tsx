@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import CallWidget from "@/components/widgets/callWidget/CallWidget";
 import CallHistoryWidget from "@/components/widgets/callHistoryWidget/callHistoryWidget";
+import { Loader2Icon } from "lucide-react";
 
 export const metadata: Metadata = {
   title: 'Helpme - Início',
@@ -31,7 +32,9 @@ export default async function Home() {
         <Connection />
       </div>
       <CallWidget />
-      <CallHistoryWidget />
+      <Suspense fallback={<Loader2Icon className="animate-spin self-center m-4" />}> {/**you must implement a better loading. */}
+        <CallHistoryWidget />
+      </Suspense>
     </MainLayout>
   )
 }
