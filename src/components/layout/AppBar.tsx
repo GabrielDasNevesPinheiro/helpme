@@ -12,10 +12,10 @@ export default function AppBar({ dashboard = true }: { dashboard?: boolean }) {
                 <Label className="text-4xl"><a href="/">Helpme</a></Label>
             </p>
             <div>{dashboard &&
-                <Button variant={"link"} className="space-x-2">
+                <div className="flex items-center h-full space-x-2 text-base">
                     <GaugeIcon />
-                    <p>Dashboard</p>
-                </Button>
+                    <a href="/dashboard">Dashboard</a>
+                </div>
             }</div>
         </header>
     )
