@@ -10,7 +10,7 @@ export default function DashboardSidebar() {
     const pathname = usePathname();
 
     return (
-        <div className="h-1/4 w-full md:w-1/4 md:h-auto md:border-r border-b flex">
+        <div className="h-1/4 w-full md:w-1/4 md:h-auto border-b md:border-b-0 flex">
             <div className="flex flex-col space-y-2 h-full w-full p-2">
                 <ListItem icon={Table2Icon} text="Visão geral" active={pathname === "/dashboard"} href="/dashboard" />
                 <ListItem icon={Building2Icon} text="Organização" active={pathname === "/dashboard/org"} href="/dashboard/org" />
