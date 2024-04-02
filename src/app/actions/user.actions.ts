@@ -91,3 +91,29 @@ export async function getUserInfo(email: string): Promise<User> {
     }
 
 }
+
+export async function getUsers(email: string): Promise<UserSchemaType[]> {
+    try {
+        await connectDatabase();
+
+        const { company } = await User.findOne({ email }) as UserSchemaType;
+        const users = await User.find({ company });
+
+        return users;
+
+    } catch {
+        return [];
+    }
+}
+
+export async function getUserCount(email: string): Promise<number> {
+    const count = await getUsers(email);
+    return count.length;
+}
+
+export async function getOperatorCount(email: string) {
+    let users = await getUsers(email);
+    users = users.filter((user) => user.level === UserLevel.OPERATOR);
+
+    return users.length;
+}
