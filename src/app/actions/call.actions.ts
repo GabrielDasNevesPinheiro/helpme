@@ -45,14 +45,15 @@ export async function makeCall(description: string, userInfo: User): Promise<boo
     }
 }
 
-export async function getCalls(companyName: string): Promise<Call[]> {
+export async function getCalls(email: string): Promise<Call[]> {
 
     let parsedCalls: Call[] = [];
 
     try {
         await connectDatabase();
 
-        const { _id: companyId } = (await Company.findOne({ name: companyName })) as CompanySchemaType;
+        const { company } = await User.findOne({ email }) as UserSchemaType;
+        const { _id: companyId } = (await Company.findOne({ _id: company })) as CompanySchemaType;
         const calls: CallSchemaType[] = (await Call.find({ company: companyId }));
 
         for (const call of calls.reverse().slice(0, 15)) {
@@ -127,7 +128,7 @@ export async function closeCall(callID: string, userID: string): Promise<boolean
 
 export async function getRecentCalls(email: string): Promise<Call[]> {
     const now = new Date();
-    const offset = new Date(now.getTime() - 20 * 60000); // 20 minutes ago
+
     const user = await User.findOne({ email });
 
     try {
@@ -158,6 +159,11 @@ function createEmptyCall(): Call {
         datetime: "",
     }
 }
+
+export async function getCallCount(email: string) {
+    return (await getCalls(email)).length;
+}
+
 async function parseCall(callQuery: CallSchemaType) {
 
     let call: Call = createEmptyCall();
