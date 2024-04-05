@@ -9,6 +9,7 @@ function generateCode(): string {
     return code.slice(0, 6);
 }
 
+
 export async function createCompany(name: string, ownerEmail: string): Promise<boolean> {
     try {
 

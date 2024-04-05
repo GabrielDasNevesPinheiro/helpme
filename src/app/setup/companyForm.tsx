@@ -7,11 +7,11 @@ import { Input } from "@/components/ui/input";
 import { BadgeCheck, Loader2Icon } from "lucide-react";
 import { companySchema } from "../../lib/schemas";
 import { useSession } from "next-auth/react";
-import { createCompany } from "../actions/company.actions";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "../context/UserContext";
 import { getUserInfo } from "../actions/user.actions";
+import { createCompany } from "../actions/Company/write";
 
 
 export default function CompanyForm() {
