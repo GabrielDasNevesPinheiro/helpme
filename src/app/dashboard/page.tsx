@@ -31,7 +31,10 @@ export default async function DashboardPage() {
             </Suspense>
 
             <Suspense fallback={<></>}>
-                <OverviewTable />
+                <div className="p-2 space-y-2 border-t md:border-0">
+                    <h1 className="text-3xl text-center">Chamados</h1>
+                    <OverviewTable />
+                </div>
             </Suspense>
         </div>
     )
