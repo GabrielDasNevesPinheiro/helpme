@@ -18,7 +18,7 @@ export default async function DataViews() {
     const solvedCallCount = callData.filter((call) => !call.status).length;
 
     return (
-        <div className="flex gap-4 p-2 flex-col md:flex-row flex-wrap">
+        <div className="grid lg:grid-cols-5 gap-2 p-2">
             <DataView description="Total de cadastros" data={count.operators + count.employees} />
             <DataView description="Operadores" data={count.operators} />
             <DataView description="Total de chamados" data={callCount} />
