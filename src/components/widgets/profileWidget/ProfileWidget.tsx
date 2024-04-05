@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
-import { getUserInfo } from "@/app/actions/user.actions";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { getUserInfo } from "@/app/actions/Users/read";
 
 export default async function ProfileWidget() {
     const session = await getServerSession();

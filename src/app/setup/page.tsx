@@ -6,11 +6,11 @@ import { ArrowRightIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { checkUser } from "../actions/user.actions";
 import { Button } from "@/components/ui/button";
 import CompanyForm from "./companyForm";
 import UserForm from "./userForm";
 import { toast } from "@/components/ui/use-toast";
+import { checkUser } from "../actions/Users/read";
 
 export default function AccountSetupPage() {
 

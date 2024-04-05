@@ -2,9 +2,9 @@
 
 import { signOut, useSession } from "next-auth/react";
 import { useUserContext } from "../context/UserContext";
-import { checkUser } from "../actions/user.actions";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { checkUser } from "../actions/Users/read";
 
 
 interface Props {

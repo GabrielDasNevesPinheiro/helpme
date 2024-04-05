@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import CallForm from "./CallForm";
 import { getServerSession } from "next-auth";
-import { getUserInfo } from "@/app/actions/user.actions";
+import { getUserInfo } from "@/app/actions/Users/read";
 
 export default async function CallWidget() {
     const session = await getServerSession();

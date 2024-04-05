@@ -4,13 +4,14 @@ import connectDatabase from "@/connections/db";
 import { Company } from "@/models/Company";
 import { User } from "@/models/User";
 import { UserLevel } from "@/types/userlevel";
-import mongoose from "mongoose";
+import { Document } from "mongoose";
 
 const userLevels = {
     0: "Chefe",
     1: "Operador",
     2: "Funcionário",
 }
+
 
 export async function checkUser(email: string): Promise<UserStatus> { // check if user need to complete registration
     try {
@@ -29,44 +30,12 @@ export async function checkUser(email: string): Promise<UserStatus> { // check i
 
 }
 
-// this function must be used when setup a new account
-export async function setupUser({ email, sector, code, level }: { email: string, sector: string, code: string, level: string }): Promise<SetupResponse> {
-
-    try {
-
-        await connectDatabase();
-
-        const user = (await User.findOne({ email })) as UserSchemaType<mongoose.Document>;
-        let userCompany = (await Company.findOne({ code })) as CompanySchemaType<mongoose.Document>;
-
-        user.level = Number(level);
-        user.sector = sector;
-
-
-        if (!userCompany?._id) return "NO COMPANY";
-
-        if (userCompany?._id) {
-            user.company = userCompany._id;
-        }
-
-        await User.updateOne({ email }, user);
-
-        return "SUCCESS";
-
-
-    } catch (error) {
-        return "ERROR";
-    }
-
-}
-
-
 export async function getUserInfo(email: string): Promise<User> {
 
     try {
 
         await connectDatabase();
-        const user: UserSchemaType<mongoose.Document> = (await User.findOne({ email }))!;
+        const user: UserSchemaType<Document> = (await User.findOne({ email }))!;
         const { name: companyName } = (await Company.findOne({ _id: user?.company })) as CompanySchemaType || { name: "" };
 
         return {
@@ -106,14 +75,11 @@ export async function getUsers(email: string): Promise<UserSchemaType[]> {
     }
 }
 
-export async function getUserCount(email: string): Promise<number> {
-    const count = await getUsers(email);
-    return count.length;
-}
+export async function getUserCount(email: string): Promise<{ employees: number, operators: number }> {
+    const users = await getUsers(email);
 
-export async function getOperatorCount(email: string) {
-    let users = await getUsers(email);
-    users = users.filter((user) => user.level === UserLevel.OPERATOR);
+    const employees = users.filter((user) => user.level == 2).length;
+    const operators = users.filter((user) => user.level == 1).length;
 
-    return users.length;
+    return { employees, operators };
 }

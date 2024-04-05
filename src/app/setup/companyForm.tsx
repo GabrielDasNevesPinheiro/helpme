@@ -10,8 +10,8 @@ import { useSession } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "../context/UserContext";
-import { getUserInfo } from "../actions/user.actions";
 import { createCompany } from "../actions/Company/write";
+import { getUserInfo } from "../actions/Users/read";
 
 
 export default function CompanyForm() {

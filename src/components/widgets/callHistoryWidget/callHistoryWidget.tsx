@@ -1,8 +1,8 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { getServerSession } from "next-auth";
 import CallPopover from "./callPopover";
-import { getUserInfo } from "@/app/actions/user.actions";
 import { getRecentCalls } from "@/app/actions/Calls/read";
+import { getUserInfo } from "@/app/actions/Users/read";
 
 export default async function CallHistoryWidget() {
     const session = await getServerSession();

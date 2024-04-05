@@ -1,6 +1,6 @@
 
 import { getCalls } from "@/app/actions/Calls/read";
-import { getOperatorCount, getUserCount } from "@/app/actions/user.actions";
+import { getUserCount } from "@/app/actions/Users/read";
 import DataView from "@/components/ui/dataview";
 import { getServerSession } from "next-auth";
 
@@ -11,7 +11,7 @@ export default async function DataViews() {
     const email = String(session?.user?.email);
 
     const userCount = await getUserCount(email);
-    const operatorCount = await getOperatorCount(email);
+    const count = await getUserCount(email);
     const callData = await getCalls(email);
     const callCount = callData.length;
     const pendingCallCount = callData.filter((call) => call.status).length;
@@ -19,8 +19,8 @@ export default async function DataViews() {
 
     return (
         <div className="flex gap-4 p-2 flex-col md:flex-row flex-wrap">
-            <DataView description="Total de cadastros" data={userCount} />
-            <DataView description="Operadores" data={operatorCount} />
+            <DataView description="Total de cadastros" data={count.operators + count.employees} />
+            <DataView description="Operadores" data={count.operators} />
             <DataView description="Total de chamados" data={callCount} />
             <DataView description="Chamados abertos" data={pendingCallCount} />
             <DataView description="Chamados resolvidos" data={solvedCallCount} />

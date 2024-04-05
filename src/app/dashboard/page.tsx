@@ -1,9 +1,9 @@
 import { getServerSession } from "next-auth"
-import { getUserInfo } from "../actions/user.actions";
 import DataViews from "@/components/layout/DataViews";
 import OverviewTable from "@/components/layout/OverviewTable";
 import { Suspense } from "react";
 import { Loader2Icon } from "lucide-react";
+import { getUserInfo } from "../actions/Users/read";
 
 export default async function DashboardPage() {
     const session = await getServerSession();

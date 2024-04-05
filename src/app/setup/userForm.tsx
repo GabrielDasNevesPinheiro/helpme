@@ -11,8 +11,9 @@ import { useRouter } from "next/navigation";
 import { useUserContext } from "../context/UserContext";
 import { userSchema } from "../../lib/schemas";
 import { sectors } from "../../lib/sectors";
-import { getUserInfo, setupUser } from "../actions/user.actions";
 import { toast } from "@/components/ui/use-toast";
+import { setupUser } from "../actions/Users/write";
+import { getUserInfo } from "../actions/Users/read";
 
 
 export default function UserForm() {
