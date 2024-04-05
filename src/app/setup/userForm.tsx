@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "../context/UserContext";
 import { userSchema } from "../../lib/schemas";
-import { sectors } from "../actions/sector.actions";
+import { sectors } from "../../lib/sectors";
 import { getUserInfo, setupUser } from "../actions/user.actions";
 import { toast } from "@/components/ui/use-toast";
 

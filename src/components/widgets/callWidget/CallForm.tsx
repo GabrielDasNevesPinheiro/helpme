@@ -10,8 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2Icon, Mail } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { makeCall } from "@/app/actions/call.actions";
 import { useUserContext } from "@/app/context/UserContext";
+import { makeCall } from "@/app/actions/Calls/write";
 
 export default function CallForm() {
 

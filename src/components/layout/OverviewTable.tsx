@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { columns } from "../dashboard/tables/columns";
 import { DataTable } from "../dashboard/tables/DataTable";
-import { getCalls } from "@/app/actions/call.actions";
+import { getCalls } from "@/app/actions/Calls/read";
 
 
 export default async function OverviewTable() {

@@ -5,7 +5,7 @@ import { Socket, io } from "socket.io-client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Info, User, XCircle } from "lucide-react";
 import { useUserContext } from "../context/UserContext";
-import { getCall } from "../actions/call.actions";
+import { getCall } from "../actions/Calls/read";
 
 
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { closeCall } from "@/app/actions/call.actions";
+import { closeCall } from "@/app/actions/Calls/write";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";

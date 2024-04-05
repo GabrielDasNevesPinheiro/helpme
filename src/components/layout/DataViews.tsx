@@ -1,6 +1,6 @@
 
-import { getCalls } from "@/app/actions/call.actions";
-import { getOperatorCount, getUserCount, getUserInfo } from "@/app/actions/user.actions";
+import { getCalls } from "@/app/actions/Calls/read";
+import { getOperatorCount, getUserCount } from "@/app/actions/user.actions";
 import DataView from "@/components/ui/dataview";
 import { getServerSession } from "next-auth";
 
