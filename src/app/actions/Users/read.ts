@@ -61,12 +61,19 @@ export async function getUserInfo(email: string): Promise<User> {
 
 }
 
-export async function getUsers(email: string): Promise<UserSchemaType[]> {
+export async function getUsers(email: string): Promise<User[]> {
     try {
         await connectDatabase();
 
         const { company } = await User.findOne({ email }) as UserSchemaType;
-        const users = await User.find({ company });
+        const users: User[] = await Promise.all((await User.find({ company })).map((user) => ({
+            company: String(user.company),
+            email: user.email,
+            level: userLevels[user.level as 0 | 1 | 2],
+            name: user.name,
+            sector: String(user.sector),
+            id: String(user._id)
+        })));
 
         return users;
 
@@ -78,8 +85,8 @@ export async function getUsers(email: string): Promise<UserSchemaType[]> {
 export async function getUserCount(email: string): Promise<{ employees: number, operators: number }> {
     const users = await getUsers(email);
 
-    const employees = users.filter((user) => user.level == 2).length;
-    const operators = users.filter((user) => user.level == 1).length;
+    const employees = users.filter((user) => user.level === "Funcionário").length;
+    const operators = users.filter((user) => user.level === "Operador").length;
 
     return { employees, operators };
 }
