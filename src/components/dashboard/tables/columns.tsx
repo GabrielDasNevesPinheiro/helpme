@@ -58,3 +58,61 @@ export const columns: ColumnDef<Call>[] = [
         },
     }
 ]
+
+
+export const usersColumns: ColumnDef<User>[] = [
+    {
+        accessorKey: "id",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="link"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    ID
+                </Button>
+            )
+        },
+        cell: ({ row }) => (String(row.getValue("id")))
+
+    },
+    {
+        accessorKey: "name",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="link"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Nome
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "sector",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="link"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Setor
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "level",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="link"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Nível
+                </Button>
+            )
+        },
+    }
+]
