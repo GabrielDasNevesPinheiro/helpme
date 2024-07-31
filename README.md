@@ -1,6 +1,10 @@
-# Problemas a resolver
+# Resumo
+Este repositório contém uma aplicação simples de suporte técnico.
 
-> Múltiplas conexões no servidor de socket.
-> Configuração de contas
-> Informações invisíveis após redirecionamento depois de configurar conta(/setup redirect to /)
-> Dar um jeito de cachear a conexão com o banco de dados.
+### Features
+* Autenticação
+* Gerenciamento de dados
+* Chamados(Tickets) em tempo real
+
+Sinta-se livre para navegar pelo código.
+
