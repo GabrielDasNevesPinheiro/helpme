@@ -1,10 +1,13 @@
 # Resumo
 Este repositório contém uma aplicação simples de suporte técnico.
 
-### Features
-* Autenticação
-* Gerenciamento de dados
-* Chamados(Tickets) em tempo real
+### 📘 Features
+* 🔒 Autenticação
+* 🎲 Gerenciamento de dados
+* 📝 Chamados(Tickets) em tempo real
 
-Sinta-se livre para navegar pelo código.
+### STACK
+[![My Skills](https://skillicons.dev/icons?i=nextjs,mongodb,tailwindcss,figma&theme=light)](https://skillicons.dev)
+
+Sinta-se livre para navegar pelo código 👌
 
